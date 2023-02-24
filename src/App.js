@@ -20,27 +20,68 @@ const initialValue = 100 / listOfPosibilities.length
 
 function App() {
   const [firstRun, setFirstRun] = useState(true)
-
-  var copyOfPosibilities = listOfPosibilities
-
   if (firstRun === true) {
-    copyOfPosibilities.forEach(item01 => {
+    listOfPosibilities.forEach(item01 => {
       item01.votingValue = initialValue
     })
     setFirstRun(false)
   }
 
+  const [copyOfPosibilities, setCopyOfPosibilities] = useState(listOfPosibilities)
+  
+
+  
+
+ 
+
+
   return (
     <div className="App">
-        {copyOfPosibilities.map(item => 
-          <ItemForVoting 
-            title={item.title}
-            description={item.description}
-            votingValue={item.votingValue}
-          />
+        {
+          
+          copyOfPosibilities.map((item, i) => 
+          <div style={{display: 'inline-flex'}}>
+            <ItemForVoting key={i}
+              title={item.title}
+              description={item.description}
+              votingValue={copyOfPosibilities[i].votingValue}
+              
+            />
+          <div style={{display: 'inline-flex'}}>
+            <button onClick={() => {
+              let copy1 = [...copyOfPosibilities]
+              copy1[i].votingValue = copy1[i].votingValue -10
+              setCopyOfPosibilities(copy1)
+              
+            }}>-10</button>
+            <button onClick={() => {
+              let copy1 = [...copyOfPosibilities]
+              copy1[i].votingValue = copy1[i].votingValue -1
+              setCopyOfPosibilities(copy1)
+            
+            }}>-1</button>
+            <div key={i}>
+            {Math.round(copyOfPosibilities[i].votingValue)}
+            </div>
+            <button onClick={() => {
+              let copy1 = [...copyOfPosibilities]
+              copy1[i].votingValue = copy1[i].votingValue +1
+              setCopyOfPosibilities(copy1)
+             
+            }}>+1</ button>
+            <button onClick={() => {
+              let copy1 = [...copyOfPosibilities]
+              copy1[i].votingValue = copy1[i].votingValue +10
+              setCopyOfPosibilities(copy1)
+            
+            }}>+10</ button>
+          </div>
+          </div>
         )}
+      
     </div>
   );
+  
 }
 
 export default App;
