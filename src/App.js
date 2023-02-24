@@ -30,10 +30,12 @@ function App() {
   const [copyOfPosibilities, setCopyOfPosibilities] = useState(listOfPosibilities)
 
   const percentageDistribution = (ar, curentSlider) => {
+   
     var ar1 = [...ar]
     var countOfAll = 0
-    var count22 = 0
     var valueToRatioTo100 = 0
+    //test22 for testing
+    // var count22 = 0
   
 
     for(let i = 0; i < ar1.length ; i++) {
@@ -48,12 +50,30 @@ function App() {
         ar1[i].votingValue = ar1[i].votingValue * valueToRatioTo100
       }  
     }
-    
-    for(let i = 0; i < ar1.length ; i++) {
-      count22 = Number(ar1[i].votingValue) + count22
+
+    //this is condition part for checking if any slider value is not more than 50
+    for(let s3 = 0; s3 < ar1.length; s3++) {
+      if(ar1[s3].votingValue > 50){
+      //test
+      // console.log(ar1[s3].votingValue)
+      ar1[s3].votingValue = 50
+      //test
+      // console.log(ar1[s3].votingValue)
+      }
     }
-    console.log(count22)
+
+
+    
+    //test22 this was just a test if the number of all slider values ​​is 100
+    // for(let i = 0; i < ar1.length ; i++) {
+    //   count22 = Number(ar1[i].votingValue) + count22
+    // }
+    // console.log(count22)
+
+      
+
     return ar1
+   
   }
 
   return (
