@@ -1,4 +1,5 @@
 import React from "react";
+//import {useState} from "react";
 //import Slider2 from './Slider2';
 
 
@@ -8,7 +9,7 @@ import React from "react";
 // }
 
 export default function ItemForVoting(props) {
-    
+   // const [rangeval, setRangeval] = useState(1400);
     // const [description, setDescription] = useState(props.description);
     
     return (
@@ -23,7 +24,11 @@ export default function ItemForVoting(props) {
                 <button onClick={() => setVotingValue(votingValue + 10)}>+10</ button> */}
                 {/* {Math.round(votingValue)}
                 <Slider2 votingValue={votingValue} onChange={() => setVotingValue(this.value, votingValue)}></Slider2> */}
-            
+                        {/* <div>
+                <input value={rangeval} type="range" className="custom-range" min="199" max="3999" 
+                onChange={(event) => setRangeval(event.target.value)} />
+                <h4>The range value is {rangeval}</h4>
+                </div> */}
             </div>
         </div>
     );

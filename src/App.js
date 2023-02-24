@@ -28,12 +28,33 @@ function App() {
   }
 
   const [copyOfPosibilities, setCopyOfPosibilities] = useState(listOfPosibilities)
+
+  const percentageDistribution = (ar, curentSlider) => {
+    var ar1 = [...ar]
+    var countOfAll = 0
+    var count22 = 0
+    var valueToRatioTo100 = 0
   
 
-  
-
+    for(let i = 0; i < ar1.length ; i++) {
+      countOfAll = Number(ar1[i].votingValue) + countOfAll
+    }
  
+    valueToRatioTo100 = (100-ar1[curentSlider].votingValue)/(countOfAll-ar1[curentSlider].votingValue)
 
+
+    for(let i = 0; i < ar1.length ; i++) {
+      if(i !== curentSlider){
+        ar1[i].votingValue = ar1[i].votingValue * valueToRatioTo100
+      }  
+    }
+    
+    for(let i = 0; i < ar1.length ; i++) {
+      count22 = Number(ar1[i].votingValue) + count22
+    }
+    console.log(count22)
+    return ar1
+  }
 
   return (
     <div className="App">
@@ -48,33 +69,22 @@ function App() {
               
             />
           <div style={{display: 'inline-flex'}}>
-            <button onClick={() => {
-              let copy1 = [...copyOfPosibilities]
-              copy1[i].votingValue = copy1[i].votingValue -10
-              setCopyOfPosibilities(copy1)
-              
-            }}>-10</button>
-            <button onClick={() => {
-              let copy1 = [...copyOfPosibilities]
-              copy1[i].votingValue = copy1[i].votingValue -1
-              setCopyOfPosibilities(copy1)
-            
-            }}>-1</button>
             <div key={i}>
-            {Math.round(copyOfPosibilities[i].votingValue)}
+            {Math.round(copyOfPosibilities[i].votingValue*10000)/10000}%
             </div>
-            <button onClick={() => {
-              let copy1 = [...copyOfPosibilities]
-              copy1[i].votingValue = copy1[i].votingValue +1
-              setCopyOfPosibilities(copy1)
-             
-            }}>+1</ button>
-            <button onClick={() => {
-              let copy1 = [...copyOfPosibilities]
-              copy1[i].votingValue = copy1[i].votingValue +10
-              setCopyOfPosibilities(copy1)
-            
-            }}>+10</ button>
+           
+            <input value={copyOfPosibilities[i].votingValue} 
+              type="range" 
+              min="0" 
+              max="50" 
+              step="0.0001" 
+              onChange={(event) => {
+                let copy1 = [...copyOfPosibilities]
+                copy1[i].votingValue = event.target.value
+                copy1 = percentageDistribution(copy1,i)
+                setCopyOfPosibilities(copy1)
+              }}
+            />
           </div>
           </div>
         )}
