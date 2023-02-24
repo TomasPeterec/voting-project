@@ -4,7 +4,6 @@ import ItemForVoting from './ItemForVoting';
 import { useState } from 'react';
 
 
-
 const listOfPosibilities = [
   {title: "morské prasa", description: "Someting 1", votingValue: 0},
   {title: "škrečok", description: "Someting 2", votingValue: 0},
@@ -15,7 +14,11 @@ const listOfPosibilities = [
   {title: "vakoveverica", description: "Someting 7", votingValue: 0}
 ]
 
-const initialValue = 100 / listOfPosibilities.length
+const maxPercentForOne = 50
+const minPercentForOne = 1
+const percent100 = 100
+const nextFloat = 1
+const initialValue = percent100 / listOfPosibilities.length
 
 
 function App() {
@@ -38,11 +41,11 @@ function App() {
     // var count22 = 0
   
 
-    for(let i = 0; i < ar1.length ; i++) {
+    for(let i = 0; i < ar1.length; i++) {
       countOfAll = Number(ar1[i].votingValue) + countOfAll
     }
  
-    valueToRatioTo100 = (100-ar1[curentSlider].votingValue)/(countOfAll-ar1[curentSlider].votingValue)
+    valueToRatioTo100 = (percent100-ar1[curentSlider].votingValue)/(countOfAll-ar1[curentSlider].votingValue)
 
 
     for(let i = 0; i < ar1.length ; i++) {
@@ -51,26 +54,28 @@ function App() {
       }  
     }
 
-    //this is condition part for checking if any slider value is not more than 50
+    //this is condition part just for checking if any slider value is not more than maxPercentForOne
     for(let s3 = 0; s3 < ar1.length; s3++) {
-      if(ar1[s3].votingValue > 50){
+      if(ar1[s3].votingValue > maxPercentForOne){
       //test
       // console.log(ar1[s3].votingValue)
-      ar1[s3].votingValue = 50
+      ar1[s3].votingValue = maxPercentForOne
       //test
       // console.log(ar1[s3].votingValue)
+        ar1 = percentageDistribution(ar1, s3)
+      }else{
+        if(ar1[s3].votingValue < minPercentForOne){
+          ar1[s3].votingValue = minPercentForOne
+          ar1 = percentageDistribution(ar1, s3)
+        }
       }
     }
 
-
-    
     //test22 this was just a test if the number of all slider values ​​is 100
     // for(let i = 0; i < ar1.length ; i++) {
     //   count22 = Number(ar1[i].votingValue) + count22
     // }
     // console.log(count22)
-
-      
 
     return ar1
    
@@ -90,13 +95,13 @@ function App() {
             />
           <div style={{display: 'inline-flex'}}>
             <div key={i}>
-            {Math.round(copyOfPosibilities[i].votingValue*10000)/10000}%
+            {Math.round(copyOfPosibilities[i].votingValue*nextFloat)/nextFloat}%
             </div>
            
             <input value={copyOfPosibilities[i].votingValue} 
               type="range" 
               min="0" 
-              max="50" 
+              max={maxPercentForOne}
               step="0.0001" 
               onChange={(event) => {
                 let copy1 = [...copyOfPosibilities]
