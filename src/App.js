@@ -16,14 +16,9 @@ const listOfPosibilities = [
   {title: "rybička", description: "Someting 8", votingValue: 0}
 ]
 
-const listOfCheckboxes = []
-
-listOfPosibilities.forEach((item, index) => {
-  listOfCheckboxes[index] = false
-})
-
+const listOfCheckboxes = listOfPosibilities.map(() => false)
 const maxPercentForOne = 50
-const minPercentForOne = 0.01 //it must not be absolute zero
+const minPercentForOne = 1 //it must not be absolute zero
 const percent100 = 100
 const nextFloat = 1
 const initialValue = percent100 / listOfPosibilities.length
@@ -49,22 +44,20 @@ function App() {
     var valueToRatioTo100 = 0 //a ratio with which are uncecked and unselected multiplied 
     var valueOfChecked = 0
     //test22 for testing
-    var count22 = 0
+    // var count22 = 0
   
     checkboxList.forEach((item, index) => {
       if(item === true){
         if(index !== curentSlider){
-          console.log('index under condition: '+index)
+          // console.log('index under condition: '+index)
         valueOfChecked = valueOfChecked + Number(ar1[index].votingValue)
         }
       }
-      console.log('value of checked: '+valueOfChecked)
-      console.log('index: '+index)
+      // console.log('value of checked: '+valueOfChecked)
+      // console.log('index: '+index)
     })
 
   
-
-
     for(let i = 0; i < ar1.length; i++) {
       countOfAll = Number(ar1[i].votingValue) + countOfAll
     }
@@ -97,11 +90,11 @@ function App() {
       }
     }
 
-    //test22 this was just a test if the number of all slider values ​​is 100
-    for(let i = 0; i < ar1.length ; i++) {
-      count22 = Number(ar1[i].votingValue) + count22
-    }
-    console.log('sum of all: '+count22)
+    // //test22 this was just a test if the number of all slider values ​​is 100
+    // for(let i = 0; i < ar1.length ; i++) {
+    //   count22 = Number(ar1[i].votingValue) + count22
+    // }
+    // console.log('sum of all: '+count22)
 
     return ar1
   }
