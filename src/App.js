@@ -8,14 +8,22 @@ const listOfPosibilities = [
   {title: "morské prasa", description: "Someting 1", votingValue: 0},
   {title: "škrečok", description: "Someting 2", votingValue: 0},
   {title: "užovka červená", description: "Someting 3", votingValue: 0},
-  {title: "korela", description: "Someting 4", votingValue: 0},
+  {title: "papagáj", description: "Someting 4", votingValue: 0},
   {title: "skunk", description: "Someting 5", votingValue: 0},
   {title: "mravce", description: "Someting 6", votingValue: 0},
-  {title: "vakoveverica", description: "Someting 7", votingValue: 0}
+  {title: "vakoveverica", description: "Someting 7", votingValue: 0},
+  {title: "pes", description: "Someting 8", votingValue: 0},
+  {title: "rybička", description: "Someting 8", votingValue: 0}
 ]
 
+const listOfCheckboxes = []
+
+listOfPosibilities.forEach((item, index) => {
+  listOfCheckboxes[index] = false
+})
+
 const maxPercentForOne = 50
-const minPercentForOne = 1
+const minPercentForOne = 0.01 //it must not be absolute zero
 const percent100 = 100
 const nextFloat = 1
 const initialValue = percent100 / listOfPosibilities.length
@@ -31,27 +39,45 @@ function App() {
   }
 
   const [copyOfPosibilities, setCopyOfPosibilities] = useState(listOfPosibilities)
+  const [checkboxList, setCheckboxList] = useState(listOfCheckboxes)
 
+  //main counting function
   const percentageDistribution = (ar, curentSlider) => {
    
-    var ar1 = [...ar]
+    var ar1 = [...ar] //copiing of array of posibilities
     var countOfAll = 0
-    var valueToRatioTo100 = 0
+    var valueToRatioTo100 = 0 //a ratio with which are uncecked and unselected multiplied 
+    var valueOfChecked = 0
     //test22 for testing
-    // var count22 = 0
+    var count22 = 0
   
+    checkboxList.forEach((item, index) => {
+      if(item === true){
+        if(index !== curentSlider){
+          console.log('index under condition: '+index)
+        valueOfChecked = valueOfChecked + Number(ar1[index].votingValue)
+        }
+      }
+      console.log('value of checked: '+valueOfChecked)
+      console.log('index: '+index)
+    })
+
+  
+
 
     for(let i = 0; i < ar1.length; i++) {
       countOfAll = Number(ar1[i].votingValue) + countOfAll
     }
- 
-    valueToRatioTo100 = (percent100-ar1[curentSlider].votingValue)/(countOfAll-ar1[curentSlider].votingValue)
 
+    var valueToSubteact = Number(ar1[curentSlider].votingValue) + Number(valueOfChecked)
+    valueToRatioTo100 = (percent100-valueToSubteact)/(countOfAll-valueToSubteact)
 
     for(let i = 0; i < ar1.length ; i++) {
-      if(i !== curentSlider){
-        ar1[i].votingValue = ar1[i].votingValue * valueToRatioTo100
-      }  
+      if(checkboxList[i] === false){
+        if(i !== curentSlider){
+          ar1[i].votingValue = ar1[i].votingValue * valueToRatioTo100
+        } 
+      }
     }
 
     //this is condition part just for checking if any slider value is not more than maxPercentForOne
@@ -72,26 +98,24 @@ function App() {
     }
 
     //test22 this was just a test if the number of all slider values ​​is 100
-    // for(let i = 0; i < ar1.length ; i++) {
-    //   count22 = Number(ar1[i].votingValue) + count22
-    // }
-    // console.log(count22)
+    for(let i = 0; i < ar1.length ; i++) {
+      count22 = Number(ar1[i].votingValue) + count22
+    }
+    console.log('sum of all: '+count22)
 
     return ar1
-   
   }
 
   return (
     <div className="App">
         {
-          
+          //main loop which generates the rows
           copyOfPosibilities.map((item, i) => 
           <div style={{display: 'inline-flex'}}>
             <ItemForVoting key={i}
               title={item.title}
               description={item.description}
               votingValue={copyOfPosibilities[i].votingValue}
-              
             />
           <div style={{display: 'inline-flex'}}>
             <div key={i}>
@@ -109,7 +133,15 @@ function App() {
                 copy1 = percentageDistribution(copy1,i)
                 setCopyOfPosibilities(copy1)
               }}
-            />
+            /><input type='checkbox' onChange={() => {
+              let copy222 = [...checkboxList]
+              if (checkboxList[i] === true){
+                copy222[i] = false
+              }else{
+                copy222[i] = true
+              }
+              setCheckboxList(copy222)
+            }} ></input>
           </div>
           </div>
         )}
