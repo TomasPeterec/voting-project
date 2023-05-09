@@ -2,11 +2,13 @@ import React from 'react';
 import './App.css';
 import ItemForVoting from './ItemForVoting';
 import { useState } from 'react';
+import SendingTest from './SendingTest';
+
 
 
 const maxPercentForOne = 50
 const minPercentForOne = 1 //it must not be absolute zero
-const percent100 = 100
+const percent100 = 250
 const nextFloat = 1
 
 //main counting function
@@ -68,6 +70,7 @@ const percentageDistribution = (ar, curentSlider, depo) => {
   return ar1
 }
 
+
 function App({possibilities}) {
 
 
@@ -83,6 +86,7 @@ function App({possibilities}) {
 
   return (
     <div className="App">
+      
         {
           //main loop which generates the rows
           copyOfPosibilities.map((possibility, i) => 
@@ -120,12 +124,19 @@ function App({possibilities}) {
                     }
                     newPossibilities[i].fixed = e.target.checked
                     setCopyOfPosibilities(newPossibilities)
-                  }} 
+                  }} co
                 />
               </div>
             </div>
         )}
+        <br/>
+      <SendingTest votingsResult={copyOfPosibilities} />
     </div>
+
+
+  
+  
+  
   );
 }
 
