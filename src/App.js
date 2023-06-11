@@ -4,8 +4,6 @@ import ItemForVoting from './ItemForVoting';
 import { useState } from 'react';
 import SendingTest from './SendingTest';
 
-
-
 const maxPercentForOne = 50
 const minPercentForOne = 1 //it must not be absolute zero
 const percent100 = 250

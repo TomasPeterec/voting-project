@@ -1,4 +1,7 @@
+require('dotenv').config();
 import React, { useState } from 'react';
+
+const API_ROOT = process.env.API_KEY;
 
 function MyComponent() {
   const [data, setData] = useState([]);
@@ -6,7 +9,7 @@ function MyComponent() {
 
   const fetchData = () => {
     setLoading(true);
-    fetch('http://localhost:5000/api/userVotes/')
+    fetch(`${process.env.REACT_APP_API_ROOT_VAR}/api/userVotes/`)
       .then(response => response.json())
       .then(jsonData => {
         setData(jsonData);
