@@ -6,14 +6,10 @@ function SendingTest(votingsResult) {
 
 
   const handleClick = async () => {
-    // const data = {
-    //   foreign_key: 5,
-    //   mail_or_id: "Viera",
-    //   voted_values: JSON.stringify(depositOfResults)
-    // };
+ 
     const data = {
         foreign_key: 5,
-        mail_or_id: "Stasek Viktorovsky",
+        mail_or_id: "Viktor Viktorovsky",
         voted_values: JSON.stringify(depositOfResults.votingsResult.map((item) => {
             return {title: item.title, votingValue: item.votingValue};
           }))
@@ -21,7 +17,7 @@ function SendingTest(votingsResult) {
 
     setDepositOfResults(data)
     try {
-      const response = await fetch('http://localhost:5000/api/userVotes', {
+      const response = await fetch(`${process.env.REACT_APP_API_ROOT_VAR}/api/userVotes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
