@@ -1,18 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-//import App from './App';
+
 import reportWebVitals from './reportWebVitals';
-//import FetchByButton from './FetchByButton';
 import RegButton from './front/RegButton';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RegButton/>
-    {/* <App possibilities={DUMMY_POSSIBILIES}/>
-    <FetchByButton/> */}
-    {/* <ValidationTest/> */}
   </React.StrictMode>
 );
 

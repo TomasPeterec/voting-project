@@ -1,8 +1,6 @@
 require('dotenv').config();
 import React, { useState } from 'react';
 
-const API_ROOT = process.env.API_KEY;
-
 function MyComponent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);

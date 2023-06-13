@@ -19,24 +19,24 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-      // Perform validation
-  if (!isEmail(email)) {
-    setError('Please enter a valid email address.');
-    return;
-  }
+    // Perform validation
+    if (!isEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
 
-  if (!isLength(password, { min: 6 })) {
-    setError('Password should be at least 6 characters long.');
-    return;
-  }
+    if (!isLength(password, { min: 6 })) {
+      setError('Password should be at least 6 characters long.');
+      return;
+    }
 
-  // Continue with login process
-  // You can make an API call here to authenticate the user
+    // Continue with login process
+    // You can make an API call here to authenticate the user
 
-  // Clear form fields and error
-  setEmail('');
-  setPassword('');
-  setError('');
+    // Clear form fields and error
+    setEmail('');
+    setPassword('');
+    setError('');
 
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_ROOT_VAR}/api/users/login?email=${email}&password=${password}`);
@@ -76,9 +76,7 @@ const LoginForm = () => {
             </form>
           </>
         )
-      }
-
-      
+      }      
     </>
   );
 };
