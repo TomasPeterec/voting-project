@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import validator from 'validator';
 import { isEmail, isLength } from 'validator';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [error, setError] = useState('');
-  const [status, setStatus] = useState('Not loged');
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
@@ -30,9 +31,6 @@ const LoginForm = () => {
       return;
     }
 
-    // Continue with login process
-    // You can make an API call here to authenticate the user
-
     // Clear form fields and error
     setEmail('');
     setPassword('');
@@ -40,7 +38,9 @@ const LoginForm = () => {
 
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_ROOT_VAR}/api/users/login?email=${email}&password=${password}`);
-      setStatus(response.data);
+      if(response.data === 'Login successful'){
+        navigate('/votings')
+      }
     } catch (error) {
       console.error(error);
     }
@@ -48,35 +48,28 @@ const LoginForm = () => {
 
   return (
     <>
-      {(status === 'Login successful') ? (
-        'LOGED'
-        ) : (
-          <>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={handleEmailChange}
-              />
-              {!isValidEmail && <p className="error">Invalid email address</p>}
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              {error && <p>{error}</p>}
-              <button type="submit">Login</button>
-            </form>
-          </>
-        )
-      }      
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        {!isValidEmail && <p className="error">Invalid email address</p>}
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        {error && <p>{error}</p>}
+        <button type="submit">Login</button>
+      </form>
     </>
   );
 };

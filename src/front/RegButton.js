@@ -1,34 +1,16 @@
 import React, { useState } from "react";
-import RegistrationForm from "../registration_and_login/RegistrationForm";
-import LoginForm from "../registration_and_login/LoginForm";
+import { Link } from "react-router-dom";
 
 
 function RegButton() {
-    const [showRegistration, setShowRegistration] = useState(false);
-    const [showLoginComponent, setShowLoginComponent] = useState(false);
-  
-    const handleRegisterClick = () => {
-      setShowRegistration(true);
-    };
-  
-    const handleLoginComponentClick = () => {
-      setShowLoginComponent(true);
-    };
-  
+
     return (
       <div>
-        {showRegistration ? (
-          <RegistrationForm />
-        ) : showLoginComponent ? (
-          <LoginForm />
-        ) : (
           <>
-            <button onClick={handleRegisterClick}>Register</button>
+            <Link to="/registration">Registration</Link>
             <br/>
-            <button onClick={handleLoginComponentClick}>Login</button>
+            <Link to="/login">Login</Link>
           </>
-        )}
-        
       </div>
     );
   }
