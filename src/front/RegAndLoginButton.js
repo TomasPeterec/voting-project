@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 
-function RegButton() {
+function RegAndLoginButton() {
 
     return (
       <div>
@@ -15,4 +15,4 @@ function RegButton() {
     );
   }
 
-export default RegButton;
+export default RegAndLoginButton;

@@ -3,12 +3,14 @@ import axios from 'axios';
 import validator from 'validator';
 import { isEmail, isLength } from 'validator';
 import { useNavigate } from 'react-router-dom';
+import { fontStyle } from '@mui/system';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
@@ -37,11 +39,14 @@ const LoginForm = () => {
     setError('');
 
     try {
+      setIsLoading(true)
       const response = await axios.get(`${process.env.REACT_APP_API_ROOT_VAR}/api/users/login?email=${email}&password=${password}`);
       if(response.data === 'Login successful'){
+        setIsLoading(false)
         navigate('/votings')
       }
     } catch (error) {
+      setIsLoading(false)
       console.error(error);
     }
   };
@@ -65,11 +70,12 @@ const LoginForm = () => {
           id="password"
           name="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => setPassword(event.target.value)} 
         />
         {error && <p>{error}</p>}
         <button type="submit">Login</button>
       </form>
+      {isLoading && <h1>loading</h1>}
     </>
   );
 };

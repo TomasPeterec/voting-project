@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import RegButton from './front/RegButton';
+import RegAndLoginButton from './front/RegAndLoginButton';
 import Box from '@mui/material/Box';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
@@ -46,7 +46,7 @@ function ThemedApp() {
         )
       }
       <Box sx={isMobile ? mobileStyles : roundedBoxStyles}>
-        <RegButton/>
+        <RegAndLoginButton/>
       </Box>
     </ThemeProvider>
   );
