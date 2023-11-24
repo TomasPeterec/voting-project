@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import validator from 'validator';
+import axios from 'axios';  
 import { isEmail, isLength } from 'validator';
 import { useNavigate } from 'react-router-dom';
-import { fontStyle } from '@mui/system';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +14,7 @@ const LoginForm = () => {
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
     setEmail(newEmail);
-    setIsValidEmail(validator.isEmail(newEmail));
+    setIsValidEmail(isEmail(newEmail));
   };
 
   const handleSubmit = async (event) => {

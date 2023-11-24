@@ -8,6 +8,7 @@ import { useMediaQuery } from '@mui/material';
 import theme from './cssAndMaterial/theme';
 import { roundedBoxStyles, mobileStyles } from './cssAndMaterial/styles';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
+
 import DashBoardVotings from './dashboard/DashBoardVotings';
 import RegistrationForm from "./registration_and_login/RegistrationForm";
 import LoginForm from "./registration_and_login/LoginForm";
