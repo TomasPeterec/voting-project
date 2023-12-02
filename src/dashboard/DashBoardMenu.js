@@ -36,7 +36,7 @@ function DashBoardMenu() {
           >
             <List>
               <ListItem button onClick={toggleDrawer(false)}>
-                <Link to="/">Odhlasit</Link>
+                <Link to="/">Sign out</Link>
               </ListItem>
               <ListItem button onClick={toggleDrawer(false)}>
                 <Link to="/votings">Votings</Link>
@@ -56,7 +56,7 @@ function DashBoardMenu() {
           <header>
             <nav>
               <ul>
-                <div><Link to="/">Odhlasit</Link></div>
+                <div><Link to="/">Sign out</Link></div>
                 <div><Link to="/votings">Votings</Link></div>
                 <div><Link to="/tutorials">Tutorials</Link></div>
                 <div><Link to="/about">About</Link></div>
