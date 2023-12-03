@@ -55,11 +55,11 @@ function DashBoardMenu() {
           {/* PC version header menu */}
           <header>
             <nav>
-              <ul>
-                <div><Link to="/">Sign out</Link></div>
-                <div><Link to="/votings">Votings</Link></div>
-                <div><Link to="/tutorials">Tutorials</Link></div>
-                <div><Link to="/about">About</Link></div>
+              <ul style={{ display: 'flex', justifyContent: 'space-between', listStyleType: 'none', padding: '0 5px' }}>
+              <li><Link to="/">Sign out</Link></li>
+              <li><Link to="/votings">Votings</Link></li>
+              <li><Link to="/tutorials">Tutorials</Link></li>
+              <li><Link to="/about">About</Link></li>
               </ul>
             </nav>
           </header>
