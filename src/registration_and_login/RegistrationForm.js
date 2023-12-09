@@ -50,7 +50,6 @@ const RegistrationForm = () => {
     
 
     try {
-      console.log(process.env.REACT_APP_API_ROOT_VAR);
       const response = await axios.post(`${process.env.REACT_APP_API_ROOT_VAR}/api/users`, { email, password });
       console.log(response.data);
     } catch (error) {
