@@ -5,6 +5,7 @@ import { useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
 import { styles02 } from '../../cssAndMaterial/styles02';
+import mobileWidth from '../../cssAndMaterial/is-device';
 
 const DashBoardVotingsForm = ({triggerReload}) => {
   const [clicked, setClicked] = useState(false);
@@ -38,7 +39,8 @@ const DashBoardVotingsForm = ({triggerReload}) => {
     setClicked(false);
   };
 
-  const isMobile = useMediaQuery('(max-width:600px)'); // Adjust the breakpoint as needed
+   //breakpoint
+   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`); 
 
   return (
     <>
