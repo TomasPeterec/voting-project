@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import DashBoardMenu from './DashBoardMenu';
 import DashBoardStaticTexts from './DashBoardStaticTexts';
-import DashBoardVotingItemsCopy from './DashBoardVotingItemsCopy';
+import DashBoardVotingItems from './DashBoardVotingItems';
 import DashBoardVotingsForm from './forms/DashBoardVotingsForm';
 
 
@@ -13,14 +13,12 @@ function DashBoardVotings() {
     setReload((prevReload) => !prevReload);
   };
 
-
-
   return (
     <>
       <DashBoardMenu/>
       <DashBoardStaticTexts title="Votings" breadcrumb=""/>
       <DashBoardVotingsForm triggerReload={triggerReload}  />
-      <DashBoardVotingItemsCopy userId="93" reload={reload} />
+      <DashBoardVotingItems userId="93" reload={reload} />
     </>
   );
 }

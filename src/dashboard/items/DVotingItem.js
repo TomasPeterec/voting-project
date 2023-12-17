@@ -2,40 +2,26 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { Button } from "@mui/material";
-import { useState } from "react";
-import { styles02 } from "../../cssAndMaterial/styles02";
 import mobileWidth from "../../cssAndMaterial/is-device";
 
-const DVotingItem = ({ nameOfVotes }) => {
-  const [modalButtonsOn, setModalButtonsOn] = useState(false)
-  // Breakpoint
+const DVotingItem = ({ nameOfVotes, handleButtonsModal, handleDeleteItemModal }) => {
+
+  // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
+  // Handlers of modal window 
+  const showModalButtons = () => {
+    handleButtonsModal(nameOfVotes)
+  }
+
+  const deleteItem = () => {
+    handleDeleteItemModal(nameOfVotes)
+  }
+
+  // Definition of an item in Votings list 
   const MyBox = ({ onClick }) => {
     return (
       <>
-        <div style={isMobile ? (
-          !modalButtonsOn ? (
-            styles02.desktopFormContainerHidden
-          ):(
-            styles02.displayed
-          )
-        ):(
-          styles02.desktopFormContainerHidden
-        )}>
-          <div style={{display: "flex", flexDirection: "column", height: "100%", justifyContent: "center"}}>
-            <h3 style={{display: "flex", justifyContent: "center", color: "white"}}>{nameOfVotes}</h3>
-            <div style={{display: "flex", justifyContent: "center"}}>
-              <Button>Distr</Button>
-              <Button>Stats</Button>
-              <Button>Edit</Button>
-              <Button>Delete</Button>
-            </div>
-            <div style={{display: "flex", justifyContent: "center"}}>
-              <Button onClick={hideModalButtons}>Return</Button>
-            </div>
-          </div>
-        </div>
         <Box
           style={{ display: "flex", alignItems: "center", height: "30px" }}
           borderRadius="10px"
@@ -55,7 +41,7 @@ const DVotingItem = ({ nameOfVotes }) => {
                 <Button>Distr</Button>
                 <Button>Stats</Button>
                 <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button onClick={deleteItem}>Delete</Button>
               </div>
             )}
           </div>
@@ -63,14 +49,6 @@ const DVotingItem = ({ nameOfVotes }) => {
       </>
     );
   };
-
-  const showModalButtons = () => {
-    setModalButtonsOn(true)
-  }
-
-  const hideModalButtons = () => {
-    setModalButtonsOn(false)
-  }
 
   return (
     <>

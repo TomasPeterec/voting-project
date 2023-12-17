@@ -1,11 +1,13 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
+import Box from '@mui/material/Box';
+import { useMediaQuery } from '@mui/material';
+
 import { styles02 } from '../../cssAndMaterial/styles02';
 import mobileWidth from '../../cssAndMaterial/is-device';
+
 
 const DashBoardVotingsForm = ({triggerReload}) => {
   const [clicked, setClicked] = useState(false);
