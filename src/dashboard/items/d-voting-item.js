@@ -4,18 +4,18 @@ import { useMediaQuery } from "@mui/material";
 import { Button } from "@mui/material";
 import mobileWidth from "../../css-and-material/is-device";
 
-const DVotingItem = ({ nameOfVotes, handleButtonsModal, handleDeleteItemModal }) => {
+const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
 
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
   // Handlers of modal window 
   const showModalButtons = () => {
-    handleButtonsModal(nameOfVotes)
+    handleButtonsModal({currentItem, currentId})
   }
 
   const deleteItem = () => {
-    handleDeleteItemModal(nameOfVotes)
+    handleDeleteItemModal({currentItem, currentId})
   }
 
   // Definition of an item in Votings list 
@@ -31,7 +31,7 @@ const DVotingItem = ({ nameOfVotes, handleButtonsModal, handleDeleteItemModal })
         >
           <div style={{width: "99%", display: "flex"}}>
             <div style={{ width: "55px" }}>Status</div>
-            {nameOfVotes}
+            {currentItem}
           </div>
           <div style={{width: "1%", display: "flex", justifyContent: "flex-end" }}>
             {isMobile ? (

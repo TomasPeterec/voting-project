@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import DVotingItem from "./items/d-voting-item";
-import axios from 'axios';
-import { useMediaQuery } from '@mui/material';
-import { styles02 } from "../css-and-material/styles-02";
 import mobileWidth from '../css-and-material/is-device';
+import axios from 'axios';
+import { styles02 } from "../css-and-material/styles-02";
+import { useMediaQuery } from '@mui/material';
 import { Button } from "@mui/material";
 
 
@@ -11,26 +11,38 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 	const [listOfVotes, setListOfVotes] = useState(null);
 	const [loading, setLoading] = useState(true);
 
-	const [curentItem, setCurentItem] = useState("");
+	const [currentItem, setCurrentItem] = useState("");
+	const [currentId, setCurrentId] = useState("");
 	const [modalButtonsOn, setModalButtonsOn] = useState(false)
   const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false)
 
 	// Breakpoint definition
 	const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
-	const handleButtonsModal = (itemName) => {
-		setCurentItem(itemName);
+	const handleButtonsModal = (itemIdentificators) => {
+		setCurrentItem(itemIdentificators.currentItem);
+		setCurrentId(itemIdentificators.currentId);
 		setModalButtonsOn(true);
 	};
 	
-	const handleDeleteItemModal = (itemName) => {
+	const handleDeleteItemModal = (itemIdentificators) => {
 		hideModalButtons();
-		// setModalDeleteConfirmation(true);
-		setCurentItem(itemName);
+		setModalDeleteConfirmation(true);
+		setCurrentItem(itemIdentificators.currentItem);
+		setCurrentId(itemIdentificators.currentId);
 	};
 
 	const hideModalButtons = () => {
 		setModalButtonsOn(false)
+	}
+
+	const hideDeleteConfirmation = () => {
+		setModalDeleteConfirmation(false)
+	}
+
+	const deletePermanently = (item) => {
+		deleteVotings(item)
+		setModalDeleteConfirmation(false)
 	}
 
 
@@ -54,40 +66,74 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 			}
 		};
 
-		fetchData(); // Call the fetchData function
+		// Call the fetchData function
+		fetchData(); 
 
-	}, [setLoading, setListOfVotes, reload]); // Dependency array includes 'setLoading, setListOfVotes'
+	// Dependency array includes 'setLoading, setListOfVotes'
+	}, [setLoading, setListOfVotes, reload, currentItem]); 
+
+	const deleteVotings = async (item) => {
+		try{
+			// api-endpoint for deleting the item
+			const response = await axios.delete(`${process.env.REACT_APP_API_ROOT_VAR}/api/listOfVotings/${item}`);
+			const data = response.data;
+			console.log(data)
+			setCurrentItem("");
+			setCurrentId("");
+		} catch (error) {
+			console.error('Error deleting item data:', error);
+		}
+	}
 
 	return (
 		<>
 		{/* Definition of modal window for buttons */}
 		<div style={isMobile ? (
-          !modalButtonsOn ? (
-            styles02.desktopFormContainerHidden
-          ):(
-            styles02.displayed
-          )
-        ):(
-          styles02.desktopFormContainerHidden
-        )}>
-          <div style={{display: "flex", flexDirection: "column", height: "100%", justifyContent: "center"}}>
-            <h3 style={{display: "flex", justifyContent: "center", color: "white"}}>
-              {curentItem}
-            </h3>
-            <div style={{display: "flex", justifyContent: "center"}}>
-              <Button>Distr</Button>
-              <Button>Stats</Button>
-              <Button>Edit</Button>
-              <Button onClick={() => handleDeleteItemModal(curentItem)}>Delete</Button>
-            </div>
-            <div style={{display: "flex", justifyContent: "center"}}>
-              <Button onClick={hideModalButtons}>Return</Button>
-            </div>
-          </div>
-        </div>
+			!modalButtonsOn ? (
+				styles02.desktopFormContainerHidden
+			):(
+				styles02.displayed
+			)
+		):(
+			styles02.desktopFormContainerHidden
+		)}>
+			<div style={{display: "flex", flexDirection: "column", height: "100%", justifyContent: "center"}}>
+				<h3 style={{display: "flex", justifyContent: "center", color: "white"}}>
+					{currentItem}
+				</h3>
+				<div style={{display: "flex", justifyContent: "center"}}>
+					<Button>Distr</Button>
+					<Button>Stats</Button>
+					<Button>Edit</Button>
+					<Button onClick={() => handleDeleteItemModal({currentItem, currentId})}>Delete</Button>
+				</div>
+				<div style={{display: "flex", justifyContent: "center"}}>
+					<Button onClick={hideModalButtons}>Return</Button>
+				</div>
+			</div>
+		</div>
 
-        {/* Definition of modal window for confirmation of deleting a item */}
+		{/* Definition of modal window for confirmation of deleting a item */}
+		<div style={!modalDeleteConfirmation ? (
+			styles02.desktopFormContainerHidden
+		):(
+			styles02.displayed
+		)}>
+			<div style={{display: "flex", flexDirection: "column", height: "100%", justifyContent: "center"}}>
+				<h3 style={{display: "flex", justifyContent: "center", color: "white"}}>
+					{currentItem}
+				</h3>
+				<div style={{display: "flex", justifyContent: "center"}}>
+				<Button onClick={() => deletePermanently(currentId)}>Confirm delete</Button>
+				</div>
+				<div style={{display: "flex", justifyContent: "center"}}>
+					<Button onClick={hideDeleteConfirmation}>Return</Button>
+				</div>
+			</div>
+		</div>
+
 		<div>
+
 			{loading ? (
 				// Render the loader when loading is true
 				<p>Loading...</p>
@@ -100,8 +146,9 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 								<DVotingItem 
 									handleButtonsModal={handleButtonsModal} 
 									handleDeleteItemModal={handleDeleteItemModal} 
-									nameOfVotes={vote.name_of_voting} 
-								/>} 
+									currentItem={vote.name_of_voting} 
+									currentId={vote.id} 
+								/>}
 								<div style={{height: "7px"}}></div>
 							</li>
 						))}
