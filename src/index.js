@@ -38,7 +38,8 @@ export default function AppRouter() {
 }
 
 function ThemedApp() {
-  const isMobile = useMediaQuery(`(max-width:${mobileWidth})`); // Adjust the breakpoint as needed
+  // Adjust the breakpoint as needed
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth})`);
 
   return (
     <ThemeProvider theme={theme}>

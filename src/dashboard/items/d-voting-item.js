@@ -39,13 +39,13 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
               <></>
             ) : (
               <div style={{display: "flex"}}>
-                <Link to="/votings/distribution">
+                <Link to="/votings/distribution" state={{currentItem, currentId}}>
                   <Button>Distr</Button>
                 </Link>
-                <Link to="/votings/statistics">
+                <Link to="/votings/statistics" state={{currentItem, currentId}}>
                   <Button>Stats</Button>
                 </Link>
-                <Link to="/votings/edit">
+                <Link to="/votings/edit" state={{currentItem, currentId}}>
                   <Button>Edit</Button>
                 </Link>
                 <Button onClick={deleteItem}>Delete</Button>

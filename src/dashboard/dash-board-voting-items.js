@@ -103,13 +103,13 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 					{currentItem}
 				</h3>
 				<div style={{display: "flex", justifyContent: "center"}}>
-					<Link to="/votings/distribution">
+					<Link to="/votings/distribution" state={{currentItem, currentId}}>
 						<Button>Distr</Button>
 					</Link>
-					<Link to="/votings/statistics">
+					<Link to="/votings/statistics" state={{currentItem, currentId}}>
 						<Button>Stats</Button>
 					</Link>
-					<Link to="/votings/edit">
+					<Link to="/votings/edit" state={{currentItem, currentId}}>
 						<Button>Edit</Button>
 					</Link>
 					<Button onClick={() => handleDeleteItemModal({currentItem, currentId})}>Delete</Button>
