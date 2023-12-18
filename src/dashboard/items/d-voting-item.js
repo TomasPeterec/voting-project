@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import mobileWidth from "../../css-and-material/is-device";
 
 const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
@@ -38,9 +39,15 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
               <></>
             ) : (
               <div style={{display: "flex"}}>
-                <Button>Distr</Button>
-                <Button>Stats</Button>
-                <Button>Edit</Button>
+                <Link to="/votings/distribution">
+                  <Button>Distr</Button>
+                </Link>
+                <Link to="/votings/statistics">
+                  <Button>Stats</Button>
+                </Link>
+                <Link to="/votings/edit">
+                  <Button>Edit</Button>
+                </Link>
                 <Button onClick={deleteItem}>Delete</Button>
               </div>
             )}

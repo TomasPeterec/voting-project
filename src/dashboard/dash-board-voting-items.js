@@ -5,6 +5,7 @@ import axios from 'axios';
 import { styles02 } from "../css-and-material/styles-02";
 import { useMediaQuery } from '@mui/material';
 import { Button } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 
 const DashBoardVotingItems = ({ userId, reload }) => {
@@ -102,9 +103,15 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 					{currentItem}
 				</h3>
 				<div style={{display: "flex", justifyContent: "center"}}>
-					<Button>Distr</Button>
-					<Button>Stats</Button>
-					<Button>Edit</Button>
+					<Link to="/votings/distribution">
+						<Button>Distr</Button>
+					</Link>
+					<Link to="/votings/statistics">
+						<Button>Stats</Button>
+					</Link>
+					<Link to="/votings/edit">
+						<Button>Edit</Button>
+					</Link>
 					<Button onClick={() => handleDeleteItemModal({currentItem, currentId})}>Delete</Button>
 				</div>
 				<div style={{display: "flex", justifyContent: "center"}}>

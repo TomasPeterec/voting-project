@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 import theme from './css-and-material/theme';
+import mobileWidth from './css-and-material/is-device';
 import { roundedBoxStyles, mobileStyles } from './css-and-material/styles';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
@@ -14,18 +15,23 @@ import RegistrationForm from "./registration-and-login/RegistrationForm";
 import LoginForm from "./registration-and-login/login-form";
 import DashboardTutorials from './dashboard/dash-board-tutorials';
 import DashBoardAbout from './dashboard/dash-board-about';
-import mobileWidth from './css-and-material/is-device';
+import DashboardEdit from './dashboard/dash-board-edit';
+import DashboardStats from './dashboard/dash-board-stats';
+import DashboardDistribute from './dashboard/dash-board-distribute';
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route index element={<ThemedApp/>} />
-          <Route path="/votings" element={<DashBoardVotings/>} />
-          <Route path="/registration" element={<RegistrationForm/>} />
-          <Route path="/login" element={<LoginForm/>} />
-          <Route path="/tutorials" element={<DashboardTutorials/>} />
-          <Route path="/about" element={<DashBoardAbout/>} />
+        <Route index element={<ThemedApp/>} />
+        <Route path="/votings" element={<DashBoardVotings/>} />
+        <Route path="/registration" element={<RegistrationForm/>} />
+        <Route path="/login" element={<LoginForm/>} />
+        <Route path="/tutorials" element={<DashboardTutorials/>} />
+        <Route path="/about" element={<DashBoardAbout/>} />
+        <Route path="/votings/edit" element={<DashboardEdit/>} />
+        <Route path="/votings/statistics" element={<DashboardStats/>} />
+        <Route path="/votings/distribution" element={<DashboardDistribute/>} />
       </Routes>
     </BrowserRouter>
   );
