@@ -1,5 +1,5 @@
 import React from 'react';
-import DashBoardMenu from './DashBoardMenu';
+import DashBoardMenu from './dash-board-menu';
 
 const DashboardTutorials = () => {
 

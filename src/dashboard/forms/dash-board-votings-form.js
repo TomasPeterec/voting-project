@@ -5,8 +5,8 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import { useMediaQuery } from '@mui/material';
 
-import { styles02 } from '../../cssAndMaterial/styles02';
-import mobileWidth from '../../cssAndMaterial/is-device';
+import { styles02 } from '../../css-and-material/styles-02';
+import mobileWidth from '../../css-and-material/is-device';
 
 
 const DashBoardVotingsForm = ({triggerReload}) => {

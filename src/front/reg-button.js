@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import RegistrationForm from "../registration_and_login/RegistrationForm";
-import LoginForm from "../registration_and_login/LoginForm";
+import RegistrationForm from "../registration-and-login/RegistrationForm";
+import LoginForm from "../registration-and-login/login-form";
 
 
 function RegButton() {

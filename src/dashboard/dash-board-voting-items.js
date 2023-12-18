@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import DVotingItem from "./items/DVotingItem";
+import DVotingItem from "./items/d-voting-item";
 import axios from 'axios';
 import { useMediaQuery } from '@mui/material';
-import { styles02 } from "../cssAndMaterial/styles02";
-import mobileWidth from '../cssAndMaterial/is-device';
+import { styles02 } from "../css-and-material/styles-02";
+import mobileWidth from '../css-and-material/is-device';
 import { Button } from "@mui/material";
 
 

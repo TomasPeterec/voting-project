@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { useMediaQuery } from '@mui/material';
-import mobileWidth from '../cssAndMaterial/is-device';
+import mobileWidth from '../css-and-material/is-device';
 
 function DashBoardMenu() {
 

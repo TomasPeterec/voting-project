@@ -1,19 +1,20 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from './report-web-vitals';
 import Box from '@mui/material/Box';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
-import theme from './cssAndMaterial/theme';
-import { roundedBoxStyles, mobileStyles } from './cssAndMaterial/styles';
+import theme from './css-and-material/theme';
+import { roundedBoxStyles, mobileStyles } from './css-and-material/styles';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
-import RegAndLoginButton from './front/RegAndLoginButton';
-import DashBoardVotings from './dashboard/DashBoardVotings';
-import RegistrationForm from "./registration_and_login/RegistrationForm";
-import LoginForm from "./registration_and_login/LoginForm";
-import DashboardTutorials from './dashboard/DashboardTutorials';
-import DashBoardAbout from './dashboard/DashBoardAbout';
+import RegAndLoginButton from './front/reg-and-login-button';
+import DashBoardVotings from './dashboard/dash-board-votings';
+import RegistrationForm from "./registration-and-login/RegistrationForm";
+import LoginForm from "./registration-and-login/login-form";
+import DashboardTutorials from './dashboard/dash-board-tutorials';
+import DashBoardAbout from './dashboard/dash-board-about';
+import mobileWidth from './css-and-material/is-device';
 
 export default function AppRouter() {
   return (
@@ -31,7 +32,7 @@ export default function AppRouter() {
 }
 
 function ThemedApp() {
-  const isMobile = useMediaQuery('(max-width:600px)'); // Adjust the breakpoint as needed
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth})`); // Adjust the breakpoint as needed
 
   return (
     <ThemeProvider theme={theme}>

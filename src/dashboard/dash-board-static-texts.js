@@ -1,6 +1,6 @@
 import React from "react";
-import DashBoardTitleBright from "./DashBoardTitleBright";
-import DashBoardBreadcrumbBright from "./DashBoardBreadcrumbBright";
+import DashBoardTitleBright from "./dash-board-title-bright";
+import DashBoardBreadcrumbBright from "./dash-board-breadcrumb-bright";
 
 const DashBoardStaticTexts = ({title, breadcrumb}) => {
 return(

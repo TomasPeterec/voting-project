@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { Button } from "@mui/material";
-import mobileWidth from "../../cssAndMaterial/is-device";
+import mobileWidth from "../../css-and-material/is-device";
 
 const DVotingItem = ({ nameOfVotes, handleButtonsModal, handleDeleteItemModal }) => {
 

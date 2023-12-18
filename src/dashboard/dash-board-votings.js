@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import DashBoardMenu from './DashBoardMenu';
-import DashBoardStaticTexts from './DashBoardStaticTexts';
-import DashBoardVotingItems from './DashBoardVotingItems';
-import DashBoardVotingsForm from './forms/DashBoardVotingsForm';
+import DashBoardMenu from './dash-board-menu';
+import DashBoardStaticTexts from './dash-board-static-texts';
+import DashBoardVotingItems from './dash-board-voting-items';
+import DashBoardVotingsForm from './forms/dash-board-votings-form';
 
 
 function DashBoardVotings() {
