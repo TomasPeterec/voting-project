@@ -23,7 +23,7 @@ export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<ThemedApp/>} />
+        <Route index element={<ThemeApp/>} />
         <Route path="/votings" element={<DashBoardVotings/>} />
         <Route path="/registration" element={<RegistrationForm/>} />
         <Route path="/login" element={<LoginForm/>} />
@@ -37,7 +37,7 @@ export default function AppRouter() {
   );
 }
 
-function ThemedApp() {
+function ThemeApp() {
   // Adjust the breakpoint as needed
   const isMobile = useMediaQuery(`(max-width:${mobileWidth})`);
 

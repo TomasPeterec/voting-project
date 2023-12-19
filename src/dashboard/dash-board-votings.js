@@ -17,7 +17,7 @@ function DashBoardVotings() {
     <>
       <DashBoardMenu/>
       <DashBoardStaticTexts title="Votings" breadcrumb=""/>
-      <DashBoardVotingsForm triggerReload={triggerReload}  />
+      <DashBoardVotingsForm userId="93" triggerReload={triggerReload}  />
       <DashBoardVotingItems userId="93" reload={reload} />
     </>
   );

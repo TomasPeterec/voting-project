@@ -4,22 +4,33 @@ import { useState } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import { useMediaQuery } from '@mui/material';
+import axiosInstance from '../../axios-instance';
 
 import { styles02 } from '../../css-and-material/styles-02';
 import mobileWidth from '../../css-and-material/is-device';
 
 
-const DashBoardVotingsForm = ({triggerReload}) => {
+const DashBoardVotingsForm = ({triggerReload, userId}) => {
   const [clicked, setClicked] = useState(false);
   const [formData, setFormData] = useState('');
+
+
+  axiosInstance.interceptors.request.use(
+		(config) => {
+			config.headers['X-User-ID'] = userId;
+			return config;
+		},
+		(error) => {
+			return Promise.reject(error);
+		}
+	);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_ROOT_VAR}/api/listOfVotings`, 
-        { name_of_voting: formData, id_of_user: "93"}
+      const response = await axiosInstance.post(`/api/listOfVotings`, 
+        { name_of_voting: formData}
       );
       console.log(response.data);
       triggerReload()

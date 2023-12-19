@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DVotingItem from "./items/d-voting-item";
 import mobileWidth from '../css-and-material/is-device';
-import axios from 'axios';
+import axiosInstance from '../axios-instance';
 import { styles02 } from "../css-and-material/styles-02";
 import { useMediaQuery } from '@mui/material';
 import { Button } from "@mui/material";
@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 
 const DashBoardVotingItems = ({ userId, reload }) => {
+	
 	const [listOfVotes, setListOfVotes] = useState(null);
 	const [loading, setLoading] = useState(true);
 
@@ -16,6 +17,17 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 	const [currentId, setCurrentId] = useState("");
 	const [modalButtonsOn, setModalButtonsOn] = useState(false)
   const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false)
+
+	// adding of interceptor
+	axiosInstance.interceptors.request.use(
+		(config) => {
+			config.headers['X-User-ID'] = userId;
+			return config;
+		},
+		(error) => {
+			return Promise.reject(error);
+		}
+	);
 
 	// Breakpoint definition
 	const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
@@ -54,7 +66,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 				setLoading(true);
 				
 				// api-endpoint for serving the items
-				const response = await axios.get(`${process.env.REACT_APP_API_ROOT_VAR}/api/listOfVotings/${userId}`);
+				const response = await axiosInstance.get(`/api/listOfVotings/subset`);
 				const data = response.data;
 				// Set data and loading to false when the operation is complete
 				setListOfVotes(data);
@@ -76,9 +88,8 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 	const deleteVotings = async (item) => {
 		try{
 			// api-endpoint for deleting the item
-			const response = await axios.delete(`${process.env.REACT_APP_API_ROOT_VAR}/api/listOfVotings/${item}`);
+			const response = await axiosInstance.delete(`/api/listOfVotings/${item}`);
 			const data = response.data;
-			console.log(data)
 			setCurrentItem("");
 			setCurrentId("");
 		} catch (error) {
