@@ -1,17 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import DashBoardMenu from './dash-board-menu';
+import DashBoardMenu from './dash-board-menu'
 
-
-
-function DashBoardAbout() {
-
+function DashBoardAbout () {
   return (
     <div>
-      <DashBoardMenu/>
+      <DashBoardMenu />
       <div>DashboardAbout page</div>
     </div>
-  );
+  )
 }
 
-export default DashBoardAbout;
+export default DashBoardAbout

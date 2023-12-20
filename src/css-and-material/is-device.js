@@ -1,5 +1,3 @@
-import React from "react";
-
-const mobileWidth = 600;
+const mobileWidth = 600
 
 export default mobileWidth

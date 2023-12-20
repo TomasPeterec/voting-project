@@ -4,22 +4,21 @@ const styles02 = {
     bottom: 100,
     right: 16,
     zIndex: 1000, // Adjust the z-index to make sure the button appears above other content
-    opacity: 100,
+    opacity: 100
   },
   button: {
-    borderRadius: '50%',
+    borderRadius: '50%'
   },
   floatedHidden: {
-    opacity: 0,
+    opacity: 0
   },
   desktopFormContainerVisible: {
-    display: "block",
+    display: 'block'
   },
   desktopFormContainerHidden: {
-    display: "none",
+    display: 'none'
   },
-  verticalGap: {
-  },
+  verticalGap: {},
   displayed: {
     position: 'fixed',
     top: 0,
@@ -28,15 +27,15 @@ const styles02 = {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.75)', // Black with 50% opacity
     display: 'block',
-    zIndex: 2000,
+    zIndex: 2000
   },
   modalInnerDivMobile: {
-    padding: "10px",
-    top: 100,
+    padding: '10px',
+    top: 100
   },
   modalInnerDivDesk: {
-    padding: "0px",
+    padding: '0px'
   }
-};
+}
 
-export { styles02 };
+export { styles02 }

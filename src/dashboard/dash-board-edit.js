@@ -1,19 +1,20 @@
-import React from 'react';
-import DashBoardMenu from './dash-board-menu';
-import { useLocation } from 'react-router-dom';
+import React from 'react'
+import DashBoardMenu from './dash-board-menu'
+import { useLocation } from 'react-router-dom'
 
 const DashboardEdit = () => {
-  const location = useLocation();
-  const {currentItem, currentId} = location.state
+  const location = useLocation()
+  const { currentItem, currentId } = location.state
 
   return (
     <>
-      <DashBoardMenu/>
+      <DashBoardMenu />
       <div>Edit page</div>
-      {currentItem}<br/>
+      {currentItem}
+      <br />
       {currentId}
     </>
-  );
+  )
 }
 
-export default DashboardEdit;
+export default DashboardEdit

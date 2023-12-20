@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-function MyComponent() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+function MyComponent () {
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const fetchData = () => {
-    setLoading(true);
+    setLoading(true)
     fetch(`${process.env.REACT_APP_API_ROOT_VAR}/api/userVotes/`)
-      .then(response => response.json())
-      .then(jsonData => {
-        setData(jsonData);
-        setLoading(false);
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setData(jsonData)
+        setLoading(false)
       })
-      .catch(error => {
-        console.error(error);
-        setLoading(false);
-      });
+      .catch((error) => {
+        console.error(error)
+        setLoading(false)
+      })
   }
 
   return (
@@ -24,12 +24,14 @@ function MyComponent() {
       {loading && <p>Loading...</p>}
       <button onClick={fetchData}>Fetch Data</button>
       <ul>
-        {data.map(item => (
-          <li key={item.primary_key}>{item.mail_or_id}: {item.voted_values}</li>
+        {data.map((item) => (
+          <li key={item.primary_key}>
+            {item.mail_or_id}: {item.voted_values}
+          </li>
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export default MyComponent;
+export default MyComponent
