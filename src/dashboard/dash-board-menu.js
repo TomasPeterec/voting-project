@@ -25,63 +25,62 @@ function DashBoardMenu () {
 
   return (
     <>
-      {isMobile ? (
-        <div>
-          <Button variant="contained" onClick={toggleDrawer(true)}>
-            Open Drawer
-          </Button>
-          <br />
-          <Drawer
-            anchor="left"
-            open={isDrawerOpen}
-            onClose={toggleDrawer(false)}
-          >
-            <List>
-              <ListItem button onClick={toggleDrawer(false)}>
-                <Link to="/">Sign out</Link>
-              </ListItem>
-              <ListItem button onClick={toggleDrawer(false)}>
-                <Link to="/votings">Votings</Link>
-              </ListItem>
-              <ListItem button onClick={toggleDrawer(false)}>
-                <Link to="/tutorials">Tutorials</Link>
-              </ListItem>
-              <ListItem button onClick={toggleDrawer(false)}>
-                <Link to="/about">About</Link>
-              </ListItem>
-            </List>
-          </Drawer>
-        </div>
-      ) : (
-        <div>
-          {/* PC version header menu */}
-          <header>
-            <nav>
-              <ul
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  listStyleType: 'none',
-                  padding: '0 5px'
-                }}
-              >
-                <li>
+      {isMobile
+        ? (
+          <div>
+            <Button variant="contained" onClick={toggleDrawer(true)}>
+              Open Drawer
+            </Button>
+            <br />
+            <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+              <List>
+                <ListItem button onClick={toggleDrawer(false)}>
                   <Link to="/">Sign out</Link>
-                </li>
-                <li>
+                </ListItem>
+                <ListItem button onClick={toggleDrawer(false)}>
                   <Link to="/votings">Votings</Link>
-                </li>
-                <li>
+                </ListItem>
+                <ListItem button onClick={toggleDrawer(false)}>
                   <Link to="/tutorials">Tutorials</Link>
-                </li>
-                <li>
+                </ListItem>
+                <ListItem button onClick={toggleDrawer(false)}>
                   <Link to="/about">About</Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
-        </div>
-      )}
+                </ListItem>
+              </List>
+            </Drawer>
+          </div>
+          )
+        : (
+          <div>
+            {/* PC version header menu */}
+            <header>
+              <nav>
+                <ul
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    listStyleType: 'none',
+                    padding: '0 5px'
+                  }}
+                >
+                  <li>
+                    <Link to="/">Sign out</Link>
+                  </li>
+                  <li>
+                    <Link to="/votings">Votings</Link>
+                  </li>
+                  <li>
+                    <Link to="/tutorials">Tutorials</Link>
+                  </li>
+                  <li>
+                    <Link to="/about">About</Link>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+          </div>
+          )}
+
     </>
   )
 }

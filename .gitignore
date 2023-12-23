@@ -26,3 +26,14 @@ yarn-error.log*
 
 # in src
 /src/obsolete
+
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore ESLint configuration files
+.eslintrc.json
+.eslintignore
+
+# Ignore Prettier configuration file
+.prettierrc.json

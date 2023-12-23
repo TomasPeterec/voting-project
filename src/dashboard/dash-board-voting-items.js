@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import DVotingItem from './items/d-voting-item'
 import mobileWidth from '../css-and-material/is-device'
 import axiosInstance from '../axios-instance'
@@ -7,6 +8,11 @@ import { useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 const DashBoardVotingItems = ({ userId, reload }) => {
+  DashBoardVotingItems.propTypes = {
+    userId: PropTypes.string.isRequired,
+    reload: PropTypes.bool.isRequired
+  }
+
   const [listOfVotes, setListOfVotes] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -84,7 +90,11 @@ const DashBoardVotingItems = ({ userId, reload }) => {
     try {
       // api-endpoint for deleting the item
       const response = await axiosInstance.delete(`/api/listOfVotings/${item}`)
-      const data = response.data
+      if (response.status === 200) {
+        const data = response.data
+        // Perform actions with the data
+        console.log('Delete request successful:', data)
+      }
       setCurrentItem('')
       setCurrentId('')
     } catch (error) {
@@ -99,8 +109,8 @@ const DashBoardVotingItems = ({ userId, reload }) => {
         style={
           isMobile
             ? !modalButtonsOn
-                ? styles02.desktopFormContainerHidden
-                : styles02.displayed
+              ? styles02.desktopFormContainerHidden
+              : styles02.displayed
             : styles02.desktopFormContainerHidden
         }
       >
@@ -184,7 +194,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
           // Render the loader when loading is true
           <p>Loading...</p>
         ) : (
-          // Render your component content when loading is false
+          // Render component content when loading is false
           <div>
             <ul style={{ listStyleType: 'none', padding: '0px' }}>
               {listOfVotes
@@ -197,7 +207,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
                         handleButtonsModal={handleButtonsModal}
                         handleDeleteItemModal={handleDeleteItemModal}
                         currentItem={vote.name_of_voting}
-                        currentId={vote.id}
+                        currentId={vote.lov_id}
                       />
                     }
                     <div style={{ height: '7px' }}></div>
