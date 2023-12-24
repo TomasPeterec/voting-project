@@ -1,12 +1,10 @@
 const styles02 = {
-  floatedVIsible: {
+  floatedVisible: {
     position: 'fixed',
     bottom: 100,
     right: 16,
-    zIndex: 1000, // Adjust the z-index to make sure the button appears above other content
-    opacity: 100
-  },
-  button: {
+    zIndex: 1000,
+    opacity: 1,
     borderRadius: '50%'
   },
   floatedHidden: {
@@ -18,14 +16,13 @@ const styles02 = {
   desktopFormContainerHidden: {
     display: 'none'
   },
-  verticalGap: {},
   displayed: {
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.75)', // Black with 50% opacity
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
     display: 'block',
     zIndex: 2000
   },
@@ -35,6 +32,35 @@ const styles02 = {
   },
   modalInnerDivDesk: {
     padding: '0px'
+  },
+  mainUpperContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    backgroundColor: '#ddd',
+    paddingBottom: '15px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    boxSizing: 'border-box',
+    borderBottomLeftRadius: '15px',
+    borderBottomRightRadius: '15px'
+  },
+  mainBottomContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    boxSizing: 'border-box'
+  },
+  mainContentContainer: {
+    width: '100%',
+    maxWidth: '1000px'
+  },
+  basicButton: {
+    border: '0px solid white'
   }
 }
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
-import axios from 'axios'
 import Box from '@mui/material/Box'
 import { useMediaQuery } from '@mui/material'
 import axiosInstance from '../../axios-instance'
@@ -54,8 +53,8 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
 
   return (
     <>
-      <div style={isMobile ? styles02.floatedVIsible : styles02.floatedHidden}>
-        <Button onClick={handleClickModalOn} variant="contained">
+      <div style={isMobile ? styles02.floatedVisible : styles02.floatedHidden}>
+        <Button style={styles02.basicButton} onClick={handleClickModalOn} variant="contained">
           PLUS
         </Button>
       </div>
@@ -63,43 +62,24 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
         style={
           isMobile
             ? !clicked
-                ? styles02.desktopFormContainerHidden
-                : styles02.displayed
+              ? styles02.desktopFormContainerHidden
+              : styles02.displayed
             : styles02.desktopFormContainerVisible
         }
       >
         <div style={{ height: '40%' }}></div>
-        <div
-          style={
-            isMobile ? styles02.modalInnerDivMobile : styles02.modalInnerDivDesk
-          }
-        >
-          <Box
-            borderRadius="10px"
-            bgcolor="white"
-            border="1px solid #ccc"
-            p={2}
-          >
+        <div style={isMobile ? styles02.modalInnerDivMobile : styles02.modalInnerDivDesk}>
+          <Box borderRadius="10px" bgcolor="white" border="1px solid #ccc" p={2}>
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <div style={{ width: '100%', display: 'flex' }}>
                 <div style={{ width: '100%' }}>
                   <div>The name of the new vote</div>
-                  <input
-                    style={{ width: '100%' }}
-                    type="text"
-                    name="name"
-                    value={formData}
-                    onChange={handleChange}
-                  />
+                  <input style={{ width: '100%' }} type="text" name="name" value={formData} onChange={handleChange} />
                   <div>Required Input</div>
                 </div>
                 <div style={{ width: '30px' }}></div>
                 <div>
-                  <Button
-                    type="submit"
-                    onClick={handleClickModalOff}
-                    variant="contained"
-                  >
+                  <Button type="submit" onClick={handleClickModalOff} variant="contained">
                     PLUS
                   </Button>
                 </div>

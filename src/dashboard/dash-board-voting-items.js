@@ -141,11 +141,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
             <Link to="/votings/edit" state={{ currentItem, currentId }}>
               <Button>Edit</Button>
             </Link>
-            <Button
-              onClick={() => handleDeleteItemModal({ currentItem, currentId })}
-            >
-              Delete
-            </Button>
+            <Button onClick={() => handleDeleteItemModal({ currentItem, currentId })}>Delete</Button>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={hideModalButtons}>Return</Button>
@@ -154,13 +150,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
       </div>
 
       {/* Definition of modal window for confirmation of deleting a item */}
-      <div
-        style={
-          !modalDeleteConfirmation
-            ? styles02.desktopFormContainerHidden
-            : styles02.displayed
-        }
-      >
+      <div style={!modalDeleteConfirmation ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div
           style={{
             display: 'flex',
@@ -179,9 +169,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
             {currentItem}
           </h3>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button onClick={() => deletePermanently(currentId)}>
-              Confirm delete
-            </Button>
+            <Button onClick={() => deletePermanently(currentId)}>Confirm delete</Button>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={hideDeleteConfirmation}>Return</Button>
