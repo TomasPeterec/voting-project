@@ -18,7 +18,7 @@ import DashboardEdit from './dashboard/dash-board-edit'
 import DashboardStats from './dashboard/dash-board-stats'
 import DashboardDistribute from './dashboard/dash-board-distribute'
 
-export default function AppRouter () {
+export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
@@ -36,24 +36,22 @@ export default function AppRouter () {
   )
 }
 
-function ThemeApp () {
+function ThemeApp() {
   // Adjust the breakpoint as needed
   const isMobile = useMediaQuery(`(max-width:${mobileWidth})`)
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {isMobile
-        ? (
+      {isMobile ? (
         <div>
           <h1>This is the mobile screen layout</h1>
         </div>
-          )
-        : (
+      ) : (
         <div>
           <h1>This is the normal screen layout</h1>
         </div>
-          )}
+      )}
       <Box sx={isMobile ? mobileStyles : roundedBoxStyles}>
         <RegAndLoginButton />
       </Box>

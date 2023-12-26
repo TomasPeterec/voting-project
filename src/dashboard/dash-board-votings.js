@@ -22,7 +22,7 @@ function DashBoardVotings() {
       </div>
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
-          <DashBoardStaticTexts title="Votings" breadcrumb="" />
+          <DashBoardStaticTexts title="Votings" breadcrumb="Nejaky skusobny text" />
           <DashBoardVotingsForm userId="93" triggerReload={triggerReload} />
         </div>
       </div>

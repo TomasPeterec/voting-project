@@ -1,6 +1,6 @@
 const headerHeight = 40
 const maxContentWidth = 1000
-const sidePadding = 10
+const sidePadding = 11
 const backgroundCornersRadius = 15
 
 const styles02 = {
@@ -9,11 +9,19 @@ const styles02 = {
     bottom: 100,
     right: 16,
     zIndex: 1000,
-    opacity: 1,
-    borderRadius: '50px'
+    visibility: 'visible',
+    borderRadius: '50px',
+    height: '50px'
   },
   floatedHidden: {
-    opacity: 0
+    visibility: 'hidden',
+    height: '0px'
+  },
+  separatorFlat: {
+    height: '0'
+  },
+  separatorHigh: {
+    height: '14px'
   },
   desktopFormContainerVisible: {
     display: 'block'
@@ -44,7 +52,7 @@ const styles02 = {
     flexDirection: 'column',
     width: '100%',
     backgroundColor: '#ddd',
-    paddingBottom: '15px',
+    paddingBottom: '13px',
     paddingLeft: sidePadding,
     paddingRight: sidePadding,
     boxSizing: 'border-box',
@@ -87,6 +95,46 @@ const styles02 = {
     justifyContent: 'space-between',
     alignItems: 'center',
     height: headerHeight
+  },
+  listOfItems: {
+    listStyleType: 'none',
+    padding: '0px',
+    marginTop: '7px'
+  },
+  buttonNest01: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  itemStyle: {
+    display: 'flex',
+    alignItems: 'center',
+    height: '30px',
+    marginBottom: '7px'
+  },
+  itemRow: {
+    display: 'flex'
+  },
+  buttonsAlignedToRight: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  nameOfCUrentItem: {
+    width: '100%',
+    display: 'flex'
+  },
+  statusNest: {
+    width: '55px'
+  },
+  nameOfItemOnModal: {
+    display: 'flex',
+    justifyContent: 'center',
+    color: 'white'
+  },
+  nameOfItemOnModalNest: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'center'
   }
 }
 

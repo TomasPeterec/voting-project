@@ -30,10 +30,8 @@ const percentageDistribution = (ar, curentSlider, depo) => {
     countOfAll += Number(ar1[i].votingValue)
   }
 
-  const valueToSubteact =
-    Number(ar1[curentSlider].votingValue) + Number(valueOfChecked)
-  valueToRatioTo100 =
-    (percent100 - valueToSubteact) / (countOfAll - valueToSubteact)
+  const valueToSubteact = Number(ar1[curentSlider].votingValue) + Number(valueOfChecked)
+  valueToRatioTo100 = (percent100 - valueToSubteact) / (countOfAll - valueToSubteact)
 
   for (let i = 0; i < ar1.length; i++) {
     if (ar1[i].fixed !== true) {
@@ -69,7 +67,7 @@ const percentageDistribution = (ar, curentSlider, depo) => {
   return ar1
 }
 
-function App ({ possibilities }) {
+function App({ possibilities }) {
   possibilities.forEach((item, index) => {
     if (item.fixed === undefined) {
       possibilities[index].fixed = false
@@ -77,8 +75,7 @@ function App ({ possibilities }) {
   })
 
   const [copyOfPosibilities, setCopyOfPosibilities] = useState(possibilities)
-  const [depositOfPosibilities, setDepositOfPosibilities] =
-    useState(possibilities)
+  const [depositOfPosibilities, setDepositOfPosibilities] = useState(possibilities)
 
   return (
     <div className="App">
@@ -86,15 +83,9 @@ function App ({ possibilities }) {
         // main loop which generates the rows
         copyOfPosibilities.map((possibility, i) => (
           <div style={{ display: 'inline-flex' }}>
-            <ItemForVoting
-              key={i}
-              title={possibility.title}
-              description={possibility.description}
-            />
+            <ItemForVoting key={i} title={possibility.title} description={possibility.description} />
             <div style={{ display: 'inline-flex' }}>
-              <div key={i}>
-                {Math.round(possibility.votingValue * nextFloat) / nextFloat}%
-              </div>
+              <div key={i}>{Math.round(possibility.votingValue * nextFloat) / nextFloat}%</div>
               <input
                 value={possibility.votingValue}
                 type="range"
@@ -105,11 +96,7 @@ function App ({ possibilities }) {
                   const copy1 = [...copyOfPosibilities]
                   if (copy1[i].fixed === false) {
                     copy1[i].votingValue = event.target.value
-                    const result = percentageDistribution(
-                      copy1,
-                      i,
-                      depositOfPosibilities
-                    )
+                    const result = percentageDistribution(copy1, i, depositOfPosibilities)
                     setDepositOfPosibilities(result)
                     setCopyOfPosibilities(result)
                   }
@@ -121,8 +108,7 @@ function App ({ possibilities }) {
                 onChange={(e) => {
                   const newPossibilities = [...copyOfPosibilities]
                   if (e.target.checked === true) {
-                    newPossibilities[i].fixedValue =
-                      newPossibilities[i].votingValue
+                    newPossibilities[i].fixedValue = newPossibilities[i].votingValue
                   }
                   newPossibilities[i].fixed = e.target.checked
                   setCopyOfPosibilities(newPossibilities)

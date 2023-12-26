@@ -53,6 +53,7 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
 
   return (
     <>
+      <div style={isMobile ? styles02.separatorFlat : styles02.separatorHigh}></div>
       <div style={isMobile ? styles02.floatedVisible : styles02.floatedHidden}>
         <Button style={styles02.basicButton} onClick={handleClickModalOn} variant="contained">
           PLUS

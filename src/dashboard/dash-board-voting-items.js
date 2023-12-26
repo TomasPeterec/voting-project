@@ -114,24 +114,9 @@ const DashBoardVotingItems = ({ userId, reload }) => {
             : styles02.desktopFormContainerHidden
         }
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            justifyContent: 'center'
-          }}
-        >
-          <h3
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              color: 'white'
-            }}
-          >
-            {currentItem}
-          </h3>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={styles02.nameOfItemOnModalNest}>
+          <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
+          <div style={styles02.buttonNest01}>
             <Link to="/votings/distribution" state={{ currentItem, currentId }}>
               <Button>Distr</Button>
             </Link>
@@ -143,7 +128,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
             </Link>
             <Button onClick={() => handleDeleteItemModal({ currentItem, currentId })}>Delete</Button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={styles02.buttonNest01}>
             <Button onClick={hideModalButtons}>Return</Button>
           </div>
         </div>
@@ -151,27 +136,12 @@ const DashBoardVotingItems = ({ userId, reload }) => {
 
       {/* Definition of modal window for confirmation of deleting a item */}
       <div style={!modalDeleteConfirmation ? styles02.desktopFormContainerHidden : styles02.displayed}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            justifyContent: 'center'
-          }}
-        >
-          <h3
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              color: 'white'
-            }}
-          >
-            {currentItem}
-          </h3>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={styles02.nameOfItemOnModalNest}>
+          <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
+          <div style={styles02.buttonNest01}>
             <Button onClick={() => deletePermanently(currentId)}>Confirm delete</Button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={styles02.buttonNest01}>
             <Button onClick={hideDeleteConfirmation}>Return</Button>
           </div>
         </div>
@@ -184,7 +154,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
         ) : (
           // Render component content when loading is false
           <div>
-            <ul style={{ listStyleType: 'none', padding: '0px' }}>
+            <ul style={styles02.listOfItems}>
               {listOfVotes
                 .slice()
                 .reverse()
@@ -198,7 +168,6 @@ const DashBoardVotingItems = ({ userId, reload }) => {
                         currentId={vote.lov_id}
                       />
                     }
-                    <div style={{ height: '7px' }}></div>
                   </li>
                 ))}
             </ul>

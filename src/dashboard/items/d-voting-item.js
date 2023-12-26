@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import mobileWidth from '../../css-and-material/is-device'
+import { styles02 } from '../../css-and-material/styles-02'
 
 const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
   // Breakpoint definition
@@ -20,22 +21,16 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
   const MyBox = ({ onClick }) => {
     return (
       <>
-        <Box
-          style={{ display: 'flex', alignItems: 'center', height: '30px' }}
-          borderRadius="10px"
-          border="1px solid #ccc"
-          p={'10px'}
-          onClick={onClick}
-        >
-          <div style={{ width: '99%', display: 'flex' }}>
-            <div style={{ width: '55px' }}>Status</div>
+        <Box style={styles02.itemStyle} borderRadius="10px" border="1px solid #ccc" p={'10px'} onClick={onClick}>
+          <div style={styles02.nameOfCUrentItem}>
+            <div style={styles02.statusNest}>Status</div>
             {currentItem}
           </div>
-          <div style={{ width: '1%', display: 'flex', justifyContent: 'flex-end' }}>
+          <div style={styles02.buttonsAlignedToRight}>
             {isMobile ? (
               <></>
             ) : (
-              <div style={{ display: 'flex' }}>
+              <div style={styles02.itemRow}>
                 <Link to="/votings/distribution" state={{ currentItem, currentId }}>
                   <Button>Distr</Button>
                 </Link>
