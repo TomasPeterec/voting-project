@@ -1,5 +1,5 @@
 import React from 'react'
-import DashBoardMenu from './dash-board-menu'
+import DashBoardHeader from './dash-board-header'
 import { useLocation } from 'react-router-dom'
 
 const DashboardDistribute = () => {
@@ -8,7 +8,7 @@ const DashboardDistribute = () => {
 
   return (
     <>
-      <DashBoardMenu />
+      <DashBoardHeader />
       <div>Distribute page</div>
       {currentItem}
       <br />

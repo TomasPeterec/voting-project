@@ -1,5 +1,5 @@
 import React from 'react'
-import DashBoardMenu from './dash-board-menu'
+import DashBoardHeader from './dash-board-header'
 import { useLocation } from 'react-router-dom'
 
 const DashboardStats = () => {
@@ -8,7 +8,7 @@ const DashboardStats = () => {
 
   return (
     <>
-      <DashBoardMenu />
+      <DashBoardHeader />
       <div>Statistics page</div>
       {currentItem}
       <br />

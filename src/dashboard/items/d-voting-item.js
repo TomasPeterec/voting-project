@@ -3,12 +3,7 @@ import { Box, useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import mobileWidth from '../../css-and-material/is-device'
 
-const DVotingItem = ({
-  currentItem,
-  currentId,
-  handleButtonsModal,
-  handleDeleteItemModal
-}) => {
+const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
 
@@ -36,25 +31,15 @@ const DVotingItem = ({
             <div style={{ width: '55px' }}>Status</div>
             {currentItem}
           </div>
-          <div
-            style={{ width: '1%', display: 'flex', justifyContent: 'flex-end' }}
-          >
-            {isMobile
-              ? (
+          <div style={{ width: '1%', display: 'flex', justifyContent: 'flex-end' }}>
+            {isMobile ? (
               <></>
-                )
-              : (
+            ) : (
               <div style={{ display: 'flex' }}>
-                <Link
-                  to="/votings/distribution"
-                  state={{ currentItem, currentId }}
-                >
+                <Link to="/votings/distribution" state={{ currentItem, currentId }}>
                   <Button>Distr</Button>
                 </Link>
-                <Link
-                  to="/votings/statistics"
-                  state={{ currentItem, currentId }}
-                >
+                <Link to="/votings/statistics" state={{ currentItem, currentId }}>
                   <Button>Stats</Button>
                 </Link>
                 <Link to="/votings/edit" state={{ currentItem, currentId }}>
@@ -62,7 +47,7 @@ const DVotingItem = ({
                 </Link>
                 <Button onClick={deleteItem}>Delete</Button>
               </div>
-                )}
+            )}
           </div>
         </Box>
       </>

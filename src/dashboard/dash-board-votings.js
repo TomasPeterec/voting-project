@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import DashBoardMenu from './dash-board-menu'
+import DashBoardHeader from './dash-board-header'
 import DashBoardStaticTexts from './dash-board-static-texts'
 import DashBoardVotingItems from './dash-board-voting-items'
 import DashBoardVotingsForm from './forms/dash-board-votings-form'
@@ -15,11 +15,13 @@ function DashBoardVotings() {
 
   return (
     <>
+      <div style={styles02.headerBasic}>
+        <div style={styles02.mainHeaderContainer}>
+          <DashBoardHeader />
+        </div>
+      </div>
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
-          <header>
-            <DashBoardMenu />
-          </header>
           <DashBoardStaticTexts title="Votings" breadcrumb="" />
           <DashBoardVotingsForm userId="93" triggerReload={triggerReload} />
         </div>

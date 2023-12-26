@@ -1,10 +1,10 @@
 import React from 'react'
-import DashBoardMenu from './dash-board-menu'
+import DashBoardHeader from './dash-board-header'
 
 const DashboardTutorials = () => {
   return (
     <>
-      <DashBoardMenu />
+      <DashBoardHeader />
       <div>DashboardTutorials page</div>
     </>
   )

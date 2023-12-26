@@ -1,11 +1,11 @@
 import React from 'react'
 
-import DashBoardMenu from './dash-board-menu'
+import DashBoardHeader from './dash-board-header'
 
-function DashBoardAbout () {
+function DashBoardAbout() {
   return (
     <div>
-      <DashBoardMenu />
+      <DashBoardHeader />
       <div>DashboardAbout page</div>
     </div>
   )

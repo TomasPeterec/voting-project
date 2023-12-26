@@ -1,3 +1,8 @@
+const headerHeight = 40
+const maxContentWidth = 1000
+const sidePadding = 10
+const backgroundCornersRadius = 15
+
 const styles02 = {
   floatedVisible: {
     position: 'fixed',
@@ -5,7 +10,7 @@ const styles02 = {
     right: 16,
     zIndex: 1000,
     opacity: 1,
-    borderRadius: '50%'
+    borderRadius: '50px'
   },
   floatedHidden: {
     opacity: 0
@@ -40,27 +45,48 @@ const styles02 = {
     width: '100%',
     backgroundColor: '#ddd',
     paddingBottom: '15px',
-    paddingLeft: '10px',
-    paddingRight: '10px',
+    paddingLeft: sidePadding,
+    paddingRight: sidePadding,
     boxSizing: 'border-box',
-    borderBottomLeftRadius: '15px',
-    borderBottomRightRadius: '15px'
+    borderBottomLeftRadius: backgroundCornersRadius,
+    borderBottomRightRadius: backgroundCornersRadius
   },
   mainBottomContainer: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     width: '100%',
-    paddingLeft: '10px',
-    paddingRight: '10px',
+    paddingLeft: sidePadding,
+    paddingRight: sidePadding,
     boxSizing: 'border-box'
   },
   mainContentContainer: {
     width: '100%',
-    maxWidth: '1000px'
+    maxWidth: maxContentWidth
   },
   basicButton: {
     border: '0px solid white'
+  },
+  headerBasic: {
+    height: headerHeight,
+    backgroundColor: '#bbb',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    paddingLeft: sidePadding,
+    paddingRight: sidePadding,
+    boxSizing: 'border-box'
+  },
+  mainHeaderContainer: {
+    width: '100%',
+    maxWidth: maxContentWidth
+  },
+  innerHeaderContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: headerHeight
   }
 }
 
