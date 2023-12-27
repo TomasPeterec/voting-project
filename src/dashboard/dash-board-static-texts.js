@@ -1,8 +1,9 @@
 import React from 'react'
 import DashBoardTitleBright from './dash-board-title-bright'
 import DashBoardBreadcrumbBright from './dash-board-breadcrumb-bright'
+import { Link } from 'react-router-dom'
 
-const DashBoardStaticTexts = ({ title, breadcrumb }) => {
+const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
   return (
     <>
       {/* the pair row Title Return button */}
@@ -11,16 +12,22 @@ const DashBoardStaticTexts = ({ title, breadcrumb }) => {
           <DashBoardTitleBright title={title} />
         </div>
         <div style={{ textAlign: 'right', margin: 'auto', width: '20%' }}>
-          <button
-            style={{
-              border: 'none',
-              background: 'none',
-              cursor: 'pointer',
-              paddingTop: '11px'
-            }}
-          >
-            Return
-          </button>
+          {urlBack === '' ? (
+            <></>
+          ) : (
+            <Link to={urlBack}>
+              <button
+                style={{
+                  border: 'none',
+                  background: 'none',
+                  cursor: 'pointer',
+                  paddingTop: '11px'
+                }}
+              >
+                Return
+              </button>
+            </Link>
+          )}
         </div>
       </div>
 
