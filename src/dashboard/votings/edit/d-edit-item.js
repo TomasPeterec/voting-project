@@ -1,10 +1,10 @@
 import React from 'react'
 import { Box, useMediaQuery } from '@mui/material'
 import { Link } from 'react-router-dom'
-import mobileWidth from '../../css-and-material/is-device'
-import { styles02 } from '../../css-and-material/styles-02'
+import mobileWidth from '../../../css-and-material/is-device'
+import { styles02 } from '../../../css-and-material/styles-02'
 import { Typography } from '@mui/material'
-import votingTheme from '../../css-and-material/theme'
+import votingTheme from '../../../css-and-material/theme'
 
 const DEditItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
   // Breakpoint definition

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import DashBoardHeader from './dash-board-header'
-import DashBoardStaticTexts from './dash-board-static-texts'
-import DashBoardVotingItems from './dash-board-voting-items'
-import DashBoardEditForm from './forms/dash-board-votings-form'
-import { styles02 } from '../css-and-material/styles-02'
+import DashBoardHeader from '../../common/dash-board-header'
+import DashBoardStaticTexts from '../../common/dash-board-static-texts'
+import DashBoardVotingItems from '../main/dash-board-voting-items'
+import DashBoardEditForm from '../main/dash-board-votings-form'
+import { styles02 } from '../../../css-and-material/styles-02'
 import { useLocation } from 'react-router-dom'
-import '../css-and-material/basic.css'
+import '../../../css-and-material/basic.css'
 
 const DashboardEdit = () => {
   const location = useLocation()

@@ -1,5 +1,5 @@
 import React from 'react'
-import DashBoardHeader from './dash-board-header'
+import DashBoardHeader from '../common/dash-board-header'
 import { useLocation } from 'react-router-dom'
 
 const DashboardStats = () => {

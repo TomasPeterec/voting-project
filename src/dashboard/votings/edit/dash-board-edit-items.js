@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import DVotingItem from './items/d-voting-item'
-import mobileWidth from '../css-and-material/is-device'
-import axiosInstance from '../axios-instance'
-import { styles02 } from '../css-and-material/styles-02'
+import DVotingItem from '../main/d-voting-item'
+import mobileWidth from '../../../css-and-material/is-device'
+import axiosInstance from '../../../axios-instance'
+import { styles02 } from '../../../css-and-material/styles-02'
 import { useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 

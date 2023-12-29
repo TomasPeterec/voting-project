@@ -9,14 +9,14 @@ import { roundedBoxStyles, mobileStyles } from './css-and-material/styles'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import RegAndLoginButton from './front/reg-and-login-button'
-import DashBoardVotings from './dashboard/dash-board-votings'
+import DashBoardVotings from './dashboard/votings/main/dash-board-votings'
 import RegistrationForm from './registration-and-login/RegistrationForm'
 import LoginForm from './registration-and-login/login-form'
-import DashboardTutorials from './dashboard/dash-board-tutorials'
-import DashBoardAbout from './dashboard/dash-board-about'
-import DashboardEdit from './dashboard/dash-board-edit'
-import DashboardStats from './dashboard/dash-board-stats'
-import DashboardDistribute from './dashboard/dash-board-distribute'
+import DashboardTutorials from './dashboard/tutorials/dash-board-tutorials'
+import DashBoardAbout from './dashboard/votings/about/dash-board-about'
+import DashboardEdit from './dashboard/votings/edit/dash-board-edit'
+import DashboardStats from './dashboard/statistics/dash-board-stats'
+import DashboardDistribute from './dashboard/votings/distribute/dash-board-distribute'
 
 export default function AppRouter() {
   return (

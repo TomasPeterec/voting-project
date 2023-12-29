@@ -5,9 +5,9 @@ import Button from '@mui/material/Button'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { useMediaQuery } from '@mui/material'
-import mobileWidth from '../css-and-material/is-device'
-import { styles02 } from '../css-and-material/styles-02'
-import { brightLine } from '../css-and-material/generalVariables'
+import mobileWidth from '../../css-and-material/is-device'
+import { styles02 } from '../../css-and-material/styles-02'
+import { brightLine } from '../../css-and-material/generalVariables'
 
 function DashBoardHeader() {
   // breakpoint

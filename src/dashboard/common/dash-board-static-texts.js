@@ -2,7 +2,7 @@ import React from 'react'
 import DashBoardTitleBright from './dash-board-title-bright'
 import DashBoardBreadcrumbBright from './dash-board-breadcrumb-bright'
 import { Link } from 'react-router-dom'
-import { fontColorPrime } from '../css-and-material/generalVariables'
+import { fontColorPrime } from '../../css-and-material/generalVariables'
 
 const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
   return (

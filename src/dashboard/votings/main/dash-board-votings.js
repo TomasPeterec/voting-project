@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import DashBoardHeader from './dash-board-header'
-import DashBoardStaticTexts from './dash-board-static-texts'
+import DashBoardHeader from '../../common/dash-board-header'
+import DashBoardStaticTexts from '../../common/dash-board-static-texts'
 import DashBoardVotingItems from './dash-board-voting-items'
-import DashBoardVotingsForm from './forms/dash-board-votings-form'
-import { styles02 } from '../css-and-material/styles-02'
-import '../css-and-material/basic.css'
+import DashBoardVotingsForm from './dash-board-votings-form'
+import { styles02 } from '../../../css-and-material/styles-02'
+import '../../../css-and-material/basic.css'
 
 function DashBoardVotings() {
   const [reload, setReload] = useState(false)
