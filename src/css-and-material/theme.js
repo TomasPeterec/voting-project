@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles'
-import { fCoef, fontColorPrime, fontColorGray, formDescriptionColor } from './generalVariables'
+import { fCoef, fontColorPrime, fontColorGray, formDescriptionColor, grayIcons } from './generalVariables'
 
 const votingTheme = createTheme({
   colors: {
@@ -36,6 +36,11 @@ const votingTheme = createTheme({
       fontSize: 48 / fCoef / 1.272,
       fontWeight: 100,
       color: fontColorPrime
+    },
+    descriptionOfItem: {
+      fontSize: 37.74 / fCoef / 1.272,
+      fontWeight: 100,
+      color: grayIcons
     }
   }
 })

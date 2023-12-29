@@ -111,7 +111,18 @@ const styles02 = {
   itemStyle: {
     display: 'flex',
     alignItems: 'center',
-    height: '48px',
+    minHeight: '48px',
+    marginBottom: '7px',
+    backgroundColor: 'white',
+    boxShadow: '0px 1px 6px #dddddd',
+    paddingRight: '4px',
+    paddingLeft: '4px'
+  },
+  itemStyle2: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    minHeight: '48px',
     marginBottom: '7px',
     backgroundColor: 'white',
     boxShadow: '0px 1px 6px #dddddd',

@@ -26,7 +26,7 @@ const DashboardEdit = () => {
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
           <DashBoardStaticTexts title="Votings" breadcrumb={currentItem} urlBack="/votings" />
-          <DashBoardEditForm userId="93" triggerReload={triggerReload} />
+          <DashBoardEditForm userId="93" triggerReload={triggerReload} curentUuid={currentId} />
         </div>
       </div>
       <div style={styles02.mainBottomContainer}>

@@ -8,9 +8,10 @@ import votingTheme from '../../../css-and-material/theme'
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
 
-const DashBoardEditForm = ({ triggerReload, userId }) => {
+const DashBoardEditForm = ({ triggerReload, userId, curentUuid }) => {
   const [clicked, setClicked] = useState(false)
-  const [formData, setFormData] = useState('')
+  const [formDataTitle, setFormDataTitle] = useState('')
+  const [formDataDes, setFormDataDes] = useState('')
 
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -26,19 +27,26 @@ const DashBoardEditForm = ({ triggerReload, userId }) => {
     e.preventDefault()
 
     try {
-      const response = await axiosInstance.post('/api/listOfVotings', {
-        name_of_voting: formData
+      const response = await axiosInstance.put('/api/listOfVotings/template', {
+        lov_id: curentUuid,
+        title: formDataTitle,
+        description: formDataDes
       })
       console.log(response.data)
       triggerReload()
-      setFormData('')
+      setFormDataTitle('')
+      setFormDataDes('')
     } catch (error) {
       console.error('Error:', error.response.data)
     }
   }
 
   const handleChange = (e) => {
-    setFormData(e.target.value)
+    setFormDataTitle(e.target.value)
+  }
+
+  const handleChange2 = (e) => {
+    setFormDataDes(e.target.value)
   }
 
   const handleClickModalOn = () => {
@@ -81,7 +89,7 @@ const DashBoardEditForm = ({ triggerReload, userId }) => {
                     type="text"
                     name="name"
                     placeholder="Enter Input"
-                    value={formData.name}
+                    value={formDataTitle}
                     onChange={handleChange}
                   />
                   <Typography sx={votingTheme.typography.inputRequired}>Required Input</Typography>
@@ -90,14 +98,15 @@ const DashBoardEditForm = ({ triggerReload, userId }) => {
                     style={{ width: '100%' }}
                     rows={4} // Specifies the number of visible text lines
                     cols={150} // Specifies the width of the textarea in characters
-                    value={formData.description} // Specifies the initial value of the textarea
+                    value={formDataDes} // Specifies the initial value of the textarea
                     placeholder="Enter Input" // Specifies a short hint that describes the expected value of the textarea
                     wrap="soft" // Specifies how the text in the textarea should be wrapped
                     readOnly={false} // Specifies that the textarea is read-only, meaning the user cannot modify its content
                     name="description" // Specifies the name of the textarea, which can be used when submitting a form
                     disabled={false} //  Specifies that the textarea is disabled, meaning the user cannot interact with it
-                    minLength={150} // Specifies the minimum number of characters required in the textarea
+                    minLength={15} // Specifies the minimum number of characters required in the textarea
                     maxLength={200} // Specifies the maximum number of characters allowed in the textarea
+                    onChange={handleChange2}
                   />
                 </div>
                 <div style={{ width: '30px' }}></div>
