@@ -6,7 +6,7 @@ import { styles02 } from '../../css-and-material/styles-02'
 import { Typography } from '@mui/material'
 import votingTheme from '../../css-and-material/theme'
 
-const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
+const DEditItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
 
@@ -76,4 +76,4 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
   return <>{isMobile ? <MyBox onClick={showModalButtons} /> : <MyBox />}</>
 }
 
-export default DVotingItem
+export default DEditItem

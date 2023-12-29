@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import reportWebVitals from './report-web-vitals'
 import Box from '@mui/material/Box'
 import { ThemeProvider, CssBaseline, useMediaQuery } from '@mui/material'
-import theme from './css-and-material/theme'
+import votingTheme from './css-and-material/theme'
 import mobileWidth from './css-and-material/is-device'
 import { roundedBoxStyles, mobileStyles } from './css-and-material/styles'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -41,7 +41,7 @@ function ThemeApp() {
   const isMobile = useMediaQuery(`(max-width:${mobileWidth})`)
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={votingTheme}>
       <CssBaseline />
       {isMobile ? (
         <div>
@@ -61,7 +61,9 @@ function ThemeApp() {
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AppRouter />
+    <ThemeProvider theme={votingTheme}>
+      <AppRouter />
+    </ThemeProvider>
   </React.StrictMode>
 )
 

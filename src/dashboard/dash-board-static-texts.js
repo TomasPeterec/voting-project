@@ -2,6 +2,7 @@ import React from 'react'
 import DashBoardTitleBright from './dash-board-title-bright'
 import DashBoardBreadcrumbBright from './dash-board-breadcrumb-bright'
 import { Link } from 'react-router-dom'
+import { fontColorPrime } from '../css-and-material/generalVariables'
 
 const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
   return (
@@ -21,7 +22,8 @@ const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
                   border: 'none',
                   background: 'none',
                   cursor: 'pointer',
-                  paddingTop: '11px'
+                  paddingTop: '11px',
+                  color: fontColorPrime
                 }}
               >
                 Return
@@ -32,7 +34,7 @@ const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
       </div>
 
       {/* Breadcrumb */}
-      <div style={{ paddingTop: '15px' }}>
+      <div style={{ paddingTop: '3px' }}>
         <DashBoardBreadcrumbBright breadcrumb={breadcrumb} />
       </div>
     </>

@@ -8,7 +8,7 @@ import votingTheme from '../../css-and-material/theme'
 import { styles02 } from '../../css-and-material/styles-02'
 import mobileWidth from '../../css-and-material/is-device'
 
-const DashBoardVotingsForm = ({ triggerReload, userId }) => {
+const DashBoardEditForm = ({ triggerReload, userId }) => {
   const [clicked, setClicked] = useState(false)
   const [formData, setFormData] = useState('')
 
@@ -94,4 +94,4 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
   )
 }
 
-export default DashBoardVotingsForm
+export default DashBoardEditForm

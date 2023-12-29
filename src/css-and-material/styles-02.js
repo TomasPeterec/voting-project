@@ -1,7 +1,10 @@
+import { darkBackground } from './generalVariables'
+import { fCoef } from './generalVariables'
+
 const headerHeight = 40
 const maxContentWidth = 1000
 const sidePadding = 11
-const backgroundCornersRadius = 15
+const backgroundCornersRadius = 40 / fCoef
 
 const styles02 = {
   floatedVisible: {
@@ -51,7 +54,7 @@ const styles02 = {
     alignItems: 'center',
     flexDirection: 'column',
     width: '100%',
-    backgroundColor: '#ddd',
+    backgroundColor: darkBackground,
     paddingBottom: '13px',
     paddingLeft: sidePadding,
     paddingRight: sidePadding,
@@ -77,7 +80,7 @@ const styles02 = {
   },
   headerBasic: {
     height: headerHeight,
-    backgroundColor: '#bbb',
+    backgroundColor: darkBackground,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
@@ -108,8 +111,12 @@ const styles02 = {
   itemStyle: {
     display: 'flex',
     alignItems: 'center',
-    height: '30px',
-    marginBottom: '7px'
+    height: '48px',
+    marginBottom: '7px',
+    backgroundColor: 'white',
+    boxShadow: '0px 1px 6px #dddddd',
+    paddingRight: '4px',
+    paddingLeft: '4px'
   },
   itemRow: {
     display: 'flex'
@@ -118,12 +125,13 @@ const styles02 = {
     display: 'flex',
     justifyContent: 'flex-end'
   },
-  nameOfCUrentItem: {
+  nameOfCurentItem: {
     width: '100%',
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   statusNest: {
-    width: '55px'
+    width: '45px'
   },
   nameOfItemOnModal: {
     display: 'flex',
@@ -135,6 +143,20 @@ const styles02 = {
     flexDirection: 'column',
     height: '100%',
     justifyContent: 'center'
+  },
+  roundButonNest: {
+    display: 'flex',
+    width: '42px',
+    justifyContent: 'flex-end'
+  },
+  rounderFrame: {
+    backgroundColor: 'white',
+    height: '36px',
+    width: '36px',
+    borderRadius: '18px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: '#cccccc'
   }
 }
 

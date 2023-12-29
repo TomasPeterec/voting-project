@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Typography } from '@mui/material'
 
 const DashBoardBreadcrumbBright = ({ breadcrumb }) => {
-  return <p style={{ margin: '0px' }}>{breadcrumb}</p>
+  return <Typography variant="h3">{breadcrumb}</Typography>
 }
 
 DashBoardBreadcrumbBright.propTypes = {

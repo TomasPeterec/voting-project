@@ -1,21 +1,43 @@
-// theme.js
 import { createTheme } from '@mui/material/styles'
+import { fCoef, fontColorPrime, fontColorGray, formDescriptionColor } from './generalVariables'
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#2196f3' // your primary color
-    },
-    secondary: {
-      main: '#ff4081' // your secondary color
-    }
+const votingTheme = createTheme({
+  colors: {
+    primary: '#186DFD',
+    secondary: '#FF4081'
+    // ... other color configurations
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
-    fontSize: 16
-  },
-  spacing: 4
-  // other customizations...
+    fontFamily: 'Inter, Arial, sans-serif',
+    lineHeight: 1.5,
+    fontWeightRegular: 400,
+    fontWeightBold: 700,
+    h1: {
+      fontSize: 61.06 / fCoef,
+      fontWeight: 'bold',
+      color: fontColorPrime
+    },
+    h3: {
+      fontSize: 37.74 / fCoef,
+      fontWeight: 100,
+      color: fontColorGray
+    },
+    formDescription: {
+      fontSize: 37.74 / fCoef,
+      fontWeight: 100,
+      color: formDescriptionColor
+    },
+    inputRequired: {
+      fontSize: 29.67 / fCoef,
+      fontWeight: 100,
+      color: fontColorPrime
+    },
+    titleOfItem: {
+      fontSize: 48 / fCoef / 1.272,
+      fontWeight: 100,
+      color: fontColorPrime
+    }
+  }
 })
 
-export default theme
+export default votingTheme

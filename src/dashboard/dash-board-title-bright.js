@@ -1,7 +1,8 @@
 import React from 'react'
+import { Typography } from '@mui/material'
 
 const DashBoardTitleBright = ({ title }) => {
-  return <h1 style={{ margin: '0px' }}>{title}</h1>
+  return <Typography variant="h1">{title}</Typography>
 }
 
 export default DashBoardTitleBright
