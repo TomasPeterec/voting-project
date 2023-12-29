@@ -6,7 +6,7 @@ import { styles02 } from '../../../css-and-material/styles-02'
 import { Typography } from '@mui/material'
 import votingTheme from '../../../css-and-material/theme'
 
-const DEditItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
+const DEditItem = ({ currentItem, currentId, curentDescription, handleButtonsModal, handleDeleteItemModal }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
 
@@ -25,26 +25,15 @@ const DEditItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteIte
       <>
         <Box style={styles02.itemStyle} borderRadius="24px" border="1px solid #e0e0e0" p={'0px'} onClick={onClick}>
           <div style={styles02.nameOfCurentItem}>
-            <div style={styles02.statusNest}>
-              <div style={styles02.rounderFrame}>ST</div>
-            </div>
+            <div style={styles02.textFromLeft}></div>
             <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography>
+            {curentDescription}
           </div>
           <div style={styles02.buttonsAlignedToRight}>
             {isMobile ? (
               <></>
             ) : (
               <div style={styles02.itemRow}>
-                <div style={styles02.roundButonNest}>
-                  <Link to="/votings/distribution" state={{ currentItem, currentId }}>
-                    <div style={styles02.rounderFrame}>DIS</div>
-                  </Link>
-                </div>
-                <div style={styles02.roundButonNest}>
-                  <Link to="/votings/statistics" state={{ currentItem, currentId }}>
-                    <div style={styles02.rounderFrame}>STA</div>
-                  </Link>
-                </div>
                 <div style={styles02.roundButonNest}>
                   <Link to="/votings/edit" state={{ currentItem, currentId }}>
                     <div style={styles02.rounderFrame}>EDI</div>

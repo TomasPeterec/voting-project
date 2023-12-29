@@ -13,9 +13,9 @@ import DashBoardVotings from './dashboard/votings/main/dash-board-votings'
 import RegistrationForm from './registration-and-login/RegistrationForm'
 import LoginForm from './registration-and-login/login-form'
 import DashboardTutorials from './dashboard/tutorials/dash-board-tutorials'
-import DashBoardAbout from './dashboard/votings/about/dash-board-about'
+import DashBoardAbout from './dashboard/about/dash-board-about'
 import DashboardEdit from './dashboard/votings/edit/dash-board-edit'
-import DashboardStats from './dashboard/statistics/dash-board-stats'
+import DashboardStats from './dashboard/votings/statistics/dash-board-stats'
 import DashboardDistribute from './dashboard/votings/distribute/dash-board-distribute'
 
 export default function AppRouter() {

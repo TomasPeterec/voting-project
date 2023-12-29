@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import DashBoardHeader from '../../common/dash-board-header'
 import DashBoardStaticTexts from '../../common/dash-board-static-texts'
-import DashBoardVotingItems from '../main/dash-board-voting-items'
-import DashBoardEditForm from '../main/dash-board-votings-form'
+import DashBoardEditItems from './dash-board-edit-items'
+import DashBoardEditForm from './dash-board-edit-form'
 import { styles02 } from '../../../css-and-material/styles-02'
 import { useLocation } from 'react-router-dom'
 import '../../../css-and-material/basic.css'
@@ -31,8 +31,7 @@ const DashboardEdit = () => {
       </div>
       <div style={styles02.mainBottomContainer}>
         <div style={styles02.mainContentContainer}>
-          {currentId}
-          <DashBoardVotingItems userId="93" reload={reload} />
+          <DashBoardEditItems userId="93" curentVotingId={currentId} reload={reload} />
         </div>
       </div>
     </>

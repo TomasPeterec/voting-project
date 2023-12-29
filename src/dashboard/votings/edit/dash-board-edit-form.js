@@ -75,9 +75,30 @@ const DashBoardEditForm = ({ triggerReload, userId }) => {
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <div style={{ width: '100%', display: 'flex' }}>
                 <div style={{ width: '100%' }}>
-                  <Typography sx={votingTheme.typography.formDescription}>The name of the new vote</Typography>
-                  <input style={{ width: '100%' }} type="text" name="name" value={formData} onChange={handleChange} />
+                  <Typography sx={votingTheme.typography.formDescription}>The name of the new choice</Typography>
+                  <input
+                    style={{ width: '100%' }}
+                    type="text"
+                    name="name"
+                    placeholder="Enter Input"
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
                   <Typography sx={votingTheme.typography.inputRequired}>Required Input</Typography>
+                  <Typography sx={votingTheme.typography.formDescription}>The description of the new choice</Typography>
+                  <textarea
+                    style={{ width: '100%' }}
+                    rows={4} // Specifies the number of visible text lines
+                    cols={150} // Specifies the width of the textarea in characters
+                    value={formData.description} // Specifies the initial value of the textarea
+                    placeholder="Enter Input" // Specifies a short hint that describes the expected value of the textarea
+                    wrap="soft" // Specifies how the text in the textarea should be wrapped
+                    readOnly={false} // Specifies that the textarea is read-only, meaning the user cannot modify its content
+                    name="description" // Specifies the name of the textarea, which can be used when submitting a form
+                    disabled={false} //  Specifies that the textarea is disabled, meaning the user cannot interact with it
+                    minLength={150} // Specifies the minimum number of characters required in the textarea
+                    maxLength={200} // Specifies the maximum number of characters allowed in the textarea
+                  />
                 </div>
                 <div style={{ width: '30px' }}></div>
                 <div>

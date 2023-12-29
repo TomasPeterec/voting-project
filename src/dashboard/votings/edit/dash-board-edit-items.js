@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import DVotingItem from '../main/d-voting-item'
+import DEditItem from './d-edit-item'
 import mobileWidth from '../../../css-and-material/is-device'
 import axiosInstance from '../../../axios-instance'
 import { styles02 } from '../../../css-and-material/styles-02'
 import { useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-const DashBoardVotingItems = ({ userId, reload }) => {
-  DashBoardVotingItems.propTypes = {
+const DashBoardEditItems = ({ userId, reload, curentVotingId }) => {
+  DashBoardEditItems.propTypes = {
     userId: PropTypes.string.isRequired,
     reload: PropTypes.bool.isRequired
   }
 
-  const [listOfVotes, setListOfVotes] = useState(null)
+  const [listOfCandidates, setListOfCandidates] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const [currentItem, setCurrentItem] = useState('')
@@ -68,10 +68,10 @@ const DashBoardVotingItems = ({ userId, reload }) => {
         setLoading(true)
 
         // api-endpoint for serving the items
-        const response = await axiosInstance.get('/api/listOfVotings/subset')
+        const response = await axiosInstance.get(`/api/listOfVotings/template/${curentVotingId}`)
         const data = response.data
         // Set data and loading to false when the operation is complete
-        setListOfVotes(data)
+        setListOfCandidates(data)
         setLoading(false)
       } catch (error) {
         // Handle errors if needed
@@ -83,8 +83,8 @@ const DashBoardVotingItems = ({ userId, reload }) => {
     // Call the fetchData function
     fetchData()
 
-    // Dependency array includes 'setLoading, setListOfVotes'
-  }, [setLoading, setListOfVotes, reload, currentItem])
+    // Dependency array includes 'setLoading, setListOfCandidates'
+  }, [setLoading, setListOfCandidates, reload, currentItem])
 
   const deleteVotings = async (item) => {
     try {
@@ -117,12 +117,6 @@ const DashBoardVotingItems = ({ userId, reload }) => {
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
           <div style={styles02.buttonNest01}>
-            <Link to="/votings/distribution" state={{ currentItem, currentId }}>
-              <Button>Distr</Button>
-            </Link>
-            <Link to="/votings/statistics" state={{ currentItem, currentId }}>
-              <Button>Stats</Button>
-            </Link>
             <Link to="/votings/edit" state={{ currentItem, currentId }}>
               <Button>Edit</Button>
             </Link>
@@ -155,17 +149,18 @@ const DashBoardVotingItems = ({ userId, reload }) => {
           // Render component content when loading is false
           <div>
             <ul style={styles02.listOfItems}>
-              {listOfVotes
+              {listOfCandidates
                 .slice()
                 .reverse()
                 .map((vote, index) => (
                   <li key={index}>
                     {
-                      <DVotingItem
+                      <DEditItem
                         handleButtonsModal={handleButtonsModal}
                         handleDeleteItemModal={handleDeleteItemModal}
-                        currentItem={vote.name_of_voting}
-                        currentId={vote.lov_id}
+                        currentItem={vote.title}
+                        currentId={vote.description}
+                        curentDescription={vote.description}
                       />
                     }
                   </li>
@@ -178,4 +173,4 @@ const DashBoardVotingItems = ({ userId, reload }) => {
   )
 }
 
-export default DashBoardVotingItems
+export default DashBoardEditItems

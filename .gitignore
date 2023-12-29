@@ -37,3 +37,6 @@ yarn-error.log*
 
 # Ignore Prettier configuration file
 .prettierrc.json
+
+# Ignore bin for uncertain files
+a-obsolete

@@ -133,6 +133,9 @@ const styles02 = {
   statusNest: {
     width: '45px'
   },
+  textFromLeft: {
+    width: '12px'
+  },
   nameOfItemOnModal: {
     display: 'flex',
     justifyContent: 'center',
