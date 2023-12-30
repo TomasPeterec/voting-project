@@ -4,11 +4,13 @@ import Box from '@mui/material/Box'
 import { Typography, useMediaQuery } from '@mui/material'
 import axiosInstance from '../../../axios-instance'
 import votingTheme from '../../../css-and-material/theme'
+import { testIfItExists } from '../../common/already-exist'
 
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
 
-const DashBoardEditForm = ({ triggerReload, userId, curentUuid }) => {
+const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) => {
+  const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input')
   const [clicked, setClicked] = useState(false)
   const [formDataTitle, setFormDataTitle] = useState('')
   const [formDataDes, setFormDataDes] = useState('')
@@ -27,15 +29,19 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid }) => {
     e.preventDefault()
 
     try {
-      const response = await axiosInstance.put('/api/listOfVotings/template', {
-        lov_id: curentUuid,
-        title: formDataTitle,
-        description: formDataDes
-      })
-      console.log(response.data)
-      triggerReload()
-      setFormDataTitle('')
-      setFormDataDes('')
+      if (noteBelowTheInput != 'Such name of item is already in the list') {
+        if (formDataTitle != '' && formDataTitle != ' ' && formDataTitle != '.' && formDataTitle != ',') {
+          const response = await axiosInstance.put('/api/listOfVotings/template', {
+            lov_id: curentUuid,
+            title: formDataTitle.trim(),
+            description: formDataDes.charAt()
+          })
+          console.log(response.data)
+          triggerReload()
+          setFormDataTitle('')
+          setFormDataDes('')
+        }
+      }
     } catch (error) {
       console.error('Error:', error.response.data)
     }
@@ -43,6 +49,7 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid }) => {
 
   const handleChange = (e) => {
     setFormDataTitle(e.target.value)
+    setNoteBelowTheInput(testIfItExists(arrFromItems, 'title', e.target.value.trim()))
   }
 
   const handleChange2 = (e) => {
@@ -92,7 +99,7 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid }) => {
                     value={formDataTitle}
                     onChange={handleChange}
                   />
-                  <Typography sx={votingTheme.typography.inputRequired}>Required Input</Typography>
+                  <Typography sx={votingTheme.typography.inputRequired}>{noteBelowTheInput}</Typography>
                   <Typography sx={votingTheme.typography.formDescription}>The description of the new choice</Typography>
                   <textarea
                     style={{ width: '100%' }}

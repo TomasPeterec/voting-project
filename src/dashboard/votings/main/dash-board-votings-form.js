@@ -4,11 +4,13 @@ import Box from '@mui/material/Box'
 import { Typography, useMediaQuery } from '@mui/material'
 import axiosInstance from '../../../axios-instance'
 import votingTheme from '../../../css-and-material/theme'
+import { testIfItExists } from '../../common/already-exist'
 
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
 
-const DashBoardVotingsForm = ({ triggerReload, userId }) => {
+const DashBoardVotingsForm = ({ triggerReload, userId, arrFromItems }) => {
+  const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input')
   const [clicked, setClicked] = useState(false)
   const [formData, setFormData] = useState('')
 
@@ -26,12 +28,16 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
     e.preventDefault()
 
     try {
-      const response = await axiosInstance.post('/api/listOfVotings', {
-        name_of_voting: formData
-      })
-      console.log(response.data)
-      triggerReload()
-      setFormData('')
+      if (noteBelowTheInput != 'Such name of item is already in the list') {
+        if (formData != '' && formData != ' ' && formData != '.' && formData != ',') {
+          const response = await axiosInstance.post('/api/listOfVotings', {
+            name_of_voting: formData.trim()
+          })
+          console.log(response.data)
+          triggerReload()
+          setFormData('')
+        }
+      }
     } catch (error) {
       console.error('Error:', error.response.data)
     }
@@ -39,6 +45,7 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
 
   const handleChange = (e) => {
     setFormData(e.target.value)
+    setNoteBelowTheInput(testIfItExists(arrFromItems, 'name_of_voting', e.target.value.trim()))
   }
 
   const handleClickModalOn = () => {
@@ -77,7 +84,7 @@ const DashBoardVotingsForm = ({ triggerReload, userId }) => {
                 <div style={{ width: '100%' }}>
                   <Typography sx={votingTheme.typography.formDescription}>The name of the new vote</Typography>
                   <input style={{ width: '100%' }} type="text" name="name" value={formData} onChange={handleChange} />
-                  <Typography sx={votingTheme.typography.inputRequired}>Required Input</Typography>
+                  <Typography sx={votingTheme.typography.inputRequired}>{noteBelowTheInput}</Typography>
                 </div>
                 <div style={{ width: '30px' }}></div>
                 <div>

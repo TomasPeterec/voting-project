@@ -7,7 +7,7 @@ import { styles02 } from '../../../css-and-material/styles-02'
 import { useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-const DashBoardEditItems = ({ userId, reload, curentVotingId }) => {
+const DashBoardEditItems = ({ userId, reload, curentVotingId, arrHandler }) => {
   DashBoardEditItems.propTypes = {
     userId: PropTypes.string.isRequired,
     reload: PropTypes.bool.isRequired
@@ -73,6 +73,7 @@ const DashBoardEditItems = ({ userId, reload, curentVotingId }) => {
         // Set data and loading to false when the operation is complete
         setListOfCandidates(data)
         setLoading(false)
+        arrHandler(data)
       } catch (error) {
         // Handle errors if needed
         console.error('Error fetching data:', error)
@@ -87,16 +88,19 @@ const DashBoardEditItems = ({ userId, reload, curentVotingId }) => {
   }, [setLoading, setListOfCandidates, reload, currentItem])
 
   const deleteVotings = async (item) => {
+    console.log(item)
+    console.log(curentVotingId)
     try {
       // api-endpoint for deleting the item
-      const response = await axiosInstance.delete(`/api/listOfVotings/${item}`)
-      if (response.status === 200) {
-        const data = response.data
-        // Perform actions with the data
-        console.log('Delete request successful:', data)
-      }
-      setCurrentItem('')
-      setCurrentId('')
+      const response = await axiosInstance.put('/api/listOfVotings/template/delete', { curentVotingId, item })
+      console.log(response)
+      // if (response.status === 200) {
+      //   const data = response.data
+      //   // Perform actions with the data
+      //   console.log('Delete request successful:', data)
+      // }
+      // setCurrentItem('')
+      // setCurrentId('')
     } catch (error) {
       console.error('Error deleting item data:', error)
     }

@@ -7,7 +7,7 @@ import { styles02 } from '../../../css-and-material/styles-02'
 import { useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-const DashBoardVotingItems = ({ userId, reload }) => {
+const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
   DashBoardVotingItems.propTypes = {
     userId: PropTypes.string.isRequired,
     reload: PropTypes.bool.isRequired
@@ -73,6 +73,7 @@ const DashBoardVotingItems = ({ userId, reload }) => {
         // Set data and loading to false when the operation is complete
         setListOfVotes(data)
         setLoading(false)
+        arrHandler(data)
       } catch (error) {
         // Handle errors if needed
         console.error('Error fetching data:', error)
