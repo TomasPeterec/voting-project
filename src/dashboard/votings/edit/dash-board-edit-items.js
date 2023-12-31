@@ -6,6 +6,7 @@ import axiosInstance from '../../../axios-instance'
 import { styles02 } from '../../../css-and-material/styles-02'
 import { useMediaQuery, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
 
 const DashBoardEditItems = ({ userId, reload, curentVotingId, arrHandler }) => {
   DashBoardEditItems.propTypes = {
@@ -88,19 +89,22 @@ const DashBoardEditItems = ({ userId, reload, curentVotingId, arrHandler }) => {
   }, [setLoading, setListOfCandidates, reload, currentItem])
 
   const deleteVotings = async (item) => {
-    console.log(item)
-    console.log(curentVotingId)
+    const newListArray = ifExistDeleteFromArrayOfObjects(listOfCandidates, 'title', item)
+
     try {
       // api-endpoint for deleting the item
-      const response = await axiosInstance.put('/api/listOfVotings/template/delete', { curentVotingId, item })
-      console.log(response)
-      // if (response.status === 200) {
-      //   const data = response.data
-      //   // Perform actions with the data
-      //   console.log('Delete request successful:', data)
-      // }
-      // setCurrentItem('')
-      // setCurrentId('')
+      const response = await axiosInstance.put('/api/listOfVotings/template/delete', {
+        lov_id: curentVotingId,
+        template: newListArray
+      })
+
+      if (response.status === 200) {
+        const data = response.data
+        // Perform actions with the data
+        console.log('Delete request successful:', data)
+      }
+      setCurrentItem('')
+      setCurrentId('')
     } catch (error) {
       console.error('Error deleting item data:', error)
     }
@@ -137,7 +141,7 @@ const DashBoardEditItems = ({ userId, reload, curentVotingId, arrHandler }) => {
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
           <div style={styles02.buttonNest01}>
-            <Button onClick={() => deletePermanently(currentId)}>Confirm delete</Button>
+            <Button onClick={() => deletePermanently(currentItem)}>Confirm delete</Button>
           </div>
           <div style={styles02.buttonNest01}>
             <Button onClick={hideDeleteConfirmation}>Return</Button>

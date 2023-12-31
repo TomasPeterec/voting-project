@@ -5,6 +5,7 @@ import { Typography, useMediaQuery } from '@mui/material'
 import axiosInstance from '../../../axios-instance'
 import votingTheme from '../../../css-and-material/theme'
 import { testIfItExists } from '../../common/already-exist'
+import { sanitizeForApi } from '../../common/sanitize'
 
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
@@ -34,7 +35,7 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) 
           const response = await axiosInstance.put('/api/listOfVotings/template', {
             lov_id: curentUuid,
             title: formDataTitle.trim(),
-            description: formDataDes.charAt()
+            description: formDataDes.trim()
           })
           console.log(response.data)
           triggerReload()
@@ -48,12 +49,12 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) 
   }
 
   const handleChange = (e) => {
-    setFormDataTitle(e.target.value)
-    setNoteBelowTheInput(testIfItExists(arrFromItems, 'title', e.target.value.trim()))
+    setFormDataTitle(sanitizeForApi(e.target.value))
+    setNoteBelowTheInput(testIfItExists(arrFromItems, 'title', sanitizeForApi(e.target.value).trim()))
   }
 
   const handleChange2 = (e) => {
-    setFormDataDes(e.target.value)
+    setFormDataDes(sanitizeForApi(e.target.value))
   }
 
   const handleClickModalOn = () => {

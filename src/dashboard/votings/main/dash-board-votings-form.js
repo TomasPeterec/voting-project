@@ -5,6 +5,7 @@ import { Typography, useMediaQuery } from '@mui/material'
 import axiosInstance from '../../../axios-instance'
 import votingTheme from '../../../css-and-material/theme'
 import { testIfItExists } from '../../common/already-exist'
+import { sanitizeForApi } from '../../common/sanitize'
 
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
@@ -44,8 +45,8 @@ const DashBoardVotingsForm = ({ triggerReload, userId, arrFromItems }) => {
   }
 
   const handleChange = (e) => {
-    setFormData(e.target.value)
-    setNoteBelowTheInput(testIfItExists(arrFromItems, 'name_of_voting', e.target.value.trim()))
+    setFormData(sanitizeForApi(e.target.value))
+    setNoteBelowTheInput(testIfItExists(arrFromItems, 'name_of_voting', sanitizeForApi(e.target.value).trim()))
   }
 
   const handleClickModalOn = () => {
