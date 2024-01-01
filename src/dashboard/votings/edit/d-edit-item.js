@@ -1,12 +1,18 @@
 import React from 'react'
 import { Box, useMediaQuery } from '@mui/material'
-import { Link } from 'react-router-dom'
 import mobileWidth from '../../../css-and-material/is-device'
 import { styles02 } from '../../../css-and-material/styles-02'
 import { Typography } from '@mui/material'
 import votingTheme from '../../../css-and-material/theme'
 
-const DEditItem = ({ currentItem, currentId, curentDescription, handleButtonsModal, handleDeleteItemModal }) => {
+const DEditItem = ({
+  currentItem,
+  currentId,
+  curentDescription,
+  handleButtonsModal,
+  handleDeleteItemModal,
+  handleEditItemModal
+}) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
 
@@ -17,6 +23,10 @@ const DEditItem = ({ currentItem, currentId, curentDescription, handleButtonsMod
 
   const deleteItem = () => {
     handleDeleteItemModal({ currentItem, currentId })
+  }
+
+  const editItem = () => {
+    handleEditItemModal({ currentItem, curentDescription })
   }
 
   // Definition of an item in Votings list
@@ -35,9 +45,19 @@ const DEditItem = ({ currentItem, currentId, curentDescription, handleButtonsMod
               ) : (
                 <div style={styles02.itemRow}>
                   <div style={styles02.roundButonNest}>
-                    <Link to="/votings/edit" state={{ currentItem, currentId }}>
+                    <button
+                      style={{
+                        height: '38px',
+                        width: '38px',
+                        borderWidth: '0px',
+                        padding: '0',
+                        backgroundColor: 'white',
+                        borderRadius: '19px'
+                      }}
+                      onClick={editItem}
+                    >
                       <div style={styles02.rounderFrame}>EDI</div>
-                    </Link>
+                    </button>
                   </div>
                   <div style={styles02.roundButonNest}>
                     <button
