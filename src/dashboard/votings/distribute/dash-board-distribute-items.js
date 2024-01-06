@@ -12,18 +12,18 @@ import { sanitizeForApi } from '../../common/sanitize'
 import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
 import { testIfItExists } from '../../common/already-exist'
 
-const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }) => {
+const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, handleEmails }) => {
   DashBoardDistributeItems.propTypes = {
     userId: PropTypes.string.isRequired,
     reload: PropTypes.bool.isRequired
   }
 
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input')
-  const [listOfCandidates, setListOfCandidates] = useState(null)
+  const [listsOfEmails, setListsOfEmails] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const [currentItem, setCurrentItem] = useState('')
-  const [curentDescription, setCurentDescription] = useState('')
+  const [curentEmails, setCurentEmails] = useState('')
   const [newItem, setNewItem] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [modalButtonsOn, setModalButtonsOn] = useState(false)
@@ -46,7 +46,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
 
   const handleButtonsModal = (itemIdentificators) => {
     setCurrentItem(itemIdentificators.currentItem)
-    setCurentDescription(itemIdentificators.curentDescription)
+    setCurentEmails(itemIdentificators.curentEmails)
     setModalButtonsOn(true)
   }
 
@@ -54,17 +54,17 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
     hideModalButtons()
     setModalDeleteConfirmation(true)
     setCurrentItem(itemIdentificators.currentItem)
-    setCurentDescription(itemIdentificators.curentDescription)
+    setCurentEmails(itemIdentificators.curentEmails)
   }
 
   const handleEditItemModal = (itemIdentificators) => {
     hideModalButtons()
     setModalEdit(true)
     setCurrentItem(itemIdentificators.currentItem)
-    setCurentDescription(itemIdentificators.curentDescription)
+    setCurentEmails(itemIdentificators.curentEmails)
 
     setNewItem(itemIdentificators.currentItem)
-    setNewDescription(itemIdentificators.curentDescription)
+    setNewDescription(itemIdentificators.curentEmails)
   }
 
   const hideModalButtons = () => {
@@ -86,7 +86,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
 
   const handleChange = (e) => {
     setNewItem(sanitizeForApi(e.target.value))
-    setNoteBelowTheInput(testIfItExists(listOfCandidates, 'title', sanitizeForApi(e.target.value).trim()))
+    setNoteBelowTheInput(testIfItExists(listsOfEmails, 'title', sanitizeForApi(e.target.value).trim()))
   }
 
   const handleChange2 = (e) => {
@@ -99,11 +99,20 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
         // Set loading to true before starting the operation
         setLoading(true)
 
+        // // api-endpoint for serving the items
+        // const response = await axiosInstance.get(`/api/listOfVotings/template/${curentVotingId}`)
+        // const data = response.data
+        // // Set data and loading to false when the operation is complete
+        // setListsOfEmails(data)
+        // setLoading(false)
+        // arrHandler(data)
+
         // api-endpoint for serving the items
-        const response = await axiosInstance.get(`/api/listOfVotings/template/${curentVotingId}`)
+        const response = await axiosInstance.get('/api/users/mails/')
         const data = response.data
+
         // Set data and loading to false when the operation is complete
-        setListOfCandidates(data)
+        setListsOfEmails(data)
         setLoading(false)
         arrHandler(data)
       } catch (error) {
@@ -116,11 +125,11 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
     // Call the fetchData function
     fetchData()
 
-    // Dependency array includes 'setLoading, setListOfCandidates'
-  }, [setLoading, setListOfCandidates, reload, currentItem, curentDescription])
+    // Dependency array includes 'setLoading, setListsOfEmails'
+  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails])
 
   const deleteVotings = async (item) => {
-    const newListArray = ifExistDeleteFromArrayOfObjects(listOfCandidates, 'title', item)
+    const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item)
 
     try {
       // api-endpoint for deleting the item
@@ -135,7 +144,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
         console.log('Delete request successful:', data)
       }
       setCurrentItem('')
-      setCurentDescription('')
+      setCurentEmails('')
     } catch (error) {
       console.error('Error deleting item data:', error)
     }
@@ -155,13 +164,19 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
           })
           console.log('response data: ' + response.data)
           setCurrentItem(newItem.trim())
-          setCurentDescription(newDescription.trim())
+          setCurentEmails(newDescription.trim())
         }
       }
     } catch (error) {
       console.error('Error:', error.response.data)
     }
     hideEditModal()
+  }
+
+  const handleLoadModal = ({ currentItem, curentEmails }) => {
+    setCurrentItem(currentItem)
+    setCurentEmails(curentEmails)
+    handleEmails(curentEmails)
   }
 
   return (
@@ -179,10 +194,14 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
           <div style={styles02.buttonNest01}>
-            <Link to="/votings/edit" state={{ currentItem, curentDescription }}>
+            <Button onClick={() => handleLoadModal({ currentItem, curentEmails })}>Load</Button>
+            <Link to="/votings/edit" state={{ currentItem, curentEmails }}>
+              <Button>Save</Button>
+            </Link>
+            <Link to="/votings/edit" state={{ currentItem, curentEmails }}>
               <Button>Edit</Button>
             </Link>
-            <Button onClick={() => handleDeleteItemModal({ currentItem, curentDescription })}>Delete</Button>
+            <Button onClick={() => handleDeleteItemModal({ currentItem, curentEmails })}>Delete</Button>
           </div>
           <div style={styles02.buttonNest01}>
             <Button onClick={hideModalButtons}>Return</Button>
@@ -263,18 +282,19 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
           // Render component content when loading is false
           <div>
             <ul style={styles02.listOfItems}>
-              {listOfCandidates
+              {listsOfEmails
                 .slice()
                 .reverse()
-                .map((vote, index) => (
+                .map((curentEmailList, index) => (
                   <li key={index}>
                     {
                       <DDistributeItem
                         handleButtonsModal={handleButtonsModal}
                         handleDeleteItemModal={handleDeleteItemModal}
                         handleEditItemModal={handleEditItemModal}
-                        currentItem={vote.title}
-                        curentDescription={vote.description}
+                        currentItem={curentEmailList.name}
+                        curentEmails={curentEmailList.emails}
+                        handleLoadModal={handleLoadModal}
                       />
                     }
                   </li>

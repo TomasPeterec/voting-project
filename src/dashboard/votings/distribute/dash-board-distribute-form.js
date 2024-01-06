@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { Typography, useMediaQuery } from '@mui/material'
@@ -9,9 +9,14 @@ import { sanitizeForApi } from '../../common/sanitize'
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
 
-const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid }) => {
+const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmails }) => {
   const [clicked, setClicked] = useState(false)
   const [formDataMails, setFormDataMails] = useState('')
+
+  useEffect(() => {
+    // Update the component or log the received prop
+    setFormDataMails(loadedEmails)
+  }, [loadedEmails])
 
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -53,6 +58,14 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid }) => {
     setClicked(false)
   }
 
+  const clearTextArea = () => {
+    setFormDataMails('')
+  }
+
+  const handleSave = () => {
+    console.log('for save')
+  }
+
   // breakpoint
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
 
@@ -61,7 +74,7 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid }) => {
       <div style={isMobile ? styles02.separatorFlat : styles02.separatorHigh}></div>
       <div style={isMobile ? styles02.floatedVisible : styles02.floatedHidden}>
         <Button style={styles02.basicButton} onClick={handleClickModalOn} variant="contained">
-          PLUS
+          SEND
         </Button>
       </div>
       <div
@@ -95,11 +108,23 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid }) => {
                     onChange={handleChange2}
                   />
                 </div>
-                <div style={{ width: '30px' }}></div>
+                <div style={{ width: '30px', display: 'flex', flexDirection: 'column' }}></div>
                 <div>
-                  <Button type="submit" onClick={handleClickModalOff} variant="contained">
-                    PLUS
-                  </Button>
+                  <div>
+                    <Button type="submit" onClick={handleClickModalOff} variant="contained">
+                      SEND
+                    </Button>
+                  </div>
+                  <div>
+                    <Button type="submit" onClick={clearTextArea} variant="contained">
+                      CLEAR
+                    </Button>
+                  </div>
+                  <div>
+                    <Button type="submit" onClick={handleSave} variant="contained">
+                      SAVE
+                    </Button>
+                  </div>
                 </div>
               </div>
             </form>

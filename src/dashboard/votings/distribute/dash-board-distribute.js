@@ -13,6 +13,7 @@ const DashBoardDistribute = () => {
   const location = useLocation()
   const { currentItem, currentId } = location.state
   const [reload, setReload] = useState(false)
+  const [emails, setEmails] = useState('')
 
   const triggerReload = () => {
     setReload((prevReload) => !prevReload)
@@ -20,6 +21,17 @@ const DashBoardDistribute = () => {
 
   const handleItemArray = (arr) => {
     setArrayOfE(arr)
+  }
+
+  const handleEmails = (newEmails) => {
+    let newString = ''
+    for (let i = 0; i < newEmails.length; i++) {
+      if (i != 0) {
+        newString = newString + ', '
+      }
+      newString = newString + newEmails[i].mail
+    }
+    setEmails(newString)
   }
 
   return (
@@ -37,6 +49,7 @@ const DashBoardDistribute = () => {
             triggerReload={triggerReload}
             arrFromItems={arrayOfE}
             curentUuid={currentId}
+            loadedEmails={emails}
           />
         </div>
       </div>
@@ -47,6 +60,7 @@ const DashBoardDistribute = () => {
             curentVotingId={currentId}
             reload={reload}
             arrHandler={handleItemArray}
+            handleEmails={handleEmails}
           />
         </div>
       </div>
