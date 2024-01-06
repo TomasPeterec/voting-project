@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { Typography, useMediaQuery } from '@mui/material'
+// import { Typography } from '@mui/material'
 import axiosInstance from '../../../axios-instance'
 import votingTheme from '../../../css-and-material/theme'
 import { sanitizeForApi } from '../../common/sanitize'
@@ -9,8 +10,8 @@ import { sanitizeForApi } from '../../common/sanitize'
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
 
-const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmails }) => {
-  const [clicked, setClicked] = useState(false)
+const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmails, pushClickUp }) => {
+  // const [clicked, setClicked] = useState(false)
   const [formDataMails, setFormDataMails] = useState('')
 
   useEffect(() => {
@@ -50,12 +51,12 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmai
     setFormDataMails(sanitizeForApi(e.target.value))
   }
 
-  const handleClickModalOn = () => {
-    setClicked(true)
-  }
+  // const handleClickModalOn = () => {
+  //   setClicked(true)
+  // }
 
   const handleClickModalOff = () => {
-    setClicked(false)
+    // setClicked(false)
   }
 
   const clearTextArea = () => {
@@ -66,28 +67,24 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmai
     console.log('for save')
   }
 
+  const handleLoadClick = () => {
+    pushClickUp(true)
+  }
+
   // breakpoint
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
 
   return (
     <>
-      <div style={isMobile ? styles02.separatorFlat : styles02.separatorHigh}></div>
-      <div style={isMobile ? styles02.floatedVisible : styles02.floatedHidden}>
-        <Button style={styles02.basicButton} onClick={handleClickModalOn} variant="contained">
+      <div style={styles02.separatorHigh}></div>
+      <div style={styles02.floatedHidden}>
+        {/* <Button style={styles02.basicButton} onClick={handleClickModalOn} variant="contained">
           SEND
-        </Button>
+        </Button> */}
       </div>
-      <div
-        style={
-          isMobile
-            ? !clicked
-              ? styles02.desktopFormContainerHidden
-              : styles02.displayed
-            : styles02.desktopFormContainerVisible
-        }
-      >
+      <div style={styles02.desktopFormContainerVisible}>
         <div style={{ height: '40%' }}></div>
-        <div style={isMobile ? styles02.modalInnerDivMobile : styles02.modalInnerDivDesk}>
+        <div style={styles02.modalInnerDivDesk}>
           <Box borderRadius="10px" bgcolor="white" border="1px solid #ccc" p={2}>
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <div style={{ width: '100%', display: 'flex' }}>
@@ -95,7 +92,7 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmai
                   <Typography sx={votingTheme.typography.formDescription}>Email addreses</Typography>
                   <textarea
                     style={{ width: '100%', overflowY: 'auto' }}
-                    rows={8} // Specifies the number of visible text lines
+                    rows={isMobile ? 24 : 8} // Specifies the number of visible text lines
                     cols={150} // Specifies the width of the textarea in characters
                     value={formDataMails} // Specifies the initial value of the textarea
                     placeholder="Enter Input" // Specifies a short hint that describes the expected value of the textarea
@@ -123,6 +120,11 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmai
                   <div>
                     <Button type="submit" onClick={handleSave} variant="contained">
                       SAVE
+                    </Button>
+                  </div>
+                  <div style={isMobile ? styles02.visibleButton20 : styles02.hiddenList20}>
+                    <Button type="submit" onClick={handleLoadClick} variant="contained">
+                      LOAD
                     </Button>
                   </div>
                 </div>

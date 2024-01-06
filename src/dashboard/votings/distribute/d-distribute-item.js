@@ -12,7 +12,8 @@ const DDistributeItem = ({
   handleButtonsModal,
   handleDeleteItemModal,
   handleEditItemModal,
-  handleLoadModal
+  handleLoadModal,
+  handleEmails2
 }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
@@ -20,6 +21,7 @@ const DDistributeItem = ({
   // Handlers of modal window
   const showModalButtons = () => {
     handleButtonsModal({ currentItem, currentId })
+    handleEmails2(curentEmails)
   }
 
   const deleteItem = () => {

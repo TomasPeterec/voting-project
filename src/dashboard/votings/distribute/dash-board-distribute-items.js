@@ -9,10 +9,19 @@ import { Typography } from '@mui/material'
 import votingTheme from '../../../css-and-material/theme'
 import { Link } from 'react-router-dom'
 import { sanitizeForApi } from '../../common/sanitize'
-import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
 import { testIfItExists } from '../../common/already-exist'
+import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
 
-const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, handleEmails }) => {
+const DashBoardDistributeItems = ({
+  userId,
+  reload,
+  curentVotingId,
+  arrHandler,
+  handleEmails,
+  parentClick,
+  changeParentClick,
+  handleEmails2
+}) => {
   DashBoardDistributeItems.propTypes = {
     userId: PropTypes.string.isRequired,
     reload: PropTypes.bool.isRequired
@@ -29,6 +38,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
   const [modalButtonsOn, setModalButtonsOn] = useState(false)
   const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
+  const [clickForModalList, setClickForModalList] = useState(false)
 
   // adding of interceptor
   axiosInstance.interceptors.request.use(
@@ -47,7 +57,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
   const handleButtonsModal = (itemIdentificators) => {
     setCurrentItem(itemIdentificators.currentItem)
     setCurentEmails(itemIdentificators.curentEmails)
-    setModalButtonsOn(true)
+    changeParentClick()
   }
 
   const handleDeleteItemModal = (itemIdentificators) => {
@@ -99,14 +109,6 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
         // Set loading to true before starting the operation
         setLoading(true)
 
-        // // api-endpoint for serving the items
-        // const response = await axiosInstance.get(`/api/listOfVotings/template/${curentVotingId}`)
-        // const data = response.data
-        // // Set data and loading to false when the operation is complete
-        // setListsOfEmails(data)
-        // setLoading(false)
-        // arrHandler(data)
-
         // api-endpoint for serving the items
         const response = await axiosInstance.get('/api/users/mails/')
         const data = response.data
@@ -125,8 +127,10 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
     // Call the fetchData function
     fetchData()
 
+    setClickForModalList(parentClick)
+
     // Dependency array includes 'setLoading, setListsOfEmails'
-  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails])
+  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails, parentClick])
 
   const deleteVotings = async (item) => {
     const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item)
@@ -208,7 +212,6 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
           </div>
         </div>
       </div>
-
       {/* Definition of modal window for confirmation of deleting a item */}
       <div style={!modalDeleteConfirmation ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div style={styles02.nameOfItemOnModalNest}>
@@ -221,7 +224,6 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
           </div>
         </div>
       </div>
-
       <div style={!modalEdit ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
@@ -273,14 +275,21 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
           </div>
         </div>
       </div>
-
       <div>
         {loading ? (
           // Render the loader when loading is true
           <p>Loading...</p>
         ) : (
           // Render component content when loading is false
-          <div>
+          <div
+            style={
+              isMobile
+                ? clickForModalList
+                  ? styles02.modalListVisible
+                  : styles02.hiddenList20
+                : styles02.desktopFormContainerVisible
+            }
+          >
             <ul style={styles02.listOfItems}>
               {listsOfEmails
                 .slice()
@@ -295,6 +304,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler, 
                         currentItem={curentEmailList.name}
                         curentEmails={curentEmailList.emails}
                         handleLoadModal={handleLoadModal}
+                        handleEmails2={handleEmails2}
                       />
                     }
                   </li>

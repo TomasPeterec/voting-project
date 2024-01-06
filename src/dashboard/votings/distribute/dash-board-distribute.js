@@ -14,6 +14,7 @@ const DashBoardDistribute = () => {
   const { currentItem, currentId } = location.state
   const [reload, setReload] = useState(false)
   const [emails, setEmails] = useState('')
+  const [parentClick, setParentClick] = useState(false)
 
   const triggerReload = () => {
     setReload((prevReload) => !prevReload)
@@ -34,6 +35,25 @@ const DashBoardDistribute = () => {
     setEmails(newString)
   }
 
+  const handleEmails2 = (newEmails) => {
+    let newString = ''
+    for (let i = 0; i < newEmails.length; i++) {
+      if (i != 0) {
+        newString = newString + ', '
+      }
+      newString = newString + newEmails[i].mail
+    }
+    setEmails(newString)
+  }
+
+  const pushClickUp = (innerClick) => {
+    setParentClick(innerClick)
+  }
+
+  const changeParentClick = () => {
+    setParentClick(false)
+  }
+
   return (
     <>
       <div style={styles02.headerBasic}>
@@ -50,6 +70,7 @@ const DashBoardDistribute = () => {
             arrFromItems={arrayOfE}
             curentUuid={currentId}
             loadedEmails={emails}
+            pushClickUp={pushClickUp}
           />
         </div>
       </div>
@@ -61,6 +82,9 @@ const DashBoardDistribute = () => {
             reload={reload}
             arrHandler={handleItemArray}
             handleEmails={handleEmails}
+            parentClick={parentClick}
+            changeParentClick={changeParentClick}
+            handleEmails2={handleEmails2}
           />
         </div>
       </div>
