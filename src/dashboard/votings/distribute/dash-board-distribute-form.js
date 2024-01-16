@@ -10,7 +10,7 @@ import { sanitizeForApi } from '../../common/sanitize'
 import { styles02 } from '../../../css-and-material/styles-02'
 import mobileWidth from '../../../css-and-material/is-device'
 
-const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmails, pushClickUp }) => {
+const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmails, pushClickUp, clearBigArea }) => {
   // const [clicked, setClicked] = useState(false)
   const [formDataMails, setFormDataMails] = useState('')
 
@@ -60,7 +60,7 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmai
   }
 
   const clearTextArea = () => {
-    setFormDataMails('')
+    clearBigArea()
   }
 
   const handleSave = () => {
@@ -113,17 +113,17 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, loadedEmai
                     </Button>
                   </div>
                   <div>
-                    <Button type="submit" onClick={clearTextArea} variant="contained">
+                    <Button onClick={clearTextArea} variant="contained">
                       CLEAR
                     </Button>
                   </div>
                   <div>
-                    <Button type="submit" onClick={handleSave} variant="contained">
+                    <Button onClick={handleSave} variant="contained">
                       SAVE
                     </Button>
                   </div>
                   <div style={isMobile ? styles02.visibleButton20 : styles02.hiddenList20}>
-                    <Button type="submit" onClick={handleLoadClick} variant="contained">
+                    <Button onClick={handleLoadClick} variant="contained">
                       LOAD
                     </Button>
                   </div>

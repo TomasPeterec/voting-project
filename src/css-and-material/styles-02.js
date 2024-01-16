@@ -16,6 +16,9 @@ const styles02 = {
     borderRadius: '50px',
     height: '50px'
   },
+  floatedHidden: {
+    visibility: 'hidden'
+  },
   hiddenList20: {
     visibility: 'hidden'
   },

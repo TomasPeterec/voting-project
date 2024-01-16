@@ -24,18 +24,11 @@ const DashBoardDistribute = () => {
     setArrayOfE(arr)
   }
 
-  const handleEmails = (newEmails) => {
-    let newString = ''
-    for (let i = 0; i < newEmails.length; i++) {
-      if (i != 0) {
-        newString = newString + ', '
-      }
-      newString = newString + newEmails[i].mail
-    }
-    setEmails(newString)
+  const clearBigArea = () => {
+    setEmails('')
   }
 
-  const handleEmails2 = (newEmails) => {
+  const mainEmailHandler = (newEmails, kk) => {
     let newString = ''
     for (let i = 0; i < newEmails.length; i++) {
       if (i != 0) {
@@ -44,6 +37,15 @@ const DashBoardDistribute = () => {
       newString = newString + newEmails[i].mail
     }
     setEmails(newString)
+    console.log('Toto sa pretlacilo koli mailom: ' + kk)
+  }
+
+  const handleEmails = (newEmails, kk) => {
+    mainEmailHandler(newEmails, kk)
+  }
+
+  const handleEmails2 = (newEmails, kk) => {
+    mainEmailHandler(newEmails, kk)
   }
 
   const pushClickUp = (innerClick) => {
@@ -71,6 +73,7 @@ const DashBoardDistribute = () => {
             curentUuid={currentId}
             loadedEmails={emails}
             pushClickUp={pushClickUp}
+            clearBigArea={clearBigArea}
           />
         </div>
       </div>

@@ -21,7 +21,7 @@ const DDistributeItem = ({
   // Handlers of modal window
   const showModalButtons = () => {
     handleButtonsModal({ currentItem, currentId })
-    handleEmails2(curentEmails)
+    handleEmails2(curentEmails, currentItem)
   }
 
   const deleteItem = () => {

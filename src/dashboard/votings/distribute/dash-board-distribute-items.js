@@ -38,7 +38,7 @@ const DashBoardDistributeItems = ({
   const [modalButtonsOn, setModalButtonsOn] = useState(false)
   const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
-  const [clickForModalList, setClickForModalList] = useState(false)
+  // const [clickForModalList, setClickForModalList] = useState(false)
 
   // adding of interceptor
   axiosInstance.interceptors.request.use(
@@ -127,10 +127,10 @@ const DashBoardDistributeItems = ({
     // Call the fetchData function
     fetchData()
 
-    setClickForModalList(parentClick)
+    // setClickForModalList(parentClick)
 
     // Dependency array includes 'setLoading, setListsOfEmails'
-  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails, parentClick])
+  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails])
 
   const deleteVotings = async (item) => {
     const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item)
@@ -180,7 +180,7 @@ const DashBoardDistributeItems = ({
   const handleLoadModal = ({ currentItem, curentEmails }) => {
     setCurrentItem(currentItem)
     setCurentEmails(curentEmails)
-    handleEmails(curentEmails)
+    handleEmails(curentEmails, currentItem)
   }
 
   return (
@@ -284,7 +284,7 @@ const DashBoardDistributeItems = ({
           <div
             style={
               isMobile
-                ? clickForModalList
+                ? parentClick
                   ? styles02.modalListVisible
                   : styles02.hiddenList20
                 : styles02.desktopFormContainerVisible
