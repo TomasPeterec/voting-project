@@ -9,21 +9,32 @@ import { Typography } from '@mui/material'
 import votingTheme from '../../../css-and-material/theme'
 import { Link } from 'react-router-dom'
 import { sanitizeForApi } from '../../common/sanitize'
-import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
 import { testIfItExists } from '../../common/already-exist'
+import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
 
-const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }) => {
+const DashBoardDistributeItems = ({
+  userId,
+  reload,
+  curentVotingId,
+  arrHandler,
+  handleEmails,
+  parentClick,
+  changeParentClick,
+  handleEmails2,
+  setGlobal,
+  getGlobal
+}) => {
   DashBoardDistributeItems.propTypes = {
     userId: PropTypes.string.isRequired,
     reload: PropTypes.bool.isRequired
   }
 
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input')
-  const [listOfCandidates, setListOfCandidates] = useState(null)
+  const [listsOfEmails, setListsOfEmails] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const [currentItem, setCurrentItem] = useState('')
-  const [curentDescription, setCurentDescription] = useState('')
+  const [curentEmails, setCurentEmails] = useState('')
   const [newItem, setNewItem] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [modalButtonsOn, setModalButtonsOn] = useState(false)
@@ -46,25 +57,25 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
 
   const handleButtonsModal = (itemIdentificators) => {
     setCurrentItem(itemIdentificators.currentItem)
-    setCurentDescription(itemIdentificators.curentDescription)
-    setModalButtonsOn(true)
+    setCurentEmails(itemIdentificators.curentEmails)
+    changeParentClick()
   }
 
   const handleDeleteItemModal = (itemIdentificators) => {
     hideModalButtons()
     setModalDeleteConfirmation(true)
     setCurrentItem(itemIdentificators.currentItem)
-    setCurentDescription(itemIdentificators.curentDescription)
+    setCurentEmails(itemIdentificators.curentEmails)
   }
 
   const handleEditItemModal = (itemIdentificators) => {
     hideModalButtons()
     setModalEdit(true)
     setCurrentItem(itemIdentificators.currentItem)
-    setCurentDescription(itemIdentificators.curentDescription)
+    setCurentEmails(itemIdentificators.curentEmails)
 
     setNewItem(itemIdentificators.currentItem)
-    setNewDescription(itemIdentificators.curentDescription)
+    setNewDescription(itemIdentificators.curentEmails)
   }
 
   const hideModalButtons = () => {
@@ -86,11 +97,12 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
 
   const handleChange = (e) => {
     setNewItem(sanitizeForApi(e.target.value))
-    setNoteBelowTheInput(testIfItExists(listOfCandidates, 'title', sanitizeForApi(e.target.value).trim()))
+    setNoteBelowTheInput(testIfItExists(listsOfEmails, 'title', sanitizeForApi(e.target.value).trim()))
   }
 
   const handleChange2 = (e) => {
-    setNewDescription(sanitizeForApi(e.target.value))
+    // setNewDescription(sanitizeForApi(e.target.value))
+    setGlobal('displayedListOfEmails', e.target.value)
   }
 
   useEffect(() => {
@@ -100,10 +112,11 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
         setLoading(true)
 
         // api-endpoint for serving the items
-        const response = await axiosInstance.get(`/api/listOfVotings/template/${curentVotingId}`)
+        const response = await axiosInstance.get('/api/users/mails/')
         const data = response.data
+
         // Set data and loading to false when the operation is complete
-        setListOfCandidates(data)
+        setListsOfEmails(data)
         setLoading(false)
         arrHandler(data)
       } catch (error) {
@@ -116,11 +129,11 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
     // Call the fetchData function
     fetchData()
 
-    // Dependency array includes 'setLoading, setListOfCandidates'
-  }, [setLoading, setListOfCandidates, reload, currentItem, curentDescription])
+    // Dependency array includes 'setLoading, setListsOfEmails'
+  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails])
 
   const deleteVotings = async (item) => {
-    const newListArray = ifExistDeleteFromArrayOfObjects(listOfCandidates, 'title', item)
+    const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item)
 
     try {
       // api-endpoint for deleting the item
@@ -135,7 +148,7 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
         console.log('Delete request successful:', data)
       }
       setCurrentItem('')
-      setCurentDescription('')
+      setCurentEmails('')
     } catch (error) {
       console.error('Error deleting item data:', error)
     }
@@ -144,24 +157,41 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      if (noteBelowTheInput != 'Such name of item is already in the list') {
-        if (newItem != '' && newItem != ' ' && newItem != '.' && newItem != ',') {
-          const response = await axiosInstance.put('/api/listOfVotings/template/change', {
-            lov_id: curentVotingId,
-            oldTitle: currentItem,
-            title: newItem.trim(),
-            description: newDescription.trim()
-          })
-          console.log('response data: ' + response.data)
-          setCurrentItem(newItem.trim())
-          setCurentDescription(newDescription.trim())
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error.response.data)
-    }
+    console.log(newDescription)
+    const response = await axiosInstance.put('/api/listOfVotings/template/change', {
+      lov_id: curentVotingId,
+      oldTitle: currentItem,
+      title: newItem.trim(),
+      description: getGlobal.displayedListOfEmails.trim()
+    })
+
+    console.log(getGlobal.displayedListOfEmails)
+    console.log('response data: ' + response.data)
+
+    // try {
+    //   if (newItem != '' && newItem != ' ' && newItem != '.' && newItem != ',') {
+    //     const response = await axiosInstance.put('/api/listOfVotings/template/change', {
+    //       lov_id: curentVotingId,
+    //       oldTitle: currentItem,
+    //       title: newItem.trim(),
+    //       description: newDescription.trim()
+    //     })
+    //     // console.log('response data: ' + response.data)
+    //     console.log('response data: ' + response)
+    //     setCurrentItem(newItem.trim())
+    //     setCurentEmails(newDescription.trim())
+    //   }
+    // } catch (error) {
+    //   // console.error('Error:', error.response.data)
+    //   console.error('Error:', error.response)
+    // }
     hideEditModal()
+  }
+
+  const handleLoadModal = ({ currentItem, curentEmails }) => {
+    setCurrentItem(currentItem)
+    setCurentEmails(curentEmails)
+    handleEmails(curentEmails, currentItem)
   }
 
   return (
@@ -179,17 +209,20 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
           <div style={styles02.buttonNest01}>
-            <Link to="/votings/edit" state={{ currentItem, curentDescription }}>
+            <Button onClick={() => handleLoadModal({ currentItem, curentEmails })}>Load</Button>
+            <Link to="/votings/edit" state={{ currentItem, curentEmails }}>
+              <Button>Save</Button>
+            </Link>
+            <Link to="/votings/edit" state={{ currentItem, curentEmails }}>
               <Button>Edit</Button>
             </Link>
-            <Button onClick={() => handleDeleteItemModal({ currentItem, curentDescription })}>Delete</Button>
+            <Button onClick={() => handleDeleteItemModal({ currentItem, curentEmails })}>Delete</Button>
           </div>
           <div style={styles02.buttonNest01}>
             <Button onClick={hideModalButtons}>Return</Button>
           </div>
         </div>
       </div>
-
       {/* Definition of modal window for confirmation of deleting a item */}
       <div style={!modalDeleteConfirmation ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div style={styles02.nameOfItemOnModalNest}>
@@ -202,7 +235,6 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
           </div>
         </div>
       </div>
-
       <div style={!modalEdit ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
@@ -225,10 +257,11 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
                       The description of the new choice
                     </Typography>
                     <textarea
+                      data-testid="mail_addreses"
                       style={{ width: '100%' }}
                       rows={4} // Specifies the number of visible text lines
                       cols={150} // Specifies the width of the textarea in characters
-                      value={newDescription} // Specifies the initial value of the textarea
+                      value={getGlobal.displayedListOfEmails} // Specifies the initial value of the textarea
                       placeholder="Enter Input" // Specifies a short hint that describes the expected value of the textarea
                       wrap="soft" // Specifies how the text in the textarea should be wrapped
                       readOnly={false} // Specifies that the textarea is read-only, meaning the user cannot modify its content
@@ -250,31 +283,42 @@ const DashBoardDistributeItems = ({ userId, reload, curentVotingId, arrHandler }
             </Box>
           </div>
           <div style={styles02.buttonNest01}>
-            <Button onClick={hideEditModal}>Return</Button>
+            <Button onClick={hideEditModal}>Return 03</Button>
           </div>
         </div>
       </div>
-
       <div>
         {loading ? (
           // Render the loader when loading is true
           <p>Loading...</p>
         ) : (
           // Render component content when loading is false
-          <div>
+          <div
+            style={
+              isMobile
+                ? parentClick
+                  ? styles02.modalListVisible
+                  : styles02.hiddenList20
+                : styles02.desktopFormContainerVisible
+            }
+          >
             <ul style={styles02.listOfItems}>
-              {listOfCandidates
+              {listsOfEmails
                 .slice()
                 .reverse()
-                .map((vote, index) => (
+                .map((curentEmailList, index) => (
                   <li key={index}>
                     {
                       <DDistributeItem
                         handleButtonsModal={handleButtonsModal}
                         handleDeleteItemModal={handleDeleteItemModal}
                         handleEditItemModal={handleEditItemModal}
-                        currentItem={vote.title}
-                        curentDescription={vote.description}
+                        currentItem={curentEmailList.name}
+                        curentEmails={curentEmailList.emails}
+                        handleLoadModal={handleLoadModal}
+                        handleEmails2={handleEmails2}
+                        getGlobal={getGlobal}
+                        setGlobal={setGlobal}
                       />
                     }
                   </li>

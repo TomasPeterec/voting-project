@@ -8,10 +8,14 @@ import votingTheme from '../../../css-and-material/theme'
 const DDistributeItem = ({
   currentItem,
   currentId,
-  curentDescription,
+  curentEmails,
   handleButtonsModal,
   handleDeleteItemModal,
-  handleEditItemModal
+  handleEditItemModal,
+  handleLoadModal,
+  handleEmails2,
+  // getGlobal,
+  setGlobal
 }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
@@ -19,6 +23,7 @@ const DDistributeItem = ({
   // Handlers of modal window
   const showModalButtons = () => {
     handleButtonsModal({ currentItem, currentId })
+    handleEmails2(curentEmails, currentItem)
   }
 
   const deleteItem = () => {
@@ -26,7 +31,22 @@ const DDistributeItem = ({
   }
 
   const editItem = () => {
-    handleEditItemModal({ currentItem, curentDescription })
+    let newTextValue = ''
+    for (let i = 0; i < curentEmails.length; i++) {
+      if (i > 0) {
+        newTextValue = newTextValue + ', '
+      }
+      newTextValue = newTextValue + '"' + curentEmails[i].name + '" <' + curentEmails[i].mail + '>'
+    }
+
+    handleEditItemModal({ currentItem, curentEmails })
+
+    setGlobal('displayedListOfEmails', newTextValue)
+  }
+
+  const loadToParent = () => {
+    handleLoadModal({ currentItem, curentEmails })
+    setGlobal('curentItem', currentItem)
   }
 
   // Definition of an item in Votings list
@@ -44,6 +64,22 @@ const DDistributeItem = ({
                 <></>
               ) : (
                 <div style={styles02.itemRow}>
+                  <div style={styles02.roundButonNest}>
+                    <button
+                      style={{
+                        height: '38px',
+                        width: '38px',
+                        borderWidth: '0px',
+                        padding: '0',
+                        backgroundColor: 'white',
+                        borderRadius: '19px'
+                      }}
+                      onClick={loadToParent}
+                    >
+                      <div style={styles02.rounderFrame}>LOAD</div>
+                    </button>
+                  </div>
+
                   <div style={styles02.roundButonNest}>
                     <button
                       style={{
@@ -78,12 +114,6 @@ const DDistributeItem = ({
               )}
             </div>
           </div>
-          <Typography
-            sx={votingTheme.typography.descriptionOfItem}
-            style={{ width: '100%', marginLeft: '24px', marginBottom: '10px' }}
-          >
-            {curentDescription}
-          </Typography>
         </Box>
       </>
     )

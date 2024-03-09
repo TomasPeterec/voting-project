@@ -18,6 +18,8 @@ import DashboardEdit from './dashboard/votings/edit/dash-board-edit'
 import DashboardStats from './dashboard/votings/statistics/dash-board-stats'
 import DashboardDistribute from './dashboard/votings/distribute/dash-board-distribute'
 
+// import TestOfTest from './testTest/TestOfTest'
+
 export default function AppRouter() {
   return (
     <BrowserRouter>
@@ -63,7 +65,10 @@ createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
   <ThemeProvider theme={votingTheme}>
     <AppRouter />
+    {/* <br />
+    <TestOfTest /> */}
   </ThemeProvider>
+
   // {/* </React.StrictMode> */}
 )
 
