@@ -20,7 +20,9 @@ const DashBoardDistributeItems = ({
   handleEmails,
   parentClick,
   changeParentClick,
-  handleEmails2
+  handleEmails2,
+  setGlobal,
+  getGlobal
 }) => {
   DashBoardDistributeItems.propTypes = {
     userId: PropTypes.string.isRequired,
@@ -38,7 +40,6 @@ const DashBoardDistributeItems = ({
   const [modalButtonsOn, setModalButtonsOn] = useState(false)
   const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
-  // const [clickForModalList, setClickForModalList] = useState(false)
 
   // adding of interceptor
   axiosInstance.interceptors.request.use(
@@ -100,7 +101,8 @@ const DashBoardDistributeItems = ({
   }
 
   const handleChange2 = (e) => {
-    setNewDescription(sanitizeForApi(e.target.value))
+    // setNewDescription(sanitizeForApi(e.target.value))
+    setGlobal('displayedListOfEmails', e.target.value)
   }
 
   useEffect(() => {
@@ -126,8 +128,6 @@ const DashBoardDistributeItems = ({
 
     // Call the fetchData function
     fetchData()
-
-    // setClickForModalList(parentClick)
 
     // Dependency array includes 'setLoading, setListsOfEmails'
   }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails])
@@ -157,23 +157,34 @@ const DashBoardDistributeItems = ({
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      if (noteBelowTheInput != 'Such name of item is already in the list') {
-        if (newItem != '' && newItem != ' ' && newItem != '.' && newItem != ',') {
-          const response = await axiosInstance.put('/api/listOfVotings/template/change', {
-            lov_id: curentVotingId,
-            oldTitle: currentItem,
-            title: newItem.trim(),
-            description: newDescription.trim()
-          })
-          console.log('response data: ' + response.data)
-          setCurrentItem(newItem.trim())
-          setCurentEmails(newDescription.trim())
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error.response.data)
-    }
+    console.log(newDescription)
+    const response = await axiosInstance.put('/api/listOfVotings/template/change', {
+      lov_id: curentVotingId,
+      oldTitle: currentItem,
+      title: newItem.trim(),
+      description: getGlobal.displayedListOfEmails.trim()
+    })
+
+    console.log(getGlobal.displayedListOfEmails)
+    console.log('response data: ' + response.data)
+
+    // try {
+    //   if (newItem != '' && newItem != ' ' && newItem != '.' && newItem != ',') {
+    //     const response = await axiosInstance.put('/api/listOfVotings/template/change', {
+    //       lov_id: curentVotingId,
+    //       oldTitle: currentItem,
+    //       title: newItem.trim(),
+    //       description: newDescription.trim()
+    //     })
+    //     // console.log('response data: ' + response.data)
+    //     console.log('response data: ' + response)
+    //     setCurrentItem(newItem.trim())
+    //     setCurentEmails(newDescription.trim())
+    //   }
+    // } catch (error) {
+    //   // console.error('Error:', error.response.data)
+    //   console.error('Error:', error.response)
+    // }
     hideEditModal()
   }
 
@@ -246,10 +257,11 @@ const DashBoardDistributeItems = ({
                       The description of the new choice
                     </Typography>
                     <textarea
+                      data-testid="mail_addreses"
                       style={{ width: '100%' }}
                       rows={4} // Specifies the number of visible text lines
                       cols={150} // Specifies the width of the textarea in characters
-                      value={newDescription} // Specifies the initial value of the textarea
+                      value={getGlobal.displayedListOfEmails} // Specifies the initial value of the textarea
                       placeholder="Enter Input" // Specifies a short hint that describes the expected value of the textarea
                       wrap="soft" // Specifies how the text in the textarea should be wrapped
                       readOnly={false} // Specifies that the textarea is read-only, meaning the user cannot modify its content
@@ -271,7 +283,7 @@ const DashBoardDistributeItems = ({
             </Box>
           </div>
           <div style={styles02.buttonNest01}>
-            <Button onClick={hideEditModal}>Return</Button>
+            <Button onClick={hideEditModal}>Return 03</Button>
           </div>
         </div>
       </div>
@@ -305,6 +317,8 @@ const DashBoardDistributeItems = ({
                         curentEmails={curentEmailList.emails}
                         handleLoadModal={handleLoadModal}
                         handleEmails2={handleEmails2}
+                        getGlobal={getGlobal}
+                        setGlobal={setGlobal}
                       />
                     }
                   </li>

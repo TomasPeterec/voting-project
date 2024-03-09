@@ -39,6 +39,28 @@ const styles02 = {
     display: 'block',
     zIndex: 2000
   },
+  modalSaveVisible: {
+    visibility: 'visible',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    display: 'block',
+    zIndex: 2000
+  },
+  modalSaveHidden: {
+    visibility: 'hidden',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '0%',
+    height: '0%',
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    display: 'block',
+    zIndex: 2000
+  },
   separatorFlat: {
     height: '0'
   },

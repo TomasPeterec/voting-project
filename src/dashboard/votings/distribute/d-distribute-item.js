@@ -13,7 +13,9 @@ const DDistributeItem = ({
   handleDeleteItemModal,
   handleEditItemModal,
   handleLoadModal,
-  handleEmails2
+  handleEmails2,
+  // getGlobal,
+  setGlobal
 }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
@@ -29,11 +31,22 @@ const DDistributeItem = ({
   }
 
   const editItem = () => {
+    let newTextValue = ''
+    for (let i = 0; i < curentEmails.length; i++) {
+      if (i > 0) {
+        newTextValue = newTextValue + ', '
+      }
+      newTextValue = newTextValue + '"' + curentEmails[i].name + '" <' + curentEmails[i].mail + '>'
+    }
+
     handleEditItemModal({ currentItem, curentEmails })
+
+    setGlobal('displayedListOfEmails', newTextValue)
   }
 
   const loadToParent = () => {
     handleLoadModal({ currentItem, curentEmails })
+    setGlobal('curentItem', currentItem)
   }
 
   // Definition of an item in Votings list
