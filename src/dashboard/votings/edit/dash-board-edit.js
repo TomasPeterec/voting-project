@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom'
 import '../../../css-and-material/basic.css'
 
 const DashboardEdit = () => {
+  const uID = 'e4eaaaf2-d142-11e1-b3e4-080027620cdd'
+
   const [arrayOfE, setArrayOfE] = useState([])
 
   const location = useLocation()
@@ -32,12 +34,17 @@ const DashboardEdit = () => {
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
           <DashBoardStaticTexts title="Votings" breadcrumb={currentItem + ' - edit'} urlBack="/votings" />
-          <DashBoardEditForm userId="93" triggerReload={triggerReload} arrFromItems={arrayOfE} curentUuid={currentId} />
+          <DashBoardEditForm
+            userId={uID}
+            triggerReload={triggerReload}
+            arrFromItems={arrayOfE}
+            curentUuid={currentId}
+          />
         </div>
       </div>
       <div style={styles02.mainBottomContainer}>
         <div style={styles02.mainContentContainer}>
-          <DashBoardEditItems userId="93" curentVotingId={currentId} reload={reload} arrHandler={handleItemArray} />
+          <DashBoardEditItems userId={uID} curentVotingId={currentId} reload={reload} arrHandler={handleItemArray} />
         </div>
       </div>
     </>

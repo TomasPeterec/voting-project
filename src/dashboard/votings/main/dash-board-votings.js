@@ -7,6 +7,7 @@ import { styles02 } from '../../../css-and-material/styles-02'
 import '../../../css-and-material/basic.css'
 
 function DashBoardVotings() {
+  const uID = 'e4eaaaf2-d142-11e1-b3e4-080027620cdd'
   const [arrayOfE, setArrayOfE] = useState([])
   const [reload, setReload] = useState(false)
 
@@ -28,12 +29,12 @@ function DashBoardVotings() {
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
           <DashBoardStaticTexts title="Votings" breadcrumb="&nbsp;" urlBack="" />
-          <DashBoardVotingsForm userId="93" triggerReload={triggerReload} arrFromItems={arrayOfE} />
+          <DashBoardVotingsForm userId={uID} triggerReload={triggerReload} arrFromItems={arrayOfE} />
         </div>
       </div>
       <div style={styles02.mainBottomContainer}>
         <div style={styles02.mainContentContainer}>
-          <DashBoardVotingItems userId="93" reload={reload} arrHandler={handleItemArray} />
+          <DashBoardVotingItems userId={uID} reload={reload} arrHandler={handleItemArray} />
         </div>
       </div>
     </>

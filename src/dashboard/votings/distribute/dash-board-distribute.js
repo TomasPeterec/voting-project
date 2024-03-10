@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom'
 import '../../../css-and-material/basic.css'
 
 const DashBoardDistribute = () => {
+  const uID = 'e4eaaaf2-d142-11e1-b3e4-080027620cdd'
   const [getGlobal, setGetGlobal] = useState({
     curentSetOfEmails: '',
     curentItem: '',
@@ -16,7 +17,7 @@ const DashBoardDistribute = () => {
     nameOfNewSetOfEmails: '',
     displayedListOfEmails: ''
   })
-  const userId = 93
+  const userId = uID
 
   const setGlobal = (propertyName, propertyValue) => {
     const temporaryObject = { ...getGlobal }
@@ -129,7 +130,7 @@ const DashBoardDistribute = () => {
       <div style={styles02.mainBottomContainer}>
         <div style={styles02.mainContentContainer}>
           <DashBoardDistributeItems
-            userId="93"
+            userId={uID}
             curentVotingId={currentId}
             reload={reload}
             arrHandler={handleItemArray}
