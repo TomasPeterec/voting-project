@@ -1,95 +1,126 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import validator from 'validator'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
+import firebaseConfig from '../firebaseConfig'; // Make sure the Firebase config is imported
+import { initializeApp } from 'firebase/app';
+import mobileWidth from '../css-and-material/is-device';
+import { modalWindowsStyles } from '../css-and-material/modalWindowsStyles';
+import votingTheme from '../css-and-material/theme';
+import '../css-and-material/autofillStyles.css';
 
+// Initialize Firebase app
+initializeApp(firebaseConfig);
+
+// Registration Form Component
 const RegistrationForm = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isValidEmail, setIsValidEmail] = useState(true)
-  const [isValidPassword, setIsValidPassword] = useState(true)
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`); // Determine if it's a mobile screen
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSendButtonHovered, setSendButtonHovered] = useState(false);
 
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value
-    setPassword(newPassword)
-    setIsValidPassword(validatePassword(newPassword))
-  }
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const validatePassword = (password) => {
-    // Custom password validation rules
-    // Example: At least 8 characters and contain a lowercase letter, an uppercase letter, and a number
-    return (
-      validator.isLength(password, { min: 8 }) &&
-      /[a-z]/.test(password) &&
-      /[A-Z]/.test(password) &&
-      /\d/.test(password)
-    )
-  }
-
-  const handleEmailChange = (event) => {
-    const newEmail = event.target.value
-    setEmail(newEmail)
-    setIsValidEmail(validator.isEmail(newEmail))
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
-    if (isValidEmail) {
-      // Perform further actions or submit the form
-      console.log('Valid email:', email)
-    } else {
-      console.log('Invalid email:', email)
-    }
-
-    if (isValidPassword) {
-      // Perform further actions or submit the form
-      console.log('Valid password:', password)
-    } else {
-      console.log('Invalid password:', password)
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage(''); // Reset error message before registration attempt
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_ROOT_VAR}/api/users`,
-        { email, password }
-      )
-      console.log(response.data)
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log('User registered successfully');
+      navigate('/votings/dashboard'); // Navigate to a dashboard after successful registration
     } catch (error) {
-      console.error(error)
+      setErrorMessage('Error registering user: ' + error.message); // Custom error message
+      console.error('Error registering user:', error.message);
     }
-  }
+  };
+
+  // Compute dynamic styles based on mobile screen
+  const registrationFormStyles = {
+    ...modalWindowsStyles,
+    solidFoundation: {
+      ...modalWindowsStyles.solidFoundation,
+      width: '100%',
+    },
+    sendButton: {
+      ...modalWindowsStyles.sendButton,
+      width: isMobile ? '100%' : '190px',
+      height: isMobile ? 'clamp(43.85px, 11vw, 65px)' : '59px',
+      marginTop: isMobile ? '14px' : '9px',
+      paddingLeft: '50px',
+      paddingRight: '50px',
+    },
+    sendButtonHover: {
+      ...modalWindowsStyles.sendButtonHover,
+      width: isMobile ? '100%' : '190px',
+      height: isMobile ? 'clamp(43.85px, 11vw, 65px)' : '59px',
+      marginTop: isMobile ? '14px' : '9px',
+      paddingLeft: '50px',
+      paddingRight: '50px',
+    },
+  };
 
   return (
-    <>
-      <h1>Registration</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        {!isValidEmail && <p className="error">Invalid email address</p>}
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        {!isValidPassword && (
-          <p className="error">
-            Password must be at least 8 characters and contain a lowercase
-            letter, an uppercase letter, and a number
-          </p>
-        )}
-        <button type="submit">Register</button>
-      </form>
-    </>
-  )
-}
+    <div style={{ margin: '0px' }}>
+      <div style={registrationFormStyles.solidFoundation}>
+        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              gap: '10px',
+              justifyContent: 'center',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <Typography sx={votingTheme.typography.formDescription}>Email</Typography>
+              <input
+                style={modalWindowsStyles.inputStyle}
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
+                required
+              />
+            </div>
 
-export default RegistrationForm
+            <div style={{ width: '100%' }}>
+              <Typography sx={votingTheme.typography.formDescription}>Password</Typography>
+              <input
+                style={modalWindowsStyles.inputStyle}
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+
+            {errorMessage && (
+              <Typography sx={votingTheme.typography.inputRequired} color="red">
+                {errorMessage}
+              </Typography>
+            )}
+
+            <Button
+              style={isSendButtonHovered ? registrationFormStyles.sendButtonHover : registrationFormStyles.sendButton}
+              type="submit"
+              onMouseEnter={() => setSendButtonHovered(true)}
+              onMouseLeave={() => setSendButtonHovered(false)}
+            >
+              Register
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default RegistrationForm;

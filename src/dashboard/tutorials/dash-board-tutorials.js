@@ -1,5 +1,5 @@
-import React from 'react'
-import DashBoardHeader from '../common/dash-board-header'
+import React from 'react';
+import DashBoardHeader from '../common/dash-board-header';
 
 const DashboardTutorials = () => {
   return (
@@ -7,7 +7,7 @@ const DashboardTutorials = () => {
       <DashBoardHeader />
       <div>DashboardTutorials page</div>
     </>
-  )
-}
+  );
+};
 
-export default DashboardTutorials
+export default DashboardTutorials;

@@ -1,10 +1,10 @@
-import { createTheme } from '@mui/material/styles'
-import { fCoef, fontColorPrime, fontColorGray, formDescriptionColor, grayIcons } from './generalVariables'
+import { createTheme } from '@mui/material/styles';
+import { fCoef, fontColorPrime, fontColorGray, formDescriptionColor, grayIcons } from './generalVariables';
 
 const votingTheme = createTheme({
   colors: {
     primary: '#186DFD',
-    secondary: '#FF4081'
+    secondary: '#FF4081',
     // ... other color configurations
   },
   typography: {
@@ -15,34 +15,34 @@ const votingTheme = createTheme({
     h1: {
       fontSize: 61.06 / fCoef,
       fontWeight: 'bold',
-      color: fontColorPrime
+      color: fontColorPrime,
     },
     h3: {
       fontSize: 37.74 / fCoef,
       fontWeight: 100,
-      color: fontColorGray
+      color: fontColorGray,
     },
     formDescription: {
       fontSize: 37.74 / fCoef,
       fontWeight: 100,
-      color: formDescriptionColor
+      color: formDescriptionColor,
     },
     inputRequired: {
       fontSize: 29.67 / fCoef,
       fontWeight: 100,
-      color: fontColorPrime
+      color: fontColorPrime,
     },
     titleOfItem: {
       fontSize: 48 / fCoef / 1.272,
       fontWeight: 100,
-      color: fontColorPrime
+      color: fontColorPrime,
     },
     descriptionOfItem: {
       fontSize: 37.74 / fCoef / 1.272,
       fontWeight: 100,
-      color: grayIcons
-    }
-  }
-})
+      color: grayIcons,
+    },
+  },
+});
 
-export default votingTheme
+export default votingTheme;

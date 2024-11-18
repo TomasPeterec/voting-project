@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import DDistributeItem from './d-distribute-item'
-import mobileWidth from '../../../css-and-material/is-device'
-import axiosInstance from '../../../axios-instance'
-import { styles02 } from '../../../css-and-material/styles-02'
-import { useMediaQuery, Button, Box } from '@mui/material'
-import { Typography } from '@mui/material'
-import votingTheme from '../../../css-and-material/theme'
-import { Link } from 'react-router-dom'
-import { sanitizeForApi } from '../../common/sanitize'
-import { testIfItExists } from '../../common/already-exist'
-import { ifExistDeleteFromArrayOfObjects } from '../../common/already-exist'
+import { useMediaQuery, Button, Box, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import DDistributeItem from './d-distribute-item';
+import axiosInstance from '../../../axios-instance';
+import mobileWidth from '../../../css-and-material/is-device';
+import { styles02 } from '../../../css-and-material/styles-02';
+import votingTheme from '../../../css-and-material/theme';
+import { testIfItExists, ifExistDeleteFromArrayOfObjects } from '../../common/already-exist';
+import { sanitizeForApi } from '../../common/sanitize';
 
 const DashBoardDistributeItems = ({
   userId,
@@ -22,151 +20,151 @@ const DashBoardDistributeItems = ({
   changeParentClick,
   handleEmails2,
   setGlobal,
-  getGlobal
+  getGlobal,
 }) => {
   DashBoardDistributeItems.propTypes = {
     userId: PropTypes.string.isRequired,
-    reload: PropTypes.bool.isRequired
-  }
+    reload: PropTypes.bool.isRequired,
+  };
 
-  const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input')
-  const [listsOfEmails, setListsOfEmails] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
+  const [listsOfEmails, setListsOfEmails] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const [currentItem, setCurrentItem] = useState('')
-  const [curentEmails, setCurentEmails] = useState('')
-  const [newItem, setNewItem] = useState('')
-  const [newDescription, setNewDescription] = useState('')
-  const [modalButtonsOn, setModalButtonsOn] = useState(false)
-  const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false)
-  const [modalEdit, setModalEdit] = useState(false)
+  const [currentItem, setCurrentItem] = useState('');
+  const [curentEmails, setCurentEmails] = useState('');
+  const [newItem, setNewItem] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  const [modalButtonsOn, setModalButtonsOn] = useState(false);
+  const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
 
   // adding of interceptor
   axiosInstance.interceptors.request.use(
     (config) => {
-      config.headers['X-User-ID'] = userId
-      return config
+      config.headers['X-User-ID'] = userId;
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
-    }
-  )
+      return Promise.reject(error);
+    },
+  );
 
   // Breakpoint definition
-  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
   const handleButtonsModal = (itemIdentificators) => {
-    setCurrentItem(itemIdentificators.currentItem)
-    setCurentEmails(itemIdentificators.curentEmails)
-    changeParentClick()
-  }
+    setCurrentItem(itemIdentificators.currentItem);
+    setCurentEmails(itemIdentificators.curentEmails);
+    changeParentClick();
+  };
 
   const handleDeleteItemModal = (itemIdentificators) => {
-    hideModalButtons()
-    setModalDeleteConfirmation(true)
-    setCurrentItem(itemIdentificators.currentItem)
-    setCurentEmails(itemIdentificators.curentEmails)
-  }
+    hideModalButtons();
+    setModalDeleteConfirmation(true);
+    setCurrentItem(itemIdentificators.currentItem);
+    setCurentEmails(itemIdentificators.curentEmails);
+  };
 
   const handleEditItemModal = (itemIdentificators) => {
-    hideModalButtons()
-    setModalEdit(true)
-    setCurrentItem(itemIdentificators.currentItem)
-    setCurentEmails(itemIdentificators.curentEmails)
+    hideModalButtons();
+    setModalEdit(true);
+    setCurrentItem(itemIdentificators.currentItem);
+    setCurentEmails(itemIdentificators.curentEmails);
 
-    setNewItem(itemIdentificators.currentItem)
-    setNewDescription(itemIdentificators.curentEmails)
-  }
+    setNewItem(itemIdentificators.currentItem);
+    setNewDescription(itemIdentificators.curentEmails);
+  };
 
   const hideModalButtons = () => {
-    setModalButtonsOn(false)
-  }
+    setModalButtonsOn(false);
+  };
 
   const hideDeleteConfirmation = () => {
-    setModalDeleteConfirmation(false)
-  }
+    setModalDeleteConfirmation(false);
+  };
 
   const hideEditModal = () => {
-    setModalEdit(false)
-  }
+    setModalEdit(false);
+  };
 
   const deletePermanently = (item) => {
-    deleteVotings(item)
-    setModalDeleteConfirmation(false)
-  }
+    deleteVotings(item);
+    setModalDeleteConfirmation(false);
+  };
 
   const handleChange = (e) => {
-    setNewItem(sanitizeForApi(e.target.value))
-    setNoteBelowTheInput(testIfItExists(listsOfEmails, 'title', sanitizeForApi(e.target.value).trim()))
-  }
+    setNewItem(sanitizeForApi(e.target.value));
+    setNoteBelowTheInput(testIfItExists(listsOfEmails, 'title', sanitizeForApi(e.target.value).trim()));
+  };
 
   const handleChange2 = (e) => {
     // setNewDescription(sanitizeForApi(e.target.value))
-    setGlobal('displayedListOfEmails', e.target.value)
-  }
+    setGlobal('displayedListOfEmails', e.target.value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Set loading to true before starting the operation
-        setLoading(true)
+        setLoading(true);
 
         // api-endpoint for serving the items
-        const response = await axiosInstance.get('/api/users/mails/')
-        const data = response.data
+        const response = await axiosInstance.get('/api/users/mails/');
+        const data = response.data;
 
         // Set data and loading to false when the operation is complete
-        setListsOfEmails(data)
-        setLoading(false)
-        arrHandler(data)
+        setListsOfEmails(data);
+        setLoading(false);
+        arrHandler(data);
       } catch (error) {
         // Handle errors if needed
-        console.error('Error fetching data:', error)
-        setLoading(false)
+        console.error('Error fetching data:', error);
+        setLoading(false);
       }
-    }
+    };
 
     // Call the fetchData function
-    fetchData()
+    fetchData();
 
     // Dependency array includes 'setLoading, setListsOfEmails'
-  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails])
+  }, [setLoading, setListsOfEmails, arrHandler, reload, currentItem, curentEmails]);
 
   const deleteVotings = async (item) => {
-    const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item)
+    const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item);
 
     try {
       // api-endpoint for deleting the item
       const response = await axiosInstance.put('/api/listOfVotings/template/delete', {
         lov_id: curentVotingId,
-        template: newListArray
-      })
+        template: newListArray,
+      });
 
       if (response.status === 200) {
-        const data = response.data
+        const data = response.data;
         // Perform actions with the data
-        console.log('Delete request successful:', data)
+        console.log('Delete request successful:', data);
       }
-      setCurrentItem('')
-      setCurentEmails('')
+      setCurrentItem('');
+      setCurentEmails('');
     } catch (error) {
-      console.error('Error deleting item data:', error)
+      console.error('Error deleting item data:', error);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    console.log(newDescription)
+    console.log(newDescription);
     const response = await axiosInstance.put('/api/listOfVotings/template/change', {
       lov_id: curentVotingId,
       oldTitle: currentItem,
       title: newItem.trim(),
-      description: getGlobal.displayedListOfEmails.trim()
-    })
+      description: getGlobal.displayedListOfEmails.trim(),
+    });
 
-    console.log(getGlobal.displayedListOfEmails)
-    console.log('response data: ' + response.data)
+    console.log(getGlobal.displayedListOfEmails);
+    console.log('response data: ' + response.data);
 
     // try {
     //   if (newItem != '' && newItem != ' ' && newItem != '.' && newItem != ',') {
@@ -185,14 +183,14 @@ const DashBoardDistributeItems = ({
     //   // console.error('Error:', error.response.data)
     //   console.error('Error:', error.response)
     // }
-    hideEditModal()
-  }
+    hideEditModal();
+  };
 
   const handleLoadModal = ({ currentItem, curentEmails }) => {
-    setCurrentItem(currentItem)
-    setCurentEmails(curentEmails)
-    handleEmails(curentEmails, currentItem)
-  }
+    setCurrentItem(currentItem);
+    setCurentEmails(curentEmails);
+    handleEmails(curentEmails, currentItem);
+  };
 
   return (
     <>
@@ -328,7 +326,7 @@ const DashBoardDistributeItems = ({
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashBoardDistributeItems
+export default DashBoardDistributeItems;

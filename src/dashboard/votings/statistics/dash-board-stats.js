@@ -1,10 +1,10 @@
-import React from 'react'
-import DashBoardHeader from '../../common/dash-board-header'
-import { useLocation } from 'react-router-dom'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import DashBoardHeader from '../../common/dash-board-header';
 
 const DashboardStats = () => {
-  const location = useLocation()
-  const { currentItem, currentId } = location.state
+  const location = useLocation();
+  const { currentItem, currentId } = location.state;
 
   return (
     <>
@@ -14,7 +14,7 @@ const DashboardStats = () => {
       <br />
       {currentId}
     </>
-  )
-}
+  );
+};
 
-export default DashboardStats
+export default DashboardStats;

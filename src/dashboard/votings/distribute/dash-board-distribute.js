@@ -1,108 +1,108 @@
-import React, { useState, useEffect } from 'react'
-import DashBoardHeader from '../../common/dash-board-header'
-import DashBoardStaticTexts from '../../common/dash-board-static-texts'
-import DashBoardDistributeItems from './dash-board-distribute-items'
-import DashBoardDistributeForm from './dash-board-distribute-form'
-import axiosInstance from '../../../axios-instance'
-import { styles02 } from '../../../css-and-material/styles-02'
-import { useLocation } from 'react-router-dom'
-import '../../../css-and-material/basic.css'
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import DashBoardDistributeForm from './dash-board-distribute-form';
+import DashBoardDistributeItems from './dash-board-distribute-items';
+import axiosInstance from '../../../axios-instance';
+import { styles02 } from '../../../css-and-material/styles-02';
+import DashBoardHeader from '../../common/dash-board-header';
+import DashBoardStaticTexts from '../../common/dash-board-static-texts';
+import '../../../css-and-material/basic.css';
 
 const DashBoardDistribute = () => {
-  const uID = 'e4eaaaf2-d142-11e1-b3e4-080027620cdd'
+  const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
   const [getGlobal, setGetGlobal] = useState({
     curentSetOfEmails: '',
     curentItem: '',
     saveModalButtonClicked: false,
     nameOfNewSetOfEmails: '',
-    displayedListOfEmails: ''
-  })
-  const userId = uID
+    displayedListOfEmails: '',
+  });
+  const userId = uID;
 
   const setGlobal = (propertyName, propertyValue) => {
-    const temporaryObject = { ...getGlobal }
-    temporaryObject[propertyName] = propertyValue
-    setGetGlobal(temporaryObject)
-  }
+    const temporaryObject = { ...getGlobal };
+    temporaryObject[propertyName] = propertyValue;
+    setGetGlobal(temporaryObject);
+  };
   useEffect(() => {
     if (getGlobal.saveModalButtonClicked === false) {
-      setGlobal('nameOfNewSetOfEmails', '')
+      setGlobal('nameOfNewSetOfEmails', '');
     }
-  }, [getGlobal.saveModalButtonClicked])
+  }, [getGlobal.saveModalButtonClicked, setGlobal]);
 
   axiosInstance.interceptors.request.use(
     (config) => {
-      config.headers['X-User-ID'] = userId
-      return config
+      config.headers['X-User-ID'] = userId;
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
-    }
-  )
+      return Promise.reject(error);
+    },
+  );
 
   // This ist my current workplace
   const loadEmailsFromDb = async (name) => {
     try {
       // Include 'name' in the URL as a query parameter
-      const encodedName = encodeURIComponent(name)
-      const response = await axiosInstance.get(`/api/users/mails/curentList/?name=${encodedName}`)
+      const encodedName = encodeURIComponent(name);
+      const response = await axiosInstance.get(`/api/users/mails/curentList/?name=${encodedName}`);
 
-      const data = response.data
+      const data = response.data;
 
-      setGlobal('curentSetOfEmails', data)
+      setGlobal('curentSetOfEmails', data);
     } catch (error) {
-      console.error('Error fetching data:', error)
+      console.error('Error fetching data:', error);
     }
-  }
+  };
 
-  const [arrayOfE, setArrayOfE] = useState([])
+  const [arrayOfE, setArrayOfE] = useState([]);
 
-  const location = useLocation()
-  const { currentItem, currentId } = location.state
-  const [reload, setReload] = useState(false)
-  const [emails, setEmails] = useState('')
-  const [parentClick, setParentClick] = useState(false)
+  const location = useLocation();
+  const { currentItem, currentId } = location.state;
+  const [reload, setReload] = useState(false);
+  const [emails, setEmails] = useState('');
+  const [parentClick, setParentClick] = useState(false);
 
   const triggerReload = () => {
-    setReload((prevReload) => !prevReload)
-  }
+    setReload((prevReload) => !prevReload);
+  };
 
   const handleItemArray = (arr) => {
-    setArrayOfE(arr)
-  }
+    setArrayOfE(arr);
+  };
 
   const clearBigArea = () => {
-    setEmails('')
-  }
+    setEmails('');
+  };
 
   const mainEmailHandler = (newEmails) => {
-    let newString = ''
+    let newString = '';
     for (let i = 0; i < newEmails.length; i++) {
       if (i != 0) {
-        newString = newString + ', '
+        newString = newString + ', ';
       }
-      newString = newString + newEmails[i].mail
+      newString = newString + newEmails[i].mail;
     }
-    setEmails(newString)
-  }
+    setEmails(newString);
+  };
 
   const handleEmails = (newEmails, kk) => {
-    loadEmailsFromDb(kk)
-    mainEmailHandler(newEmails)
-  }
+    loadEmailsFromDb(kk);
+    mainEmailHandler(newEmails);
+  };
 
   const handleEmails2 = (newEmails, kk) => {
-    loadEmailsFromDb(kk)
-    mainEmailHandler(newEmails)
-  }
+    loadEmailsFromDb(kk);
+    mainEmailHandler(newEmails);
+  };
 
   const pushClickUp = (innerClick) => {
-    setParentClick(innerClick)
-  }
+    setParentClick(innerClick);
+  };
 
   const changeParentClick = () => {
-    setParentClick(false)
-  }
+    setParentClick(false);
+  };
 
   return (
     <>
@@ -144,7 +144,7 @@ const DashBoardDistribute = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashBoardDistribute
+export default DashBoardDistribute;

@@ -1,33 +1,32 @@
-import React, { useState } from 'react'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import { Typography, useMediaQuery } from '@mui/material'
-import axiosInstance from '../../../axios-instance'
-import votingTheme from '../../../css-and-material/theme'
-import { testIfItExists } from '../../common/already-exist'
-import { sanitizeForApi } from '../../common/sanitize'
-
-import { styles02 } from '../../../css-and-material/styles-02'
-import mobileWidth from '../../../css-and-material/is-device'
+import { Typography, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+import axiosInstance from '../../../axios-instance';
+import mobileWidth from '../../../css-and-material/is-device';
+import { styles02 } from '../../../css-and-material/styles-02';
+import votingTheme from '../../../css-and-material/theme';
+import { testIfItExists } from '../../common/already-exist';
+import { sanitizeForApi } from '../../common/sanitize';
 
 const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) => {
-  const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input')
-  const [clicked, setClicked] = useState(false)
-  const [formDataTitle, setFormDataTitle] = useState('')
-  const [formDataDes, setFormDataDes] = useState('')
+  const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
+  const [clicked, setClicked] = useState(false);
+  const [formDataTitle, setFormDataTitle] = useState('');
+  const [formDataDes, setFormDataDes] = useState('');
 
   axiosInstance.interceptors.request.use(
     (config) => {
-      config.headers['X-User-ID'] = userId
-      return config
+      config.headers['X-User-ID'] = userId;
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
-    }
-  )
+      return Promise.reject(error);
+    },
+  );
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       if (noteBelowTheInput != 'Such name of item is already in the list') {
@@ -35,38 +34,38 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) 
           const response = await axiosInstance.put('/api/listOfVotings/template', {
             lov_id: curentUuid,
             title: formDataTitle.trim(),
-            description: formDataDes.trim()
-          })
-          console.log(response.data)
-          triggerReload()
-          setFormDataTitle('')
-          setFormDataDes('')
+            description: formDataDes.trim(),
+          });
+          console.log(response.data);
+          triggerReload();
+          setFormDataTitle('');
+          setFormDataDes('');
         }
       }
     } catch (error) {
-      console.error('Error:', error.response.data)
+      console.error('Error:', error.response.data);
     }
-  }
+  };
 
   const handleChange = (e) => {
-    setFormDataTitle(sanitizeForApi(e.target.value))
-    setNoteBelowTheInput(testIfItExists(arrFromItems, 'title', sanitizeForApi(e.target.value).trim()))
-  }
+    setFormDataTitle(sanitizeForApi(e.target.value));
+    setNoteBelowTheInput(testIfItExists(arrFromItems, 'title', sanitizeForApi(e.target.value).trim()));
+  };
 
   const handleChange2 = (e) => {
-    setFormDataDes(sanitizeForApi(e.target.value))
-  }
+    setFormDataDes(sanitizeForApi(e.target.value));
+  };
 
   const handleClickModalOn = () => {
-    setClicked(true)
-  }
+    setClicked(true);
+  };
 
   const handleClickModalOff = () => {
-    setClicked(false)
-  }
+    setClicked(false);
+  };
 
   // breakpoint
-  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
   return (
     <>
@@ -129,7 +128,7 @@ const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) 
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashBoardEditForm
+export default DashBoardEditForm;

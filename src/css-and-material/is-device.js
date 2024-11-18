@@ -1,3 +1,3 @@
-const mobileWidth = 600
+const mobileWidth = 992;
 
-export default mobileWidth
+export default mobileWidth;

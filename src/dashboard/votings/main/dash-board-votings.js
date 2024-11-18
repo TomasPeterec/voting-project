@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
-import DashBoardHeader from '../../common/dash-board-header'
-import DashBoardStaticTexts from '../../common/dash-board-static-texts'
-import DashBoardVotingItems from './dash-board-voting-items'
-import DashBoardVotingsForm from './dash-board-votings-form'
-import { styles02 } from '../../../css-and-material/styles-02'
-import '../../../css-and-material/basic.css'
+import React, { useState } from 'react';
+import DashBoardVotingItems from './dash-board-voting-items';
+import DashBoardVotingsForm from './dash-board-votings-form';
+import { styles02 } from '../../../css-and-material/styles-02';
+import DashBoardHeader from '../../common/dash-board-header';
+import DashBoardStaticTexts from '../../common/dash-board-static-texts';
+import '../../../css-and-material/basic.css';
 
 function DashBoardVotings() {
-  const uID = 'e4eaaaf2-d142-11e1-b3e4-080027620cdd'
-  const [arrayOfE, setArrayOfE] = useState([])
-  const [reload, setReload] = useState(false)
+  const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
+  const [arrayOfE, setArrayOfE] = useState([]);
+  const [reload, setReload] = useState(false);
 
   const triggerReload = () => {
-    setReload((prevReload) => !prevReload)
-  }
+    setReload((prevReload) => !prevReload);
+  };
 
   const handleItemArray = (arr) => {
-    setArrayOfE(arr)
-  }
+    setArrayOfE(arr);
+  };
 
   return (
     <>
@@ -38,7 +38,7 @@ function DashBoardVotings() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default DashBoardVotings
+export default DashBoardVotings;

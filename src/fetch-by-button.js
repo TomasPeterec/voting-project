@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-function MyComponent () {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
+function MyComponent() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
-    setLoading(true)
+    setLoading(true);
     fetch(`${process.env.REACT_APP_API_ROOT_VAR}/api/userVotes/`)
       .then((response) => response.json())
       .then((jsonData) => {
-        setData(jsonData)
-        setLoading(false)
+        setData(jsonData);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error(error)
-        setLoading(false)
-      })
-  }
+        console.error(error);
+        setLoading(false);
+      });
+  };
 
   return (
     <div>
@@ -26,12 +26,13 @@ function MyComponent () {
       <ul>
         {data.map((item) => (
           <li key={item.primary_key}>
-            {item.mail_or_id}: {item.voted_values}
+            {item.mail_or_id}:
+            {item.voted_values}
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
-export default MyComponent
+export default MyComponent;

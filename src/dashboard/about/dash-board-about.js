@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import DashBoardHeader from '../common/dash-board-header'
+import DashBoardHeader from '../common/dash-board-header';
 
 function DashBoardAbout() {
   return (
@@ -8,7 +8,7 @@ function DashBoardAbout() {
       <DashBoardHeader />
       <div>DashboardAbout page</div>
     </div>
-  )
+  );
 }
 
-export default DashBoardAbout
+export default DashBoardAbout;

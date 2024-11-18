@@ -1,9 +1,8 @@
-import React from 'react'
-import { Box, useMediaQuery } from '@mui/material'
-import mobileWidth from '../../../css-and-material/is-device'
-import { styles02 } from '../../../css-and-material/styles-02'
-import { Typography } from '@mui/material'
-import votingTheme from '../../../css-and-material/theme'
+import { Box, useMediaQuery, Typography } from '@mui/material';
+import React from 'react';
+import mobileWidth from '../../../css-and-material/is-device';
+import { styles02 } from '../../../css-and-material/styles-02';
+import votingTheme from '../../../css-and-material/theme';
 
 const DEditItem = ({
   currentItem,
@@ -11,30 +10,37 @@ const DEditItem = ({
   curentDescription,
   handleButtonsModal,
   handleDeleteItemModal,
-  handleEditItemModal
+  handleEditItemModal,
 }) => {
   // Breakpoint definition
-  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
   // Handlers of modal window
   const showModalButtons = () => {
-    handleButtonsModal({ currentItem, currentId })
-  }
+    handleButtonsModal({ currentItem, currentId });
+  };
 
   const deleteItem = () => {
-    handleDeleteItemModal({ currentItem, currentId })
-  }
+    handleDeleteItemModal({ currentItem, currentId });
+  };
 
   const editItem = () => {
-    handleEditItemModal({ currentItem, curentDescription })
-  }
+    handleEditItemModal({ currentItem, curentDescription });
+  };
 
   // Definition of an item in Votings list
   const MyBox = ({ onClick }) => {
     return (
       <>
         <Box style={styles02.itemStyle2} borderRadius="24px" border="1px solid #e0e0e0" p={'0px'} onClick={onClick}>
-          <div style={{ height: '48px', width: '100%', display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              height: '48px',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <div style={styles02.nameOfCurentItem}>
               <div style={styles02.textFromLeft}></div>
               <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography>
@@ -52,7 +58,7 @@ const DEditItem = ({
                         borderWidth: '0px',
                         padding: '0',
                         backgroundColor: 'white',
-                        borderRadius: '19px'
+                        borderRadius: '19px',
                       }}
                       onClick={editItem}
                     >
@@ -67,7 +73,7 @@ const DEditItem = ({
                         borderWidth: '0px',
                         padding: '0',
                         backgroundColor: 'white',
-                        borderRadius: '19px'
+                        borderRadius: '19px',
                       }}
                       onClick={deleteItem}
                     >
@@ -86,10 +92,10 @@ const DEditItem = ({
           </Typography>
         </Box>
       </>
-    )
-  }
+    );
+  };
 
-  return <>{isMobile ? <MyBox onClick={showModalButtons} /> : <MyBox />}</>
-}
+  return <>{isMobile ? <MyBox onClick={showModalButtons} /> : <MyBox />}</>;
+};
 
-export default DEditItem
+export default DEditItem;

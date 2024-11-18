@@ -1,28 +1,28 @@
-import React, { useState } from 'react'
-import DashBoardHeader from '../../common/dash-board-header'
-import DashBoardStaticTexts from '../../common/dash-board-static-texts'
-import DashBoardEditItems from './dash-board-edit-items'
-import DashBoardEditForm from './dash-board-edit-form'
-import { styles02 } from '../../../css-and-material/styles-02'
-import { useLocation } from 'react-router-dom'
-import '../../../css-and-material/basic.css'
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import DashBoardEditForm from './dash-board-edit-form';
+import DashBoardEditItems from './dash-board-edit-items';
+import { styles02 } from '../../../css-and-material/styles-02';
+import DashBoardHeader from '../../common/dash-board-header';
+import DashBoardStaticTexts from '../../common/dash-board-static-texts';
+import '../../../css-and-material/basic.css';
 
 const DashboardEdit = () => {
-  const uID = 'e4eaaaf2-d142-11e1-b3e4-080027620cdd'
+  const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
 
-  const [arrayOfE, setArrayOfE] = useState([])
+  const [arrayOfE, setArrayOfE] = useState([]);
 
-  const location = useLocation()
-  const { currentItem, currentId } = location.state
-  const [reload, setReload] = useState(false)
+  const location = useLocation();
+  const { currentItem, currentId } = location.state;
+  const [reload, setReload] = useState(false);
 
   const triggerReload = () => {
-    setReload((prevReload) => !prevReload)
-  }
+    setReload((prevReload) => !prevReload);
+  };
 
   const handleItemArray = (arr) => {
-    setArrayOfE(arr)
-  }
+    setArrayOfE(arr);
+  };
 
   return (
     <>
@@ -48,7 +48,7 @@ const DashboardEdit = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashboardEdit
+export default DashboardEdit;

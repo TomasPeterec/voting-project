@@ -1,38 +1,34 @@
-import React, { useState } from 'react'
-import RegistrationForm from '../registration-and-login/RegistrationForm'
-import LoginForm from '../registration-and-login/login-form'
+import React, { useState } from 'react';
+import LoginForm from '../registration-and-login/login-form';
+import RegistrationForm from '../registration-and-login/RegistrationForm';
 
-function RegButton () {
-  const [showRegistration, setShowRegistration] = useState(false)
-  const [showLoginComponent, setShowLoginComponent] = useState(false)
+function RegButton() {
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showLoginComponent, setShowLoginComponent] = useState(false);
 
   const handleRegisterClick = () => {
-    setShowRegistration(true)
-  }
+    setShowRegistration(true);
+  };
 
   const handleLoginComponentClick = () => {
-    setShowLoginComponent(true)
-  }
+    setShowLoginComponent(true);
+  };
 
   return (
     <div>
-      {showRegistration
-        ? (
+      {showRegistration ? (
         <RegistrationForm />
-          )
-        : showLoginComponent
-          ? (
+      ) : showLoginComponent ? (
         <LoginForm />
-            )
-          : (
+      ) : (
         <>
           <button onClick={handleRegisterClick}>Register</button>
           <br />
           <button onClick={handleLoginComponentClick}>Login</button>
         </>
-            )}
+      )}
     </div>
-  )
+  );
 }
 
-export default RegButton
+export default RegButton;

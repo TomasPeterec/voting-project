@@ -1,8 +1,8 @@
-import React from 'react'
-import { Typography } from '@mui/material'
+import { Typography } from '@mui/material';
+import React from 'react';
 
 const DashBoardTitleBright = ({ title }) => {
-  return <Typography variant="h1">{title}</Typography>
-}
+  return <Typography variant="h1">{title}</Typography>;
+};
 
-export default DashBoardTitleBright
+export default DashBoardTitleBright;

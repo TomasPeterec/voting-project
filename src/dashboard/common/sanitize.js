@@ -1,7 +1,7 @@
 export function sanitizeForApi(data) {
   // Ensure data is a string
   if (typeof data !== 'string') {
-    throw new Error('Input must be a string')
+    throw new Error('Input must be a string');
   }
 
   // Replace potentially dangerous characters with safe equivalents
@@ -10,7 +10,7 @@ export function sanitizeForApi(data) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
+    .replace(/'/g, '&#39;');
 
-  return sanitizedData
+  return sanitizedData;
 }

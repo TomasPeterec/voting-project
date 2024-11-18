@@ -1,8 +1,8 @@
-import React from 'react'
-import DashBoardTitleBright from './dash-board-title-bright'
-import DashBoardBreadcrumbBright from './dash-board-breadcrumb-bright'
-import { Link } from 'react-router-dom'
-import { fontColorPrime } from '../../css-and-material/generalVariables'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import DashBoardBreadcrumbBright from './dash-board-breadcrumb-bright';
+import DashBoardTitleBright from './dash-board-title-bright';
+import { fontColorPrime } from '../../css-and-material/generalVariables';
 
 const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
   return (
@@ -23,7 +23,7 @@ const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
                   background: 'none',
                   cursor: 'pointer',
                   paddingTop: '11px',
-                  color: fontColorPrime
+                  color: fontColorPrime,
                 }}
               >
                 Return
@@ -38,7 +38,7 @@ const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
         <DashBoardBreadcrumbBright breadcrumb={breadcrumb} />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashBoardStaticTexts
+export default DashBoardStaticTexts;

@@ -1,27 +1,26 @@
-import React from 'react'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import { Typography, useMediaQuery } from '@mui/material'
-import axiosInstance from '../../../axios-instance'
-import votingTheme from '../../../css-and-material/theme'
-import { sanitizeForApi } from '../../common/sanitize'
-
-import { styles02 } from '../../../css-and-material/styles-02'
-import mobileWidth from '../../../css-and-material/is-device'
+import { Typography, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import React from 'react';
+import axiosInstance from '../../../axios-instance';
+import mobileWidth from '../../../css-and-material/is-device';
+import { styles02 } from '../../../css-and-material/styles-02';
+import votingTheme from '../../../css-and-material/theme';
+import { sanitizeForApi } from '../../common/sanitize';
 
 const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickUp, getGlobal, setGlobal }) => {
   axiosInstance.interceptors.request.use(
     (config) => {
-      config.headers['X-User-ID'] = userId
-      return config
+      config.headers['X-User-ID'] = userId;
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
-    }
-  )
+      return Promise.reject(error);
+    },
+  );
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       if (
@@ -32,21 +31,21 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickU
       ) {
         const response = await axiosInstance.post('/api/users/multiplemails', {
           lov_id: curentUuid,
-          mails: getGlobal.curentSetOfEmails.split(',')
-        })
-        console.log(response.data)
-        triggerReload()
-        setGlobal('curentSetOfEmails', '')
+          mails: getGlobal.curentSetOfEmails.split(','),
+        });
+        console.log(response.data);
+        triggerReload();
+        setGlobal('curentSetOfEmails', '');
       }
     } catch (error) {
-      console.error('Error:', error.response.data)
+      console.error('Error:', error.response.data);
     }
-  }
+  };
 
   const handleSubmitNewList = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      console.log(sanitizeForApi(getGlobal.nameOfNewSetOfEmails))
+      console.log(sanitizeForApi(getGlobal.nameOfNewSetOfEmails));
       if (
         getGlobal.curentSetOfEmails != '' &&
         getGlobal.curentSetOfEmails != ' ' &&
@@ -62,46 +61,46 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickU
           const response = await axiosInstance.post('/api/users/nevSetOfMails', {
             lov_id: curentUuid,
             nameOfSet: sanitizeForApi(getGlobal.nameOfNewSetOfEmails),
-            mails: getGlobal.curentSetOfEmails.split(',')
-          })
-          console.log(response.data)
-          triggerReload()
-          setGlobal('nameOfNewSetOfEmails', '')
+            mails: getGlobal.curentSetOfEmails.split(','),
+          });
+          console.log(response.data);
+          triggerReload();
+          setGlobal('nameOfNewSetOfEmails', '');
         }
       }
     } catch (error) {
-      console.error('Error:', error.response.data)
+      console.error('Error:', error.response.data);
     }
-    setGlobal('nameOfNewSetOfEmails', '')
-    setGlobal('saveModalButtonClicked', false)
-  }
+    setGlobal('nameOfNewSetOfEmails', '');
+    setGlobal('saveModalButtonClicked', false);
+  };
 
   const handleChange2 = (e) => {
-    setGlobal('curentSetOfEmails', sanitizeForApi(e.target.value))
-  }
+    setGlobal('curentSetOfEmails', sanitizeForApi(e.target.value));
+  };
 
   const handleChangeNewNameOfMailSet = (e) => {
-    setGlobal('nameOfNewSetOfEmails', sanitizeForApi(e.target.value))
-  }
+    setGlobal('nameOfNewSetOfEmails', sanitizeForApi(e.target.value));
+  };
 
   const clearTextArea = () => {
-    setGlobal('curentSetOfEmails', '')
-  }
+    setGlobal('curentSetOfEmails', '');
+  };
 
   const handleModalForSavingOn = () => {
-    setGlobal('saveModalButtonClicked', true)
-  }
+    setGlobal('saveModalButtonClicked', true);
+  };
 
   const handleModalForSavingOff = async () => {
-    setGlobal('saveModalButtonClicked', false)
-  }
+    setGlobal('saveModalButtonClicked', false);
+  };
 
   const handleLoadClick = () => {
-    pushClickUp(true)
-  }
+    pushClickUp(true);
+  };
 
   // breakpoint
-  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
   return (
     <>
@@ -163,7 +162,13 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickU
                     onChange={handleChange2}
                   />
                 </div>
-                <div style={{ width: '30px', display: 'flex', flexDirection: 'column' }}></div>
+                <div
+                  style={{
+                    width: '30px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                ></div>
                 <div>
                   <div>
                     <Button type="submit" variant="contained">
@@ -192,7 +197,7 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickU
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DashBoardDistributeForm
+export default DashBoardDistributeForm;

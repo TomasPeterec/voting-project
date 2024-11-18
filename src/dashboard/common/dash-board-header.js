@@ -1,26 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Drawer from '@mui/material/Drawer'
-import Button from '@mui/material/Button'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import { useMediaQuery } from '@mui/material'
-import mobileWidth from '../../css-and-material/is-device'
-import { styles02 } from '../../css-and-material/styles-02'
-import { brightLine } from '../../css-and-material/generalVariables'
+import { useMediaQuery } from '@mui/material';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { brightLine } from '../../css-and-material/generalVariables';
+import mobileWidth from '../../css-and-material/is-device';
+import { styles02 } from '../../css-and-material/styles-02';
 
 function DashBoardHeader() {
   // breakpoint
-  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`)
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
+      return;
     }
 
-    setIsDrawerOpen(open)
-  }
+    setIsDrawerOpen(open);
+  };
 
   return (
     <>
@@ -32,7 +32,13 @@ function DashBoardHeader() {
               <div>
                 {/* mobile version header menu */}
                 <nav>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
                     <Button onClick={toggleDrawer(true)}>III</Button>
                   </div>
                   <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
@@ -59,7 +65,7 @@ function DashBoardHeader() {
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '250px'
+                      width: '250px',
                     }}
                   >
                     <Link to="/votings">Votings</Link>
@@ -80,7 +86,7 @@ function DashBoardHeader() {
       </div>
       <div style={{ height: '1px', backgroundColor: brightLine, width: '100%' }}></div>
     </>
-  )
+  );
 }
 
-export default DashBoardHeader
+export default DashBoardHeader;
