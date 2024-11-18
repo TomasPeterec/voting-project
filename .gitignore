@@ -40,3 +40,4 @@ yarn-error.log*
 
 # Ignore bin for uncertain files
 a-obsolete
+/odkladiste
