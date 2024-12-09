@@ -1,49 +1,60 @@
 import { Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from '../../../firebaseConfig';
 import React, { useState } from 'react';
-import axiosInstance from '../../../axios-instance';
+import { useAuth } from '../../../contexts/AuthContext';
 import mobileWidth from '../../../css-and-material/is-device';
+import axios from 'axios';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
 import { testIfItExists } from '../../common/already-exist';
 import { sanitizeForApi } from '../../common/sanitize';
+import { useLocation } from 'react-router-dom';
 
-const DashBoardEditForm = ({ triggerReload, userId, curentUuid, arrFromItems }) => {
+initializeApp(firebaseConfig);
+const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
+
+const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
+  const location = useLocation();
+  const { currentItem, currentId } = location.state;
+  const { idToken } = useAuth(); // Use the context to get user and token
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
   const [clicked, setClicked] = useState(false);
   const [formDataTitle, setFormDataTitle] = useState('');
   const [formDataDes, setFormDataDes] = useState('');
 
-  axiosInstance.interceptors.request.use(
-    (config) => {
-      config.headers['X-User-ID'] = userId;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    },
-  );
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      if (noteBelowTheInput != 'Such name of item is already in the list') {
-        if (formDataTitle != '' && formDataTitle != ' ' && formDataTitle != '.' && formDataTitle != ',') {
-          const response = await axiosInstance.put('/api/listOfVotings/template', {
-            lov_id: curentUuid,
-            title: formDataTitle.trim(),
-            description: formDataDes.trim(),
-          });
-          console.log(response.data);
-          triggerReload();
-          setFormDataTitle('');
-          setFormDataDes('');
+    if (idToken) {
+      console.log(formDataTitle);
+      console.log(formDataDes);
+      try {
+        if (noteBelowTheInput != 'Such name of item is already in the list') {
+          if (formDataTitle != '' && formDataTitle != ' ' && formDataTitle != '.' && formDataTitle != ',') {
+            const response = await axios.post(
+              `${apiUrl}/api/listOfVotings/${currentId}/candidates`,
+              {
+                title: formDataTitle.trim(),
+                description: formDataDes.trim(),
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${idToken}`,
+                },
+              },
+            );
+            console.log(response.data);
+            triggerReload();
+            setFormDataTitle('');
+            setFormDataDes('');
+          }
         }
+      } catch (error) {
+        console.error('Error:', error.response.data);
       }
-    } catch (error) {
-      console.error('Error:', error.response.data);
     }
   };
 

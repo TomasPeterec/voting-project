@@ -77,7 +77,7 @@ const basicModalStyles = {
     height: 'clamp(45px, 12.9vw, 69px)',
     width: 'clamp(45px, 12.9vw, 69px)',
   },
-  imputStyle: {
+  inputStyle: {
     width: '100%',
     backgroundColor: '#131313',
     borderColor: '#6F6E6E',

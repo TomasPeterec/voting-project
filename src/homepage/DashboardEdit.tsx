@@ -1,44 +1,46 @@
-import { colors, CssBaseline, useMediaQuery } from '@mui/material';
+import { CssBaseline, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import DashBoardEditForm from 'dashboard/votings/edit/dash-board-edit-form';
 
-import HeaderOne from './HeaderOne';
-import HeroCell from './HeroCell';
-import DashBoardVotingsForm from '../dashboard/votings/main/dash-board-votings-form';
-import LoginFormNew from './loginFormNew';
-import TextRow from './TextRow';
+import HeaderTwo from './HeaderTwo';
 import { UseWidthUpdater } from './UseWidthUpdater';
 import BottomBanner from '../banners/BottomBanner';
 import SideBanner from '../banners/SideBanner';
 import Footer from '../common/Footer';
 import { useAuth } from '../contexts/AuthContext'; // Import the useAuth hook
+import { useMainContext } from '../contexts/useMainContext'; // Correct path
+
 import mobileWidth from '../css-and-material/is-device';
 import staticStyles from '../css-and-material/staticStyles';
 import DashBoardStaticTexts from '../dashboard/common/dash-board-static-texts';
-import DashBoardVotingItems from '../dashboard/votings/main/dash-board-voting-items';
+import DashBoardEditItems from 'dashboard/votings/edit/dash-board-edit-items';
 import firebaseConfig from '../firebaseConfig';
 import MyBackground from '../img/modryPodklad.jpg';
+//import DashBoardEditForm from 'dashboard/votings/edit/dash-board-edit-form';
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
 interface CustomUser {
-  uid: string;
   email: string | null;
   displayName: string | null;
 }
 
-const LogInTo: React.FC = () => {
-  const { user, idToken } = useAuth(); // Use the context to get user and token
+const DashboardEdit: React.FC = () => {
+  const { appState, appStateSetter } = useMainContext();
+  const location = useLocation();
+  const { currentItem } = location.state;
+  const { idToken } = useAuth(); // Use the context to get user and token
   const [username, setUsername] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null); // Create a reference to the container
   const [width, setWidth] = useState(0); // Store the container's width
-  const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
   const [arrayOfE, setArrayOfE] = useState([]);
   const [reload, setReload] = useState(false);
 
@@ -56,7 +58,6 @@ const LogInTo: React.FC = () => {
   const headlineheight = Number(16 + width * 0.02);
   const logoHeight = Number(width / 25.418666667 + 60 * 0.26) / 1.26;
   const HeadlinePadding = logoHeight * 1.5;
-  const boxesContainerPadding = HeadlinePadding + 8;
   const upAndDown = logoHeight * 0.5;
 
   const styles: typeof staticStyles & {
@@ -138,7 +139,7 @@ const LogInTo: React.FC = () => {
     };
 
     fetchUsername();
-    setLoading(false); // Set loading to false once the effect runs
+    //setLoading(false); // Set loading to false once the effect runs
   }, [idToken]); // Run effect whenever idToken changes
 
   return (
@@ -180,7 +181,7 @@ const LogInTo: React.FC = () => {
           <div ref={containerRef} style={styles.topBar}>
             <div style={styles.headerContainer} />
             <div style={{ height: '3.125vw' }}>
-              <HeaderOne />
+              <HeaderTwo username={username as string | undefined} />
             </div>
 
             <div
@@ -194,15 +195,17 @@ const LogInTo: React.FC = () => {
             ></div>
             <div style={styles.heroSection}>
               {/* Headline */}
-              <DashBoardStaticTexts title="Login" breadcrumb="&nbsp;" urlBack="" />
+              <DashBoardStaticTexts title="Votings" breadcrumb={currentItem + ' - edit'} urlBack="/votings/dashboard" />
               {/* Form */}
-              <LoginFormNew />
+              <DashBoardEditForm triggerReload={triggerReload} arrFromItems={arrayOfE} />
             </div>
             <div style={{ width: '100%', height: upAndDown }} />
             <div style={{ width: '100%', height: '1.5625vw' }} />
           </div>
           {/* Central middle part */}
-          <div style={styles.centralPart}></div>
+          <div style={styles.centralPart}>
+            <DashBoardEditItems reload={reload} arrHandler={handleItemArray} />
+          </div>
           {/* Footer */}
           <div style={styles.footerCont}>
             <Footer logoHeight={logoHeight} />
@@ -251,4 +254,4 @@ const LogInTo: React.FC = () => {
   );
 };
 
-export default LogInTo;
+export default DashboardEdit;

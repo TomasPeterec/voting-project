@@ -3,6 +3,8 @@ import React from 'react';
 import mobileWidth from '../../../css-and-material/is-device';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
+import { ReactComponent as IDeleteDef } from '../../../img/i_delete_default.svg';
+import { ReactComponent as ISloadDef } from '../../../img/i_load_defaul.svg';
 
 const DDistributeItem = ({
   currentItem,
@@ -13,8 +15,10 @@ const DDistributeItem = ({
   handleEditItemModal,
   handleLoadModal,
   handleEmails2,
-  // getGlobal,
+  getGlobal,
   setGlobal,
+  setCurrentEmailListIdAux,
+  setModalButtonsOn,
 }) => {
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
@@ -22,7 +26,9 @@ const DDistributeItem = ({
   // Handlers of modal window
   const showModalButtons = () => {
     handleButtonsModal({ currentItem, currentId });
-    handleEmails2(curentEmails, currentItem);
+    setModalButtonsOn(true);
+
+    //handleEmails2(curentEmails, currentItem);
   };
 
   const deleteItem = () => {
@@ -44,8 +50,11 @@ const DDistributeItem = ({
   };
 
   const loadToParent = () => {
-    handleLoadModal({ currentItem, curentEmails });
-    setGlobal('curentItem', currentItem);
+    setGlobal('currentEmailListId', currentId);
+
+    if (currentId == getGlobal.currentEmailListId) {
+      setCurrentEmailListIdAux('');
+    }
   };
 
   // Definition of an item in Votings list
@@ -82,23 +91,9 @@ const DDistributeItem = ({
                       }}
                       onClick={loadToParent}
                     >
-                      <div style={styles02.rounderFrame}>LOAD</div>
-                    </button>
-                  </div>
-
-                  <div style={styles02.roundButonNest}>
-                    <button
-                      style={{
-                        height: '38px',
-                        width: '38px',
-                        borderWidth: '0px',
-                        padding: '0',
-                        backgroundColor: 'white',
-                        borderRadius: '19px',
-                      }}
-                      onClick={editItem}
-                    >
-                      <div style={styles02.rounderFrame}>EDI</div>
+                      <div style={styles02.rounderFrame}>
+                        <ISloadDef style={styles02.rowIcone} />
+                      </div>
                     </button>
                   </div>
                   <div style={styles02.roundButonNest}>
@@ -113,7 +108,9 @@ const DDistributeItem = ({
                       }}
                       onClick={deleteItem}
                     >
-                      <div style={styles02.rounderFrame}>DEL</div>
+                      <div style={styles02.rounderFrame}>
+                        <IDeleteDef style={styles02.rowIcone} />
+                      </div>
                     </button>
                   </div>
                 </div>

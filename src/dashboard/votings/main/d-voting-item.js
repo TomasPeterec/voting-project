@@ -13,8 +13,11 @@ import { ReactComponent as IEditDef } from '../../../img/i_edit_defaul.svg';
 import { ReactComponent as IEditDis } from '../../../img/i_edit_disabled.svg';
 import { ReactComponent as IStatisticsDef } from '../../../img/i_statistics_defaul.svg';
 import { ReactComponent as IStatisticsDis } from '../../../img/i_statistics_disabled.svg';
+import { useMainContext } from '../../../contexts/useMainContext';
 
 const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
+  const { appState, appStateSetter } = useMainContext();
+
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
@@ -25,6 +28,18 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
 
   const deleteItem = () => {
     handleDeleteItemModal({ currentItem, currentId });
+  };
+
+  // Handler to update state before navigation
+  const handleEditClick = () => {
+    appStateSetter('chosenVotesId', currentId);
+    appStateSetter('chosenVotesName', currentItem);
+  };
+
+  const handleDIstributeClick = () => {
+    appStateSetter('chosenVotesId', currentId);
+    appStateSetter('chosenVotesName', currentItem);
+    console.log(currentItem);
   };
 
   // Definition of an item in Votings list
@@ -46,15 +61,15 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
             ) : (
               <div style={styles02.itemRow}>
                 <div style={styles02.roundButonNest}>
-                  {/*<Link to="/votings/distribution" state={{ currentItem, currentId }}>*/}
-                  <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
-                    <div style={styles02.rounderFrame}>
-                      <IDistributeDef style={styles02.rowIcone} />
-                    </div>
-                  </Link>
+                  <div onClick={handleDIstributeClick} style={{ display: 'inline-block' }}>
+                    <Link to="/votings/distribution" state={{ currentItem, currentId }}>
+                      <div style={styles02.rounderFrame}>
+                        <IDistributeDef style={styles02.rowIcone} />
+                      </div>
+                    </Link>
+                  </div>
                 </div>
                 <div style={styles02.roundButonNest}>
-                  {/*<Link to="/votings/statistics" state={{ currentItem, currentId }}>*/}
                   <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
                     <div style={styles02.rounderFrame}>
                       <IStatisticsDef style={styles02.rowIcone} />
@@ -62,12 +77,13 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
                   </Link>
                 </div>
                 <div style={styles02.roundButonNest}>
-                  {/*<Link to="/votings/edit" state={{ currentItem, currentId }}>*/}
-                  <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
-                    <div style={styles02.rounderFrame}>
-                      <IEditDef style={styles02.rowIcone} />
-                    </div>
-                  </Link>
+                  <div onClick={handleEditClick} style={{ display: 'inline-block' }}>
+                    <Link to="/votings/edit" state={{ currentItem, currentId }}>
+                      <div style={styles02.rounderFrame}>
+                        <IEditDef style={styles02.rowIcone} />
+                      </div>
+                    </Link>
+                  </div>
                 </div>
                 <div style={styles02.roundButonNest}>
                   <button

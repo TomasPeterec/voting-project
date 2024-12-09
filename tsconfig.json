@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     /* Language and Environment */
-    "target": "es5", // Specify ECMAScript target version
-    "jsx": "react-jsx", // Support JSX syntax for React
+    "target": "es6", // Update target to ES6 for better modern JS support (es5 can be limiting)
+    "jsx": "react-jsx", // Support JSX syntax for React with the new JSX Transform (react 17+)
 
     /* Modules */
-    "module": "commonjs", // Use CommonJS module system
+    "module": "ESNext", // Update module to ESNext for better module system compatibility
     "moduleResolution": "node", // Use Node.js module resolution strategy
     "baseUrl": "src", // Base directory for resolving non-relative module imports
     "paths": {
@@ -15,7 +15,7 @@
       "@banners/*": ["banners/*"], // Alias for banners (if needed)
       "@common/*": ["common/*"], // Alias for common (if needed)
       "@css-and-material/*": ["css-and-material/*"] // Alias for styles (if needed)
-    }, // Module path mapping
+    },
 
     /* JavaScript Support */
     "allowJs": true, // Allow JavaScript files in the project
@@ -28,13 +28,16 @@
     /* Type Checking */
     "strict": true, // Enable all strict type-checking options
     "noImplicitAny": false, // Allow variables with implicit 'any' type
+    "skipLibCheck": true, // Skip type checking of declaration files for faster builds
 
     /* Emit */
     "outDir": "./dist", // Output directory for compiled files
     "sourceMap": true, // Generate source maps for debugging
 
     /* Completeness */
-    "skipLibCheck": true // Skip type checking of declaration files for faster builds
+    "resolveJsonModule": true, // Allows importing of JSON files
+    "isolatedModules": true, // Ensures files can be transpiled independently (useful for React JSX)
+    "strictNullChecks": true // Ensure strict null checks
   },
   "include": ["src/**/*", "tests/**/*"], // Include all files in src and tests directories
   "exclude": ["node_modules", "dist"] // Exclude node_modules and output directory

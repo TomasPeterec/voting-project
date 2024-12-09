@@ -7,28 +7,38 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [idToken, setIdToken] = useState(null); // State to hold ID token
+  const [idToken, setIdToken] = useState(() => {
+    // Initialize from localStorage, or null if not present
+    return localStorage.getItem('idToken') || null;
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
       if (currentUser) {
         const token = await currentUser.getIdToken(); // Retrieve the ID token
-        setIdToken(token); // Set the ID token in state
+        setIdToken(token);
+        localStorage.setItem('idToken', token); // Persist token to localStorage
       } else {
-        setIdToken(null); // Clear token if no user is authenticated
+        setIdToken(null);
+        localStorage.removeItem('idToken'); // Clear token on logout
       }
     });
+
     return () => unsubscribe();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, idToken }}>
-      {' '}
-      {/* Provide both user and idToken */}
-      {children}
-    </AuthContext.Provider>
-  );
+  // Sync `idToken` to localStorage when it changes
+  useEffect(() => {
+    if (idToken) {
+      localStorage.setItem('idToken', idToken);
+    } else {
+      localStorage.removeItem('idToken');
+    }
+  }, [idToken]);
+
+  return <AuthContext.Provider value={{ user, idToken }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

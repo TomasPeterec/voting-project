@@ -8,7 +8,7 @@ import DashBoardHeader from '../../common/dash-board-header';
 import DashBoardStaticTexts from '../../common/dash-board-static-texts';
 import '../../../css-and-material/basic.css';
 
-const DashBoardDistribute = () => {
+const DashBoardDistribute222 = () => {
   const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
   const [getGlobal, setGetGlobal] = useState({
     curentSetOfEmails: '',
@@ -147,4 +147,4 @@ const DashBoardDistribute = () => {
   );
 };
 
-export default DashBoardDistribute;
+export default DashBoardDistribute222;

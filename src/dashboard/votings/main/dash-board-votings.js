@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import DashBoardVotingItems from './dash-board-voting-items';
-import DashBoardVotingsForm from './dash-board-votings-form';
+import DashBoardVotingsOldForm from './dash-board-votings-form';
 import { styles02 } from '../../../css-and-material/styles-02';
 import DashBoardHeader from '../../common/dash-board-header';
 import DashBoardStaticTexts from '../../common/dash-board-static-texts';
 import '../../../css-and-material/basic.css';
 
-function DashBoardVotings() {
+function DashBoardVotingsOld() {
   const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
   const [arrayOfE, setArrayOfE] = useState([]);
   const [reload, setReload] = useState(false);
@@ -29,7 +29,7 @@ function DashBoardVotings() {
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
           <DashBoardStaticTexts title="Votings" breadcrumb="&nbsp;" urlBack="" />
-          <DashBoardVotingsForm userId={uID} triggerReload={triggerReload} arrFromItems={arrayOfE} />
+          <DashBoardVotingsOldForm userId={uID} triggerReload={triggerReload} arrFromItems={arrayOfE} />
         </div>
       </div>
       <div style={styles02.mainBottomContainer}>
@@ -41,4 +41,4 @@ function DashBoardVotings() {
   );
 }
 
-export default DashBoardVotings;
+export default DashBoardVotingsOld;

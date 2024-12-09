@@ -6,8 +6,8 @@ import votingTheme from '../../../css-and-material/theme';
 
 const DEditItem = ({
   currentItem,
-  currentId,
-  curentDescription,
+  currentCandidateId,
+  currentDescription,
   handleButtonsModal,
   handleDeleteItemModal,
   handleEditItemModal,
@@ -17,15 +17,15 @@ const DEditItem = ({
 
   // Handlers of modal window
   const showModalButtons = () => {
-    handleButtonsModal({ currentItem, currentId });
+    handleButtonsModal({ currentItem, currentCandidateId, currentDescription });
   };
 
   const deleteItem = () => {
-    handleDeleteItemModal({ currentItem, currentId });
+    handleDeleteItemModal({ currentItem, currentCandidateId, currentDescription });
   };
 
   const editItem = () => {
-    handleEditItemModal({ currentItem, curentDescription });
+    handleEditItemModal({ currentItem, currentDescription, currentCandidateId });
   };
 
   // Definition of an item in Votings list
@@ -88,7 +88,7 @@ const DEditItem = ({
             sx={votingTheme.typography.descriptionOfItem}
             style={{ width: '100%', marginLeft: '24px', marginBottom: '10px' }}
           >
-            {curentDescription}
+            {currentDescription}
           </Typography>
         </Box>
       </>

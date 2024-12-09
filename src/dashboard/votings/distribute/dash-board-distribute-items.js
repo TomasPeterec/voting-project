@@ -5,10 +5,20 @@ import { Link } from 'react-router-dom';
 import DDistributeItem from './d-distribute-item';
 import axiosInstance from '../../../axios-instance';
 import mobileWidth from '../../../css-and-material/is-device';
+import { useAuth } from '../../../contexts/AuthContext'; // Import the useAuth hook
+import axios from 'axios';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
 import { testIfItExists, ifExistDeleteFromArrayOfObjects } from '../../common/already-exist';
 import { sanitizeForApi } from '../../common/sanitize';
+import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
+import { ReactComponent as IDeleteDef } from '../../../img/i_delete_default.svg';
+import { ReactComponent as IDistributeDef } from '../../../img/i_distribute_default.svg';
+import { ReactComponent as IEditDef } from '../../../img/i_edit_defaul.svg';
+import { ReactComponent as IStatisticsDef } from '../../../img/i_statistics_defaul.svg';
+import { ReactComponent as ISloadDef } from '../../../img/i_load_defaul.svg';
+
+const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
 const DashBoardDistributeItems = ({
   userId,
@@ -21,6 +31,7 @@ const DashBoardDistributeItems = ({
   handleEmails2,
   setGlobal,
   getGlobal,
+  setCurrentEmailListIdAux,
 }) => {
   DashBoardDistributeItems.propTypes = {
     userId: PropTypes.string.isRequired,
@@ -28,9 +39,10 @@ const DashBoardDistributeItems = ({
   };
 
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
-  const [listsOfEmails, setListsOfEmails] = useState(null);
+  const [currentId, setCurrentId] = useState('');
+  const [listsOfEmails, setListsOfEmails] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { idToken } = useAuth(); // Use the context to get user and token
   const [currentItem, setCurrentItem] = useState('');
   const [curentEmails, setCurentEmails] = useState('');
   const [newItem, setNewItem] = useState('');
@@ -38,6 +50,9 @@ const DashBoardDistributeItems = ({
   const [modalButtonsOn, setModalButtonsOn] = useState(false);
   const [modalDeleteConfirmation, setModalDeleteConfirmation] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
+  const [currentListId, setCurrentListId] = useState('');
+  const [returnIsHovered, setReturnIsHovered] = useState(false);
+  const [deleteIsHovered, setDeleteIsHovered] = useState(false);
 
   // adding of interceptor
   axiosInstance.interceptors.request.use(
@@ -55,15 +70,18 @@ const DashBoardDistributeItems = ({
 
   const handleButtonsModal = (itemIdentificators) => {
     setCurrentItem(itemIdentificators.currentItem);
-    setCurentEmails(itemIdentificators.curentEmails);
+    setCurrentListId(itemIdentificators.currentId);
+    console.log(itemIdentificators.currentId);
+    console.log(getGlobal.currentEmailListId);
     changeParentClick();
   };
 
   const handleDeleteItemModal = (itemIdentificators) => {
+    // handleDeleteItemModal({ currentItem, currentId });
     hideModalButtons();
     setModalDeleteConfirmation(true);
+    setCurrentListId(itemIdentificators.currentId);
     setCurrentItem(itemIdentificators.currentItem);
-    setCurentEmails(itemIdentificators.curentEmails);
   };
 
   const handleEditItemModal = (itemIdentificators) => {
@@ -88,8 +106,22 @@ const DashBoardDistributeItems = ({
     setModalEdit(false);
   };
 
+  const handleLoadItemModal = (auxliary) => {
+    console.log(currentListId);
+
+    setGlobal('currentEmailListId', currentListId);
+
+    if (currentListId == getGlobal.currentEmailListId) {
+      setCurrentEmailListIdAux('');
+    }
+
+    setModalButtonsOn(false);
+
+    //console.log(auxliary);
+  };
+
   const deletePermanently = (item) => {
-    deleteVotings(item);
+    deleteEmailList(item);
     setModalDeleteConfirmation(false);
   };
 
@@ -105,22 +137,26 @@ const DashBoardDistributeItems = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Set loading to true before starting the operation
-        setLoading(true);
+      if (idToken) {
+        try {
+          // Set loading to true before starting the operation
+          setLoading(true);
 
-        // api-endpoint for serving the items
-        const response = await axiosInstance.get('/api/users/mails/');
-        const data = response.data;
-
-        // Set data and loading to false when the operation is complete
-        setListsOfEmails(data);
-        setLoading(false);
-        arrHandler(data);
-      } catch (error) {
-        // Handle errors if needed
-        console.error('Error fetching data:', error);
-        setLoading(false);
+          // api-endpoint for serving the items
+          const response = await axios.get(`${apiUrl}/api/emaillists`, {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          });
+          // Set data and loading to false when the operation is complete
+          setListsOfEmails(response.data.results);
+          setLoading(false);
+          arrHandler(response.data.results);
+        } catch (error) {
+          // Handle errors if needed
+          console.error('Error fetching data:', error);
+          setLoading(false);
+        }
       }
     };
 
@@ -128,34 +164,36 @@ const DashBoardDistributeItems = ({
     fetchData();
 
     // Dependency array includes 'setLoading, setListsOfEmails'
-  }, [setLoading, setListsOfEmails, arrHandler, reload, currentItem, curentEmails]);
+  }, [setLoading, setListsOfEmails, reload, currentItem, curentEmails]);
 
-  const deleteVotings = async (item) => {
+  const deleteEmailList = async (item) => {
     const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item);
 
-    try {
-      // api-endpoint for deleting the item
-      const response = await axiosInstance.put('/api/listOfVotings/template/delete', {
-        lov_id: curentVotingId,
-        template: newListArray,
-      });
+    if (idToken) {
+      try {
+        // api-endpoint for deleting the item
+        const response = await axios.delete(`${apiUrl}/api/emaillists/${currentListId}`, {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        });
 
-      if (response.status === 200) {
-        const data = response.data;
-        // Perform actions with the data
-        console.log('Delete request successful:', data);
+        if (response.status === 200) {
+          const data = response.data;
+          // Perform actions with the data
+          console.log('Delete request successful:', data);
+        }
+        setCurrentItem('');
+        setCurentEmails('');
+      } catch (error) {
+        console.error('Error deleting item data:', error);
       }
-      setCurrentItem('');
-      setCurentEmails('');
-    } catch (error) {
-      console.error('Error deleting item data:', error);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(newDescription);
     const response = await axiosInstance.put('/api/listOfVotings/template/change', {
       lov_id: curentVotingId,
       oldTitle: currentItem,
@@ -163,26 +201,6 @@ const DashBoardDistributeItems = ({
       description: getGlobal.displayedListOfEmails.trim(),
     });
 
-    console.log(getGlobal.displayedListOfEmails);
-    console.log('response data: ' + response.data);
-
-    // try {
-    //   if (newItem != '' && newItem != ' ' && newItem != '.' && newItem != ',') {
-    //     const response = await axiosInstance.put('/api/listOfVotings/template/change', {
-    //       lov_id: curentVotingId,
-    //       oldTitle: currentItem,
-    //       title: newItem.trim(),
-    //       description: newDescription.trim()
-    //     })
-    //     // console.log('response data: ' + response.data)
-    //     console.log('response data: ' + response)
-    //     setCurrentItem(newItem.trim())
-    //     setCurentEmails(newDescription.trim())
-    //   }
-    // } catch (error) {
-    //   // console.error('Error:', error.response.data)
-    //   console.error('Error:', error.response)
-    // }
     hideEditModal();
   };
 
@@ -192,36 +210,90 @@ const DashBoardDistributeItems = ({
     handleEmails(curentEmails, currentItem);
   };
 
+  const localMOdalStyles = {
+    ...modalWindowsStyles,
+    returnButton: {
+      ...modalWindowsStyles.returnButton,
+      borderColor: returnIsHovered ? '#6691D9' : '#5376B1',
+      color: returnIsHovered ? '#ffffff' : '#B7B7B7',
+    },
+    confirmDeleteButton: {
+      ...modalWindowsStyles.confirmDeleteButton,
+      borderColor: deleteIsHovered ? '#E40304' : '#BE2122',
+      color: deleteIsHovered ? '#ffffff' : '#B7B7B7',
+    },
+  };
+
   return (
     <>
-      {/* Definition of modal window for buttons */}
-      <div
-        style={
-          isMobile
-            ? !modalButtonsOn
-              ? styles02.desktopFormContainerHidden
-              : styles02.displayed
-            : styles02.desktopFormContainerHidden
-        }
-      >
-        <div style={styles02.nameOfItemOnModalNest}>
-          <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
-          <div style={styles02.buttonNest01}>
-            <Button onClick={() => handleLoadModal({ currentItem, curentEmails })}>Load</Button>
-            <Link to="/votings/edit" state={{ currentItem, curentEmails }}>
-              <Button>Save</Button>
-            </Link>
-            <Link to="/votings/edit" state={{ currentItem, curentEmails }}>
-              <Button>Edit</Button>
-            </Link>
-            <Button onClick={() => handleDeleteItemModal({ currentItem, curentEmails })}>Delete</Button>
-          </div>
-          <div style={styles02.buttonNest01}>
-            <Button onClick={hideModalButtons}>Return</Button>
+      {modalButtonsOn && (
+        <div style={isMobile ? styles02.displayed : styles02.desktopFormContainerHidden}>
+          <div style={modalWindowsStyles.nameOfItemOnModalNest}>
+            <div style={modalWindowsStyles.solidFoundation}>
+              <div style={{ height: '30px' }}></div>
+              <p style={modalWindowsStyles.modalMessage}>Choose an action for the item</p>
+              <h3 style={modalWindowsStyles.modalHeader}>{currentItem}</h3>
+              <div style={styles02.buttonNest01}>
+                <button
+                  style={modalWindowsStyles.invisibleNostyle}
+                  onClick={() => handleLoadItemModal({ currentItem, currentListId })}
+                >
+                  <ISloadDef style={modalWindowsStyles.modalRowIcone} />
+                </button>
+                <button
+                  style={modalWindowsStyles.invisibleNostyle}
+                  onClick={() => handleDeleteItemModal({ currentItem, currentListId })}
+                >
+                  <IDeleteDef style={modalWindowsStyles.modalRowIcone} />
+                </button>
+              </div>
+              <div style={styles02.buttonNest01}>
+                <Button
+                  style={localMOdalStyles.returnButton}
+                  onMouseEnter={() => setReturnIsHovered(true)} // Set hover state to true
+                  onMouseLeave={() => setReturnIsHovered(false)} // Set hover state to false
+                  onClick={hideModalButtons}
+                >
+                  Return
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      {/* Definition of modal window for confirmation of deleting a item */}
+      )}
+
+      {modalDeleteConfirmation && (
+        <div style={modalWindowsStyles.nameOfItemOnModalNest}>
+          <div style={modalWindowsStyles.solidFoundation}>
+            <div style={{ height: '22px' }}></div>
+            <p style={modalWindowsStyles.modalMessage}>
+              This action will permanently
+              <br />
+              delete item with name
+            </p>
+            <h3 style={modalWindowsStyles.modalHeader}>{currentItem}</h3>
+            <div style={modalWindowsStyles.automaticRow}>
+              <Button
+                onMouseEnter={() => setDeleteIsHovered(true)} // Set hover state to true
+                onMouseLeave={() => setDeleteIsHovered(false)} // Set hover state to false
+                style={localMOdalStyles.confirmDeleteButton}
+                onClick={() => deletePermanently(currentId)}
+              >
+                <strong>Confirm delete</strong>
+              </Button>
+              <div style={{ width: '20px' }}></div>
+              <Button
+                onMouseEnter={() => setReturnIsHovered(true)} // Set hover state to true
+                onMouseLeave={() => setReturnIsHovered(false)} // Set hover state to false
+                style={localMOdalStyles.returnButton}
+                onClick={hideDeleteConfirmation}
+              >
+                <strong>Return</strong>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       <div style={!modalDeleteConfirmation ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
@@ -311,12 +383,15 @@ const DashBoardDistributeItems = ({
                         handleButtonsModal={handleButtonsModal}
                         handleDeleteItemModal={handleDeleteItemModal}
                         handleEditItemModal={handleEditItemModal}
-                        currentItem={curentEmailList.name}
+                        currentItem={curentEmailList.list_name}
+                        currentId={curentEmailList.list_id}
                         curentEmails={curentEmailList.emails}
                         handleLoadModal={handleLoadModal}
                         handleEmails2={handleEmails2}
                         getGlobal={getGlobal}
                         setGlobal={setGlobal}
+                        setCurrentEmailListIdAux={setCurrentEmailListIdAux}
+                        setModalButtonsOn={setModalButtonsOn}
                       />
                     }
                   </li>

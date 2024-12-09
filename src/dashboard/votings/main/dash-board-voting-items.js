@@ -18,7 +18,7 @@ import { ReactComponent as IStatisticsDef } from '../../../img/i_statistics_defa
 initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
-const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
+const DashBoardVotingItems = ({ reload, arrHandler }) => {
   const { idToken } = useAuth(); // Use the context to get and token
   const [listOfVotes, setListOfVotes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -87,7 +87,7 @@ const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
   };
 
   useEffect(() => {
-    const fetchList = async () => {
+    const fetchListOfVotings = async () => {
       if (idToken) {
         try {
           const response = await axios.get(`${apiUrl}/api/listOfVotings/subset`, {
@@ -107,7 +107,7 @@ const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
       }
     };
 
-    fetchList();
+    fetchListOfVotings();
   }, [idToken, reload]);
 
   return (
@@ -122,7 +122,7 @@ const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
               <p style={modalWindowsStyles.modalMessage}>Choose an action for the item</p>
               <h3 style={modalWindowsStyles.modalHeader}>{currentItem}</h3>
               <div style={styles02.buttonNest01}>
-                <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
+                <Link to="/votings/distribution" state={{ currentItem, currentId }}>
                   {/* <Link to="/votings/distribution" state={{ currentItem, currentId }}>*/}
                   <IDistributeDef style={modalWindowsStyles.modalRowIcone} />
                 </Link>
@@ -130,8 +130,8 @@ const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
                   {/* <Link to="/votings/statistics" state={{ currentItem, currentId }}>*/}
                   <IStatisticsDef style={modalWindowsStyles.modalRowIcone} />
                 </Link>
-                <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
-                  {/* <Link to="/votings/edit" state={{ currentItem, currentId }}>*/}
+                {/* <Link to="/votings/dashboard" state={{ currentItem, currentId }}>*/}
+                <Link to="/votings/edit" state={{ currentItem, currentId }}>
                   <IEditDef style={modalWindowsStyles.modalRowIcone} />
                 </Link>
                 <button
@@ -210,7 +210,6 @@ const DashBoardVotingItems = ({ userId, reload, arrHandler }) => {
 };
 
 DashBoardVotingItems.propTypes = {
-  userId: PropTypes.string.isRequired,
   reload: PropTypes.bool.isRequired,
   arrHandler: PropTypes.func.isRequired,
 };

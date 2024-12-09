@@ -1,81 +1,108 @@
-import { Typography, useMediaQuery } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import React from 'react';
+import { Typography, useMediaQuery, Box, Button } from '@mui/material';
+import axios from 'axios';
 import axiosInstance from '../../../axios-instance';
 import mobileWidth from '../../../css-and-material/is-device';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
 import { sanitizeForApi } from '../../common/sanitize';
+import { useAuth } from '../../../contexts/AuthContext';
+import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
 
-const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickUp, getGlobal, setGlobal }) => {
+const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
+
+const DashBoardDistributeForm = ({
+  triggerReload,
+  userId,
+  curentUuid,
+  pushClickUp,
+  getGlobal,
+  setGlobal,
+  arrFromItems,
+  loadedEmails,
+  clearBigArea,
+}) => {
+  const { idToken } = useAuth(); // Access user token from context
+
+  // Add user ID header to axios instance
   axiosInstance.interceptors.request.use(
     (config) => {
       config.headers['X-User-ID'] = userId;
       return config;
     },
-    (error) => {
-      return Promise.reject(error);
-    },
+    (error) => Promise.reject(error),
   );
+
+  const validateString = (value) => typeof value === 'string' && value.trim() !== '' && value !== '.' && value !== ',';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const emails = getGlobal.curentSetOfEmails || '';
+
+    if (!validateString(emails)) return;
 
     try {
-      if (
-        getGlobal.curentSetOfEmails != '' &&
-        getGlobal.curentSetOfEmails != ' ' &&
-        getGlobal.curentSetOfEmails != '.' &&
-        getGlobal.curentSetOfEmails != ','
-      ) {
-        const response = await axiosInstance.post('/api/users/multiplemails', {
-          lov_id: curentUuid,
-          mails: getGlobal.curentSetOfEmails.split(','),
-        });
-        console.log(response.data);
-        triggerReload();
-        setGlobal('curentSetOfEmails', '');
-      }
+      const response = await axiosInstance.post('/api/users/multiplemails', {
+        lov_id: curentUuid,
+        mails: emails.split(','),
+      });
+      triggerReload();
+      setGlobal('curentSetOfEmails', '');
     } catch (error) {
-      console.error('Error:', error.response.data);
+      console.error('Error:', error.response?.data || error.message);
     }
   };
 
   const handleSubmitNewList = async (e) => {
     e.preventDefault();
-    try {
-      console.log(sanitizeForApi(getGlobal.nameOfNewSetOfEmails));
-      if (
-        getGlobal.curentSetOfEmails != '' &&
-        getGlobal.curentSetOfEmails != ' ' &&
-        getGlobal.curentSetOfEmails != '.' &&
-        getGlobal.curentSetOfEmails != ','
-      ) {
-        if (
-          getGlobal.nameOfNewSetOfEmails != '' &&
-          getGlobal.nameOfNewSetOfEmails != ' ' &&
-          getGlobal.nameOfNewSetOfEmails != '.' &&
-          getGlobal.nameOfNewSetOfEmails != ','
-        ) {
-          const response = await axiosInstance.post('/api/users/nevSetOfMails', {
-            lov_id: curentUuid,
-            nameOfSet: sanitizeForApi(getGlobal.nameOfNewSetOfEmails),
-            mails: getGlobal.curentSetOfEmails.split(','),
-          });
-          console.log(response.data);
-          triggerReload();
-          setGlobal('nameOfNewSetOfEmails', '');
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error.response.data);
+    let emails = getGlobal.curentSetOfEmails || '';
+    const listName = getGlobal.nameOfNewSetOfEmails || '';
+
+    if (Array.isArray(emails)) {
+      emails = emails.join(', ');
+    } else if (typeof emails !== 'string') {
+      console.error('Emails should be a string or an array of strings');
+      return;
     }
-    setGlobal('nameOfNewSetOfEmails', '');
-    setGlobal('saveModalButtonClicked', false);
+
+    if (!emails.trim() || !listName.trim()) {
+      console.log('Emails or list name are missing');
+      return;
+    }
+
+    const emailArray = emails
+      .split(',')
+      .map((email) => email.trim())
+      .filter((email) => email !== '');
+
+    if (emailArray.length === 0) {
+      console.log('No valid emails found');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/api/emaillists`,
+        {
+          lov_id: curentUuid,
+          nameOfEmaillist: sanitizeForApi(listName),
+          mails: emailArray,
+        },
+        {
+          headers: { Authorization: `Bearer ${idToken}` },
+        },
+      );
+
+      console.log('API Response:', response.data);
+      triggerReload();
+      setGlobal('nameOfNewSetOfEmails', '');
+      setGlobal('saveModalButtonClicked', false);
+    } catch (error) {
+      console.error('Error:', error.response?.data || error.message);
+    }
   };
 
-  const handleChange2 = (e) => {
+  const handleFormEmailsChange = (e) => {
     setGlobal('curentSetOfEmails', sanitizeForApi(e.target.value));
   };
 
@@ -87,113 +114,145 @@ const DashBoardDistributeForm = ({ triggerReload, userId, curentUuid, pushClickU
     setGlobal('curentSetOfEmails', '');
   };
 
-  const handleModalForSavingOn = () => {
-    setGlobal('saveModalButtonClicked', true);
-  };
-
-  const handleModalForSavingOff = async () => {
-    setGlobal('saveModalButtonClicked', false);
+  const toggleSaveModal = (isVisible) => {
+    setGlobal('saveModalButtonClicked', isVisible);
   };
 
   const handleLoadClick = () => {
     pushClickUp(true);
   };
 
-  // breakpoint
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
+
+  const localStyles = {
+    ...modalWindowsStyles,
+    automaticRow: {
+      ...modalWindowsStyles.automaticRow,
+      flexDirection: isMobile ? 'column' : 'row',
+    },
+    returnButton: {
+      ...modalWindowsStyles.returnButton,
+      margin: '0px',
+      padding: isMobile ? modalWindowsStyles.returnButton.padding : '18px',
+      paddingLeft: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
+      paddingRight: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
+      height: isMobile ? modalWindowsStyles.returnButton.height : '100%',
+    },
+    sendButton: {
+      ...modalWindowsStyles.sendButton,
+      margin: '0px',
+      padding: isMobile ? modalWindowsStyles.sendButton.padding : '18px',
+      paddingLeft: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+      paddingRight: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+      height: isMobile ? modalWindowsStyles.sendButton.height : '100%',
+    },
+    areaStyle: {
+      ...modalWindowsStyles.inputStyle,
+      width: '100%',
+      overflowY: 'auto',
+      height: isMobile ? '300px' : '250px',
+      marginBottom: '0px',
+    },
+    formOrder: {
+      display: 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+    },
+    butonBox: {
+      display: 'flex',
+      gap: '10px',
+      flexDirection: !isMobile ? 'column' : 'row',
+      paddingLeft: isMobile ? '0px' : '21px',
+      marginTop: !isMobile ? '10px' : '20px',
+    },
+    solidFoundation: {
+      ...modalWindowsStyles.solidFoundation,
+      width: '100%',
+    },
+    solidFoundation2: {
+      ...modalWindowsStyles.solidFoundation,
+      width: '500px',
+    },
+    nameOfItemOnModalNest: {
+      ...styles02.nameOfItemOnModalNest,
+      display: 'flex',
+      justifyContent: 'center' /* Centers horizontally */,
+      alignItems: 'center' /* Centers vertically */,
+    },
+  };
 
   return (
     <>
-      <div style={getGlobal.saveModalButtonClicked ? styles02.modalSaveVisible : styles02.modalSaveHidden}>
-        <div style={styles02.nameOfItemOnModalNest}>
-          {/* <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3> */}
-          <div style={styles02.buttonNest01}>
-            <Box sx={{ width: '100%' }} borderRadius="10px" bgcolor="white" border="1px solid #ccc" p={2}>
-              <form onSubmit={handleSubmitNewList} style={{ width: '100%' }}>
-                <div style={{ width: '100%', display: 'flex' }}>
-                  <div style={{ width: '100%' }}>
-                    <Typography sx={votingTheme.typography.formDescription}>The name of the new list</Typography>
-                    <input
-                      style={{ width: '100%' }}
-                      type="text"
-                      name="name"
-                      placeholder="Enter Input"
-                      value={getGlobal.nameOfNewSetOfEmails}
-                      onChange={handleChangeNewNameOfMailSet}
-                    />
-                  </div>
-                  <div style={{ width: '30px' }}></div>
-                  <div>
-                    <Button type="submit" variant="contained">
-                      SAVE
-                    </Button>
-                  </div>
-                </div>
-              </form>
-            </Box>
-          </div>
-          <div style={styles02.buttonNest01}>
-            <Button onClick={handleModalForSavingOff}>Return</Button>
-          </div>
-        </div>
-      </div>
-      <div style={styles02.separatorHigh}></div>
-      <div style={styles02.floatedHidden}></div>
-      <div style={styles02.desktopFormContainerVisible}>
-        <div style={{ height: '40%' }}></div>
-        <div style={styles02.modalInnerDivDesk}>
-          <Box borderRadius="10px" bgcolor="white" border="1px solid #ccc" p={2}>
-            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-              <div style={{ width: '100%', display: 'flex' }}>
-                <div style={{ width: '100%' }}>
-                  <Typography sx={votingTheme.typography.formDescription}>Email addreses</Typography>
-                  <textarea
-                    style={{ width: '100%', overflowY: 'auto' }}
-                    rows={isMobile ? 24 : 8} // Specifies the number of visible text lines
-                    cols={150} // Specifies the width of the textarea in characters
-                    value={getGlobal.curentSetOfEmails} // Specifies the initial value of the textarea
-                    placeholder="Enter Input" // Specifies a short hint that describes the expected value of the textarea
-                    wrap="soft" // Specifies how the text in the textarea should be wrapped
-                    readOnly={false} // Specifies that the textarea is read-only, meaning the user cannot modify its content
-                    name="mailAddresses" // Specifies the name of the textarea, which can be used when submitting a form
-                    disabled={false} //  Specifies that the textarea is disabled, meaning the user cannot interact with it
-                    minLength={15} // Specifies the minimum number of characters required in the textarea
-                    maxLength={20000} // Specifies the maximum number of characters allowed in the textarea
-                    onChange={handleChange2}
-                  />
-                </div>
+      {getGlobal.saveModalButtonClicked && (
+        <div style={styles02.modalSaveVisible}>
+          <div style={localStyles.nameOfItemOnModalNest}>
+            <div style={localStyles.solidFoundation2}>
+              <form onSubmit={handleSubmitNewList}>
+                <Typography sx={votingTheme.typography.formDescription}>The name of the new list</Typography>
+                <input
+                  style={modalWindowsStyles.inputStyle}
+                  type="text"
+                  placeholder="Enter list name"
+                  value={getGlobal.nameOfNewSetOfEmails}
+                  onChange={handleChangeNewNameOfMailSet}
+                />
                 <div
                   style={{
-                    width: '30px',
                     display: 'flex',
-                    flexDirection: 'column',
+                    gap: '10px',
+                    marginTop: '20px',
+                    height: '60px',
                   }}
-                ></div>
-                <div>
-                  <div>
-                    <Button type="submit" variant="contained">
-                      SEND
-                    </Button>
-                  </div>
-                  <div>
-                    <Button onClick={clearTextArea} variant="contained">
-                      CLEAR
-                    </Button>
-                  </div>
-                  <div>
-                    <Button onClick={handleModalForSavingOn} variant="contained">
-                      SAVE
-                    </Button>
-                  </div>
-                  <div style={isMobile ? styles02.visibleButton20 : styles02.hiddenList20}>
-                    <Button onClick={handleLoadClick} variant="contained">
-                      LOAD
-                    </Button>
-                  </div>
+                >
+                  <Button type="submit" style={localStyles.sendButton}>
+                    SAVE
+                  </Button>
+                  <Button onClick={() => toggleSaveModal(false)} style={localStyles.returnButton}>
+                    Return
+                  </Button>
                 </div>
-              </div>
-            </form>
-          </Box>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      <div style={styles02.desktopFormContainerVisible}>
+        <div style={localStyles.solidFoundation}>
+          <form onSubmit={handleSubmit} style={localStyles.formOrder}>
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Typography sx={votingTheme.typography.formDescription}>Email addresses</Typography>
+              <textarea
+                style={localStyles.areaStyle}
+                rows={isMobile ? 24 : 8}
+                cols={150}
+                value={getGlobal.curentSetOfEmails}
+                placeholder="Enter emails separated by commas"
+                onChange={handleFormEmailsChange}
+              />
+            </div>
+            <div style={localStyles.butonBox}>
+              <Button type="submit" style={localStyles.sendButton}>
+                SEND
+              </Button>
+              <Button onClick={clearTextArea} style={localStyles.returnButton}>
+                CLEAR
+              </Button>
+              <Button onClick={() => toggleSaveModal(true)} style={localStyles.returnButton}>
+                SAVE
+              </Button>
+              {isMobile && (
+                <Button onClick={handleLoadClick} style={localStyles.returnButton}>
+                  LISTS
+                </Button>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </>

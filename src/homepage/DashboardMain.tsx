@@ -10,7 +10,6 @@ import BottomBanner from '../banners/BottomBanner';
 import SideBanner from '../banners/SideBanner';
 import Footer from '../common/Footer';
 import { useAuth } from '../contexts/AuthContext'; // Import the useAuth hook
-import DashboardProvider from '../contexts/DashboardProvider';
 import mobileWidth from '../css-and-material/is-device';
 import staticStyles from '../css-and-material/staticStyles';
 import DashBoardStaticTexts from '../dashboard/common/dash-board-static-texts';
@@ -24,19 +23,17 @@ initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
 interface CustomUser {
-  uid: string;
   email: string | null;
   displayName: string | null;
 }
 
-const DashboardTest: React.FC = () => {
+const DashboardMain: React.FC = () => {
   const { idToken } = useAuth(); // Use the context to get user and token
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null); // Create a reference to the container
   const [width, setWidth] = useState(0); // Store the container's width
-  const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
   const [arrayOfE, setArrayOfE] = useState([]);
   const [reload, setReload] = useState(false);
 
@@ -139,117 +136,115 @@ const DashboardTest: React.FC = () => {
   }, [idToken]); // Run effect whenever idToken changes
 
   return (
-    <DashboardProvider>
-      <div
-        style={{
-          backgroundColor: 'blue',
-          alignItems: 'center',
-          height: '100%',
-        }}
-      >
-        <div style={styles.container}>
-          {isMobile ? (
-            <></>
-          ) : (
-            <div style={{ display: 'inline-flex' }}>
-              <div
-                style={{
-                  width: '160px',
-                  height: '600px',
-                  marginRight: '3.9vw',
-                }}
-              />
-              <div
-                style={{
-                  width: '160px',
-                  height: '600px',
-                  position: 'fixed',
-                  left: '0px',
-                }}
-              >
-                <SideBanner />
-              </div>
-            </div>
-          )}
-          {/* Main central container */}
-          <div style={styles.mainContent}>
-            <CssBaseline />
-            {/* Main upper part */}
-            <div ref={containerRef} style={styles.topBar}>
-              <div style={styles.headerContainer} />
-              <div style={{ height: '3.125vw' }}>
-                <HeaderTwo username={username as string | undefined} />
-              </div>
-
-              <div
-                style={{
-                  width: '100%',
-                  height: upAndDown,
-                  textAlign: 'right',
-                  paddingTop: '10px',
-                  paddingRight: logoHeight / 1.5,
-                }}
-              ></div>
-              <div style={styles.heroSection}>
-                {/* Headline */}
-                <DashBoardStaticTexts title="Votings" breadcrumb="Nejaka hodnota" urlBack="" />
-                {/* Form */}
-                <DashBoardVotingsForm userId={uID} triggerReload={triggerReload} arrFromItems={arrayOfE} />
-              </div>
-              <div style={{ width: '100%', height: upAndDown }} />
-              <div style={{ width: '100%', height: '1.5625vw' }} />
-            </div>
-            {/* Central middle part */}
-            <div style={styles.centralPart}>
-              <DashBoardVotingItems userId={uID} reload={reload} arrHandler={handleItemArray} />
-            </div>
-            {/* Footer */}
-            <div style={styles.footerCont}>
-              <Footer logoHeight={logoHeight} />
+    <div
+      style={{
+        backgroundColor: 'blue',
+        alignItems: 'center',
+        height: '100%',
+      }}
+    >
+      <div style={styles.container}>
+        {isMobile ? (
+          <></>
+        ) : (
+          <div style={{ display: 'inline-flex' }}>
+            <div
+              style={{
+                width: '160px',
+                height: '600px',
+                marginRight: '3.9vw',
+              }}
+            />
+            <div
+              style={{
+                width: '160px',
+                height: '600px',
+                position: 'fixed',
+                left: '0px',
+              }}
+            >
+              <SideBanner />
             </div>
           </div>
-
-          {isMobile ? (
-            <></>
-          ) : (
-            <div style={{ display: 'inline-flex' }}>
-              <div style={{ width: '160px', height: '600px', marginLeft: '3.9vw' }} />
-              <div
-                style={{
-                  width: '160px',
-                  height: '600px',
-                  position: 'fixed',
-                  right: '0px',
-                }}
-              >
-                <SideBanner />
-              </div>
+        )}
+        {/* Main central container */}
+        <div style={styles.mainContent}>
+          <CssBaseline />
+          {/* Main upper part */}
+          <div ref={containerRef} style={styles.topBar}>
+            <div style={styles.headerContainer} />
+            <div style={{ height: '3.125vw' }}>
+              <HeaderTwo username={username as string | undefined} />
             </div>
-          )}
+
+            <div
+              style={{
+                width: '100%',
+                height: upAndDown,
+                textAlign: 'right',
+                paddingTop: '10px',
+                paddingRight: logoHeight / 1.5,
+              }}
+            ></div>
+            <div style={styles.heroSection}>
+              {/* Headline */}
+              <DashBoardStaticTexts title="Votings" breadcrumb="dashboard" urlBack="" />
+              {/* Form */}
+              <DashBoardVotingsForm triggerReload={triggerReload} arrFromItems={arrayOfE} />
+            </div>
+            <div style={{ width: '100%', height: upAndDown }} />
+            <div style={{ width: '100%', height: '1.5625vw' }} />
+          </div>
+          {/* Central middle part */}
+          <div style={styles.centralPart}>
+            <DashBoardVotingItems reload={reload} arrHandler={handleItemArray} />
+          </div>
+          {/* Footer */}
+          <div style={styles.footerCont}>
+            <Footer logoHeight={logoHeight} />
+          </div>
         </div>
 
         {isMobile ? (
-          <div
-            className="mottomBanner"
-            style={{
-              backgroundColor: '#D9D9D9',
-              width: '320px',
-              height: '50px',
-              position: 'fixed',
-              bottom: '0', // Align to bottom
-              left: '50%', // Center horizontally
-              transform: 'translateX(-50%)', // Correct centering
-              textAlign: 'center', // Optional: for centering text inside the banner
-            }}
-          >
-            <BottomBanner />
-          </div>
-        ) : (
           <></>
+        ) : (
+          <div style={{ display: 'inline-flex' }}>
+            <div style={{ width: '160px', height: '600px', marginLeft: '3.9vw' }} />
+            <div
+              style={{
+                width: '160px',
+                height: '600px',
+                position: 'fixed',
+                right: '0px',
+              }}
+            >
+              <SideBanner />
+            </div>
+          </div>
         )}
       </div>
-    </DashboardProvider>
+
+      {isMobile ? (
+        <div
+          className="mottomBanner"
+          style={{
+            backgroundColor: '#D9D9D9',
+            width: '320px',
+            height: '50px',
+            position: 'fixed',
+            bottom: '0', // Align to bottom
+            left: '50%', // Center horizontally
+            transform: 'translateX(-50%)', // Correct centering
+            textAlign: 'center', // Optional: for centering text inside the banner
+          }}
+        >
+          <BottomBanner />
+        </div>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 
-export default DashboardTest;
+export default DashboardMain;

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import React, { useState } from 'react';
-import axiosInstance from '../../../axios-instance';
 import { useAuth } from '../../../contexts/AuthContext';
 import mobileWidth from '../../../css-and-material/is-device';
 import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
@@ -20,7 +19,7 @@ import { badWords } from '../../badwords'; // Update the path as necessary
 initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
-const DashBoardVotingsForm = ({ triggerReload, userId, arrFromItems }) => {
+const DashBoardVotingsForm = ({ triggerReload, arrFromItems }) => {
   const { idToken } = useAuth(); // Use the context to get user and token
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
   const [clicked, setClicked] = useState(false);
@@ -30,16 +29,6 @@ const DashBoardVotingsForm = ({ triggerReload, userId, arrFromItems }) => {
 
   // Add custom bad words from the external file
   filter.addWords(...badWords); // Spread the array to add the words
-
-  axiosInstance.interceptors.request.use(
-    (config) => {
-      config.headers['X-User-ID'] = userId;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    },
-  );
 
   // Check if the input contains offensive words
   const checkForProfanity = (input) => {
@@ -62,6 +51,7 @@ const DashBoardVotingsForm = ({ triggerReload, userId, arrFromItems }) => {
             const response = await axios.post(
               `${apiUrl}/api/listOfVotings/insert`,
               {
+                name_of_emaillist: formData.trim(),
                 name_of_voting: formData.trim(),
               },
               {
@@ -179,7 +169,7 @@ const DashBoardVotingsForm = ({ triggerReload, userId, arrFromItems }) => {
                 <div style={{ width: '100%', textAlign: 'left' }}>
                   <Typography sx={votingTheme.typography.formDescription}>The name of the new vote</Typography>
                   <input
-                    style={modalWindowsStyles.imputStyle}
+                    style={modalWindowsStyles.inputStyle}
                     type="text"
                     name="name"
                     value={formData}

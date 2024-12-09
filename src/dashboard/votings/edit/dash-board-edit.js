@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import DashBoardEditForm from './dash-board-edit-form';
-import DashBoardEditItems from './dash-board-edit-items';
+import DashboardEditOldForm from './dash-board-edit-form';
+import DashboardEditOldItems from './dash-board-edit-items';
 import { styles02 } from '../../../css-and-material/styles-02';
 import DashBoardHeader from '../../common/dash-board-header';
 import DashBoardStaticTexts from '../../common/dash-board-static-texts';
 import '../../../css-and-material/basic.css';
 
-const DashboardEdit = () => {
+const DashboardEditOld = () => {
   const uID = 'I99VjupuITgoS7mvvIiIKYxNRxo2';
 
   const [arrayOfE, setArrayOfE] = useState([]);
@@ -34,7 +34,7 @@ const DashboardEdit = () => {
       <div style={styles02.mainUpperContainer}>
         <div style={styles02.mainContentContainer}>
           <DashBoardStaticTexts title="Votings" breadcrumb={currentItem + ' - edit'} urlBack="/votings" />
-          <DashBoardEditForm
+          <DashboardEditOldForm
             userId={uID}
             triggerReload={triggerReload}
             arrFromItems={arrayOfE}
@@ -44,11 +44,11 @@ const DashboardEdit = () => {
       </div>
       <div style={styles02.mainBottomContainer}>
         <div style={styles02.mainContentContainer}>
-          <DashBoardEditItems userId={uID} curentVotingId={currentId} reload={reload} arrHandler={handleItemArray} />
+          <DashboardEditOldItems userId={uID} curentVotingId={currentId} reload={reload} arrHandler={handleItemArray} />
         </div>
       </div>
     </>
   );
 };
 
-export default DashboardEdit;
+export default DashboardEditOld;

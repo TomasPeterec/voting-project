@@ -1,5 +1,1 @@
-export const badWords = [
-  'badword01',
-  'badword02',
-  'badword03'
-];
+export const badWords = ['badword01', 'badword02', 'badword03'];
