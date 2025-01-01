@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, useMediaQuery, Box, Button } from '@mui/material';
 import axios from 'axios';
-import axiosInstance from '../../../axios-instance';
 import mobileWidth from '../../../css-and-material/is-device';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
@@ -25,13 +24,13 @@ const DashBoardDistributeForm = ({
   const { idToken } = useAuth(); // Access user token from context
 
   // Add user ID header to axios instance
-  axiosInstance.interceptors.request.use(
-    (config) => {
-      config.headers['X-User-ID'] = userId;
-      return config;
-    },
-    (error) => Promise.reject(error),
-  );
+  // axiosInstance.interceptors.request.use(
+  //   (config) => {
+  //     config.headers['X-User-ID'] = userId;
+  //     return config;
+  //   },
+  //   (error) => Promise.reject(error),
+  // );
 
   const validateString = (value) => typeof value === 'string' && value.trim() !== '' && value !== '.' && value !== ',';
 
@@ -39,17 +38,25 @@ const DashBoardDistributeForm = ({
     e.preventDefault();
     const emails = getGlobal.curentSetOfEmails || '';
 
-    if (!validateString(emails)) return;
+    //if (!validateString(emails)) return;
 
-    try {
-      const response = await axiosInstance.post('/api/users/multiplemails', {
-        lov_id: curentUuid,
-        mails: emails.split(','),
-      });
-      triggerReload();
-      setGlobal('curentSetOfEmails', '');
-    } catch (error) {
-      console.error('Error:', error.response?.data || error.message);
+    if (idToken) {
+      try {
+        const response = await axios.post(
+          `${apiUrl}/api/voting-records/${curentUuid}`,
+          {
+            //mails: emails.split(','),
+            mails: emails,
+          },
+          {
+            headers: { Authorization: `Bearer ${idToken}` },
+          },
+        );
+        triggerReload();
+        setGlobal('curentSetOfEmails', '');
+      } catch (error) {
+        console.error('Error:', error.response?.data || error.message);
+      }
     }
   };
 
@@ -80,25 +87,27 @@ const DashBoardDistributeForm = ({
       return;
     }
 
-    try {
-      const response = await axios.post(
-        `${apiUrl}/api/emaillists`,
-        {
-          lov_id: curentUuid,
-          nameOfEmaillist: sanitizeForApi(listName),
-          mails: emailArray,
-        },
-        {
-          headers: { Authorization: `Bearer ${idToken}` },
-        },
-      );
+    if (idToken) {
+      try {
+        const response = await axios.post(
+          `${apiUrl}/api/emaillists`,
+          {
+            lov_id: curentUuid,
+            nameOfEmaillist: sanitizeForApi(listName),
+            mails: emailArray,
+          },
+          {
+            headers: { Authorization: `Bearer ${idToken}` },
+          },
+        );
 
-      console.log('API Response:', response.data);
-      triggerReload();
-      setGlobal('nameOfNewSetOfEmails', '');
-      setGlobal('saveModalButtonClicked', false);
-    } catch (error) {
-      console.error('Error:', error.response?.data || error.message);
+        console.log('API Response:', response.data);
+        triggerReload();
+        setGlobal('nameOfNewSetOfEmails', '');
+        setGlobal('saveModalButtonClicked', false);
+      } catch (error) {
+        console.error('Error:', error.response?.data || error.message);
+      }
     }
   };
 

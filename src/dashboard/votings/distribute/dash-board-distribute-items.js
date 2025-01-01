@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DDistributeItem from './d-distribute-item';
-import axiosInstance from '../../../axios-instance';
 import mobileWidth from '../../../css-and-material/is-device';
 import { useAuth } from '../../../contexts/AuthContext'; // Import the useAuth hook
 import axios from 'axios';
@@ -55,15 +54,15 @@ const DashBoardDistributeItems = ({
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
 
   // adding of interceptor
-  axiosInstance.interceptors.request.use(
-    (config) => {
-      config.headers['X-User-ID'] = userId;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    },
-  );
+  // axiosInstance.interceptors.request.use(
+  //   (config) => {
+  //     config.headers['X-User-ID'] = userId;
+  //     return config;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   },
+  // );
 
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
@@ -194,7 +193,7 @@ const DashBoardDistributeItems = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await axiosInstance.put('/api/listOfVotings/template/change', {
+    const response = await axios.put('/api/listOfVotings/template/change', {
       lov_id: curentVotingId,
       oldTitle: currentItem,
       title: newItem.trim(),

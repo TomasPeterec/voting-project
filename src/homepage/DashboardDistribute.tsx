@@ -7,6 +7,8 @@ import { useLocation } from 'react-router-dom';
 import DashBoardDistributeItems from '../dashboard/votings/distribute/dash-board-distribute-items';
 import DashBoardDistributeForm from '../dashboard/votings/distribute/dash-board-distribute-form';
 
+import CandidateItems from 'dashboard/votings/votingform/CandidateItems';
+
 import HeaderTwo from './HeaderTwo';
 import { UseWidthUpdater } from './UseWidthUpdater';
 import BottomBanner from '../banners/BottomBanner';
@@ -18,7 +20,7 @@ import { useMainContext } from '../contexts/useMainContext'; // Correct path
 import mobileWidth from '../css-and-material/is-device';
 import staticStyles from '../css-and-material/staticStyles';
 import DashBoardStaticTexts from '../dashboard/common/dash-board-static-texts';
-import DashBoardEditItems from 'dashboard/votings/edit/dash-board-edit-items';
+// import DashBoardEditItems from 'dashboard/votings/edit/dash-board-edit-items';
 import firebaseConfig from '../firebaseConfig';
 import MyBackground from '../img/modryPodklad.jpg';
 //import DashBoardEditForm from 'dashboard/votings/edit/dash-board-edit-form';
@@ -328,16 +330,16 @@ const DashboardDistribute: React.FC = () => {
           {/* Central middle part */}
           <div style={styles.centralPart}>
             <DashBoardDistributeItems
-              userId={uID}
-              curentVotingId={currentId}
+              userId={userId}
               reload={reload}
+              curentVotingId={idToken}
               arrHandler={handleItemArray}
               handleEmails={handleEmails}
               parentClick={parentClick}
               changeParentClick={changeParentClick}
               handleEmails2={handleEmails2}
-              getGlobal={getGlobal}
               setGlobal={setGlobal}
+              getGlobal={getGlobal}
               setCurrentEmailListIdAux={setCurrentEmailListIdAux}
             />
           </div>
@@ -367,19 +369,7 @@ const DashboardDistribute: React.FC = () => {
       </div>
 
       {isMobile ? (
-        <div
-          className="mottomBanner"
-          style={{
-            backgroundColor: '#D9D9D9',
-            width: '320px',
-            height: '50px',
-            position: 'fixed',
-            bottom: '0', // Align to bottom
-            left: '50%', // Center horizontally
-            transform: 'translateX(-50%)', // Correct centering
-            textAlign: 'center', // Optional: for centering text inside the banner
-          }}
-        >
+        <div style={staticStyles.bottombanner}>
           <BottomBanner />
         </div>
       ) : (

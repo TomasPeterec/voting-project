@@ -14,6 +14,7 @@ import { ReactComponent as IEditDis } from '../../../img/i_edit_disabled.svg';
 import { ReactComponent as IStatisticsDef } from '../../../img/i_statistics_defaul.svg';
 import { ReactComponent as IStatisticsDis } from '../../../img/i_statistics_disabled.svg';
 import { useMainContext } from '../../../contexts/useMainContext';
+import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary
 
 const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteItemModal }) => {
   const { appState, appStateSetter } = useMainContext();
@@ -36,6 +37,11 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
     appStateSetter('chosenVotesName', currentItem);
   };
 
+  const handStatClick = () => {
+    appStateSetter('chosenVotesId', currentId);
+    appStateSetter('chosenVotesName', currentItem);
+  };
+
   const handleDIstributeClick = () => {
     appStateSetter('chosenVotesId', currentId);
     appStateSetter('chosenVotesName', currentItem);
@@ -53,7 +59,8 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
                 <IDraft style={styles02.rowIcone} />
               </div>
             </div>
-            <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography>
+            {/* <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography> */}
+            <div className="inter-item-title">{currentItem}</div>
           </div>
           <div style={styles02.buttonsAlignedToRight}>
             {isMobile ? (
@@ -70,11 +77,13 @@ const DVotingItem = ({ currentItem, currentId, handleButtonsModal, handleDeleteI
                   </div>
                 </div>
                 <div style={styles02.roundButonNest}>
-                  <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
-                    <div style={styles02.rounderFrame}>
-                      <IStatisticsDef style={styles02.rowIcone} />
-                    </div>
-                  </Link>
+                  <div onClick={handStatClick} style={{ display: 'inline-block' }}>
+                    <Link to="/votings/statictics" state={{ currentItem, currentId }}>
+                      <div style={styles02.rounderFrame}>
+                        <IStatisticsDef style={styles02.rowIcone} />
+                      </div>
+                    </Link>
+                  </div>
                 </div>
                 <div style={styles02.roundButonNest}>
                   <div onClick={handleEditClick} style={{ display: 'inline-block' }}>

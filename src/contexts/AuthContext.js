@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
       setUser(currentUser);
 
       if (currentUser) {
-        const token = await currentUser.getIdToken(); // Retrieve the ID token
+        const token = await currentUser.getIdToken(true); // Retrieve the ID token
         setIdToken(token);
         localStorage.setItem('idToken', token); // Persist token to localStorage
       } else {

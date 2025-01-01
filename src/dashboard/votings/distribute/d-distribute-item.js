@@ -5,6 +5,7 @@ import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
 import { ReactComponent as IDeleteDef } from '../../../img/i_delete_default.svg';
 import { ReactComponent as ISloadDef } from '../../../img/i_load_defaul.svg';
+import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary
 
 const DDistributeItem = ({
   currentItem,
@@ -72,7 +73,8 @@ const DDistributeItem = ({
           >
             <div style={styles02.nameOfCurentItem}>
               <div style={styles02.textFromLeft}></div>
-              <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography>
+              {/* <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography> */}
+              <div className="inter-item-title">{currentItem}</div>
             </div>
             <div style={styles02.buttonsAlignedToRight}>
               {isMobile ? (

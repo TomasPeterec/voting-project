@@ -16,6 +16,7 @@ import Footer from '../common/Footer';
 import mobileWidth from '../css-and-material/is-device';
 import firebaseConfig from '../firebaseConfig';
 import MyBackground from '../img/modryPodklad.jpg';
+import staticStyles from '../css-and-material/staticStyles';
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
@@ -264,19 +265,7 @@ const EmailNotification: React.FC = () => {
       </div>
 
       {isMobile ? (
-        <div
-          className="mottomBanner"
-          style={{
-            backgroundColor: '#D9D9D9',
-            width: '320px',
-            height: '50px',
-            position: 'fixed',
-            bottom: '0', // Align to bottom
-            left: '50%', // Center horizontally
-            transform: 'translateX(-50%)', // Correct centering
-            textAlign: 'center', // Optional: for centering text inside the banner
-          }}
-        >
+        <div style={staticStyles.bottombanner}>
           <BottomBanner />
         </div>
       ) : (

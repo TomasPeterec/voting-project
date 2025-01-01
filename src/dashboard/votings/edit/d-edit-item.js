@@ -3,6 +3,7 @@ import React from 'react';
 import mobileWidth from '../../../css-and-material/is-device';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
+import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary
 
 const DEditItem = ({
   currentItem,
@@ -43,7 +44,8 @@ const DEditItem = ({
           >
             <div style={styles02.nameOfCurentItem}>
               <div style={styles02.textFromLeft}></div>
-              <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography>
+              {/* <Typography sx={votingTheme.typography.titleOfItem}>{currentItem}</Typography> */}
+              <div className="inter-item-title">{currentItem}</div>
             </div>
             <div style={styles02.buttonsAlignedToRight}>
               {isMobile ? (
@@ -84,12 +86,13 @@ const DEditItem = ({
               )}
             </div>
           </div>
-          <Typography
+          {/* <Typography
             sx={votingTheme.typography.descriptionOfItem}
             style={{ width: '100%', marginLeft: '24px', marginBottom: '10px' }}
           >
             {currentDescription}
-          </Typography>
+          </Typography> */}
+          <div className="edit-description inter-item-description">{currentDescription}</div>
         </Box>
       </>
     );

@@ -12,22 +12,27 @@ import { useState } from 'react';
 import DashBoardAbout from './dashboard/about/dash-board-about';
 import DashboardTutorials from './dashboard/tutorials/dash-board-tutorials';
 import DashboardEdit from 'homepage/DashboardEdit';
-import DashboardStats from './dashboard/votings/statistics/dash-board-stats';
 import DashboardMain from './homepage/DashboardMain';
+import VotingForm from 'homepage/VotingForm';
 import EmailNotification from './homepage/EmailNotification';
 import IndexScreen from './homepage/IndexScreen';
 import LogInTo from './homepage/LogInTo';
 import RegisterTo from './homepage/RegisterTo';
 import SetUsername from './SetUsername';
 import DashboardDistribute from './homepage/DashboardDistribute';
-
-// import TestOfTest from './testTest/TestOfTest'
+import DashboardStatistic from './homepage/DashboardStatistic';
 
 export default function AppRouter() {
   const [appState, setAppState] = useState<AppStateType>({
     chosenVotesId: 'no chosen', // Initialize the state with default values
     appUsername: '', // Initialize the state with default values
-    chosenVotesName: ''
+    chosenVotesName: '',
+    idOfVotesFromMailLink: '',
+    emailIdFromMailLink: '',
+    emailOfVoter: '',
+    actualVoteToVoting: '',
+    linkVoted: '',
+    voteSended: '',
   });
 
   const appStateSetter = (item: keyof AppStateType, value: string) => {
@@ -49,10 +54,12 @@ export default function AppRouter() {
           <Route path="/tutorials" element={<DashboardTutorials />} />
           <Route path="/about" element={<DashBoardAbout />} />
           <Route path="/votings/edit" element={<DashboardEdit />} />
-          <Route path="/votings/statistics" element={<DashboardStats />} />
           <Route path="/votings/distribution" element={<DashboardDistribute />} />
           <Route path="/votings/email/notification" element={<EmailNotification />} />
           <Route path="/votings/dashboard" element={<DashboardMain />} />
+          <Route path="/votings/statictics" element={<DashboardStatistic />} />
+          {/* Dynamic route with UUIDs */}
+          <Route path="/voting-records/:uuid/votingform/:uuidSecond" element={<VotingForm />} />
         </Routes>
       </BrowserRouter>
     </MainContext.Provider>

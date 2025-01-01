@@ -138,7 +138,7 @@ const DashboardMain: React.FC = () => {
   return (
     <div
       style={{
-        backgroundColor: 'blue',
+        backgroundColor: '#F7F7F7',
         alignItems: 'center',
         height: '100%',
       }}
@@ -225,19 +225,7 @@ const DashboardMain: React.FC = () => {
       </div>
 
       {isMobile ? (
-        <div
-          className="mottomBanner"
-          style={{
-            backgroundColor: '#D9D9D9',
-            width: '320px',
-            height: '50px',
-            position: 'fixed',
-            bottom: '0', // Align to bottom
-            left: '50%', // Center horizontally
-            transform: 'translateX(-50%)', // Correct centering
-            textAlign: 'center', // Optional: for centering text inside the banner
-          }}
-        >
+        <div style={staticStyles.bottombanner}>
           <BottomBanner />
         </div>
       ) : (
