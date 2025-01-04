@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DashBoardBreadcrumbBright from './dash-board-breadcrumb-bright';
-import DashBoardTitleBright from './dash-board-title-bright';
+import DashBoardBreadcrumbBright from './DashBoardBreadcrumbBright';
+import DashBoardTitleBright from './DashBoardTitleBright';
 import { fontColorPrime } from '../../css-and-material/generalVariables';
 
 const DashBoardStaticTexts = ({ title, breadcrumb, urlBack }) => {
-  return (
+  return (  
     <>
       {/* the pair row Title Return button */}
       <div style={{ paddingTop: '20px', display: 'flex', width: '100%' }}>

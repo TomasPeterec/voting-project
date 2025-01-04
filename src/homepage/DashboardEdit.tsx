@@ -5,7 +5,7 @@ import { initializeApp } from 'firebase/app';
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import DashBoardEditForm from 'dashboard/votings/edit/dash-board-edit-form';
+import DashBoardEditForm from 'dashboard/votings/edit/DashBoardEditForm';
 
 import HeaderTwo from './HeaderTwo';
 import { UseWidthUpdater } from './UseWidthUpdater';
@@ -15,10 +15,10 @@ import Footer from '../common/Footer';
 import { useAuth } from '../contexts/AuthContext'; // Import the useAuth hook
 import { useMainContext } from '../contexts/useMainContext'; // Correct path
 
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import staticStyles from '../css-and-material/staticStyles';
-import DashBoardStaticTexts from '../dashboard/common/dash-board-static-texts';
-import DashBoardEditItems from 'dashboard/votings/edit/dash-board-edit-items';
+import DashBoardStaticTexts from '../dashboard/common/DashBoardStaticTexts';
+import DashBoardEditItems from 'dashboard/votings/edit/DashBoardEditItems';
 import firebaseConfig from '../firebaseConfig';
 import MyBackground from '../img/modryPodklad.jpg';
 //import DashBoardEditForm from 'dashboard/votings/edit/dash-board-edit-form';

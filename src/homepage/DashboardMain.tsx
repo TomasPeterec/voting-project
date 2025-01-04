@@ -10,11 +10,11 @@ import BottomBanner from '../banners/BottomBanner';
 import SideBanner from '../banners/SideBanner';
 import Footer from '../common/Footer';
 import { useAuth } from '../contexts/AuthContext'; // Import the useAuth hook
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import staticStyles from '../css-and-material/staticStyles';
-import DashBoardStaticTexts from '../dashboard/common/dash-board-static-texts';
-import DashBoardVotingItems from '../dashboard/votings/main/dash-board-voting-items';
-import DashBoardVotingsForm from '../dashboard/votings/main/dash-board-votings-form';
+import DashBoardStaticTexts from '../dashboard/common/DashBoardStaticTexts';
+import DashBoardVotingItems from '../dashboard/votings/main/DashBoardVotingItems';
+import DashBoardVotingsForm from '../dashboard/votings/main/DashBoardVotingsForm';
 import firebaseConfig from '../firebaseConfig';
 import MyBackground from '../img/modryPodklad.jpg';
 

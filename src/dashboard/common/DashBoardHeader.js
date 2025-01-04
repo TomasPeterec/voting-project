@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { brightLine } from '../../css-and-material/generalVariables';
-import mobileWidth from '../../css-and-material/is-device';
+import mobileWidth from '../../css-and-material/isDevice';
 import { styles02 } from '../../css-and-material/styles-02';
 
 function DashBoardHeader() {

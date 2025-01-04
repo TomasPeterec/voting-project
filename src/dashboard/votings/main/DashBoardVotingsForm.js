@@ -4,11 +4,11 @@ import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import React, { useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
-import mobileWidth from '../../../css-and-material/is-device';
+import mobileWidth from '../../../css-and-material/isDevice';
 import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
 import votingTheme from '../../../css-and-material/theme';
 import firebaseConfig from '../../../firebaseConfig';
-import { testIfItExists } from '../../common/already-exist';
+import { testIfItExists } from '../../common/alreadyExist';
 import { sanitizeForApi } from '../../common/sanitize';
 import { styles02 } from '../../../css-and-material/styles-02';
 import { Filter } from 'bad-words'; // Correct the import to use named export

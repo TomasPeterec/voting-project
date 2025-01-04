@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useMediaQuery } from '@mui/material';
 import firebaseConfig from '../firebaseConfig'; // Make sure the Firebase config is imported
 import { initializeApp } from 'firebase/app';
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import { modalWindowsStyles } from '../css-and-material/modalWindowsStyles';
 import votingTheme from '../css-and-material/theme';
 import '../css-and-material/autofillStyles.css';

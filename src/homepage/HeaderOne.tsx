@@ -4,7 +4,7 @@ import { CSSProperties, useRef, useState } from 'react';
 import MenuButon from './MenuButon';
 import SeparatingLine from './SeparatingLine';
 import { UseWidthUpdater } from './UseWidthUpdater';
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import { ReactComponent as BurgerMenu } from '../img/burger_menu.svg'; // This is correct if using SVG as a component
 import { ReactComponent as ClosingSign } from '../img/closing_sign.svg'; // This is correct if using SVG as a component
 import { ReactComponent as MyLogo } from '../img/logo_votelizer.svg'; // This is correct if using SVG as a component

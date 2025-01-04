@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DashBoardHeader from '../common/dash-board-header';
+import DashBoardHeader from '../common/DashBoardHeader';
 
 function DashBoardAbout() {
   return (

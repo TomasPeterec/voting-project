@@ -13,7 +13,7 @@ import { UseWidthUpdater } from './UseWidthUpdater';
 import BottomBanner from '../banners/BottomBanner';
 import SideBanner from '../banners/SideBanner';
 import Footer from '../common/Footer';
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import firebaseConfig from '../firebaseConfig';
 import MyBackground from '../img/modryPodklad.jpg';
 import staticStyles from '../css-and-material/staticStyles';

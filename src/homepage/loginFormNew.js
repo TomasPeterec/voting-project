@@ -5,7 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import { modalWindowsStyles } from '../css-and-material/modalWindowsStyles';
 import votingTheme from '../css-and-material/theme';
 import firebaseConfig from '../firebaseConfig';

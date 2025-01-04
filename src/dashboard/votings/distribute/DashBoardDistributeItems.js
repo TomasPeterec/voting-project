@@ -2,13 +2,13 @@ import { useMediaQuery, Button, Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import DDistributeItem from './d-distribute-item';
-import mobileWidth from '../../../css-and-material/is-device';
+import DDistributeItem from './DDistributeItem';
+import mobileWidth from '../../../css-and-material/isDevice';
 import { useAuth } from '../../../contexts/AuthContext'; // Import the useAuth hook
 import axios from 'axios';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
-import { testIfItExists, ifExistDeleteFromArrayOfObjects } from '../../common/already-exist';
+import { testIfItExists, ifExistDeleteFromArrayOfObjects } from '../../common/alreadyExist';
 import { sanitizeForApi } from '../../common/sanitize';
 import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
 import { ReactComponent as IDeleteDef } from '../../../img/i_delete_default.svg';

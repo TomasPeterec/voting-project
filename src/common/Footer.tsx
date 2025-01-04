@@ -1,6 +1,6 @@
 import { useMediaQuery } from '@mui/material';
 import React, { CSSProperties } from 'react';
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 
 interface FooterProps {
   title?: string;

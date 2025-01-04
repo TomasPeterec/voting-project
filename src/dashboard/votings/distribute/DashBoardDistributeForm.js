@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, useMediaQuery, Box, Button } from '@mui/material';
 import axios from 'axios';
-import mobileWidth from '../../../css-and-material/is-device';
+import mobileWidth from '../../../css-and-material/isDevice';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
 import { sanitizeForApi } from '../../common/sanitize';

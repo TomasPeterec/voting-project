@@ -1,6 +1,6 @@
 import { Box, useMediaQuery, Typography } from '@mui/material';
 import React from 'react';
-import mobileWidth from '../../../css-and-material/is-device';
+import mobileWidth from '../../../css-and-material/isDevice';
 import { styles02 } from '../../../css-and-material/styles-02';
 import votingTheme from '../../../css-and-material/theme';
 import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary

@@ -10,12 +10,12 @@ import SideBanner from '../banners/SideBanner';
 import Footer from '../common/Footer';
 import { useAuth } from '../contexts/AuthContext'; // Import the useAuth hook
 import { useMainContext } from '../contexts/useMainContext'; // Correct path to your context
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import staticStyles from '../css-and-material/staticStyles';
-import DashBoardStaticTexts from '../dashboard/common/dash-board-static-texts';
+import DashBoardStaticTexts from '../dashboard/common/DashBoardStaticTexts';
 import CandidateItems from 'dashboard/votings/votingform/CandidateItems';
 import votingFormStyles from '../css-and-material/votingFormStyles';
-import DashBoardVotingStats from '../dashboard/votings/statistics/dash-board-voting-stats';
+import DashBoardVotingStats from '../dashboard/votings/statistics/DashBoardVotingStats';
 
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 

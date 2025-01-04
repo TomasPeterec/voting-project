@@ -9,8 +9,8 @@ import { AppStateType } from './types/types';
 import { MainContext } from './contexts/MainContext';
 import { useState } from 'react';
 
-import DashBoardAbout from './dashboard/about/dash-board-about';
-import DashboardTutorials from './dashboard/tutorials/dash-board-tutorials';
+import DashBoardAbout from './dashboard/about/DashBoardAbout';
+import DashboardTutorials from './dashboard/tutorials/DashboardTutorials';
 import DashboardEdit from 'homepage/DashboardEdit';
 import DashboardMain from './homepage/DashboardMain';
 import VotingForm from 'homepage/VotingForm';

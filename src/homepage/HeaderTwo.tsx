@@ -4,7 +4,7 @@ import MenuButon from './MenuButon';
 import SeparatingLine from './SeparatingLine';
 import SimpleLogout from './SimpleLogout';
 import { UseWidthUpdater } from './UseWidthUpdater';
-import mobileWidth from '../css-and-material/is-device';
+import mobileWidth from '../css-and-material/isDevice';
 import { ReactComponent as BurgerMenu } from '../img/burger_menu.svg';
 import { ReactComponent as ClosingSign } from '../img/closing_sign.svg';
 import { ReactComponent as MyLogo } from '../img/logo_votelizer.svg';
