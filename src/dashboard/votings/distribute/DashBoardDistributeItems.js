@@ -41,7 +41,8 @@ const DashBoardDistributeItems = ({
   const [currentId, setCurrentId] = useState('');
   const [listsOfEmails, setListsOfEmails] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { idToken } = useAuth(); // Use the context to get user and token
+  //const { idToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [currentItem, setCurrentItem] = useState('');
   const [curentEmails, setCurentEmails] = useState('');
   const [newItem, setNewItem] = useState('');
@@ -52,17 +53,6 @@ const DashBoardDistributeItems = ({
   const [currentListId, setCurrentListId] = useState('');
   const [returnIsHovered, setReturnIsHovered] = useState(false);
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
-
-  // adding of interceptor
-  // axiosInstance.interceptors.request.use(
-  //   (config) => {
-  //     config.headers['X-User-ID'] = userId;
-  //     return config;
-  //   },
-  //   (error) => {
-  //     return Promise.reject(error);
-  //   },
-  // );
 
   // Breakpoint definition
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
@@ -136,7 +126,8 @@ const DashBoardDistributeItems = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         try {
           // Set loading to true before starting the operation
           setLoading(true);
@@ -144,7 +135,7 @@ const DashBoardDistributeItems = ({
           // api-endpoint for serving the items
           const response = await axios.get(`${apiUrl}/api/emaillists`, {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
           // Set data and loading to false when the operation is complete
@@ -167,13 +158,13 @@ const DashBoardDistributeItems = ({
 
   const deleteEmailList = async (item) => {
     const newListArray = ifExistDeleteFromArrayOfObjects(listsOfEmails, 'title', item);
-
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       try {
         // api-endpoint for deleting the item
         const response = await axios.delete(`${apiUrl}/api/emaillists/${currentListId}`, {
           headers: {
-            Authorization: `Bearer ${idToken}`,
+            Authorization: `Bearer ${localIdToken}`,
           },
         });
 

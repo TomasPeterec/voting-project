@@ -19,7 +19,8 @@ initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
 const DashBoardVotingItems = ({ reload, arrHandler }) => {
-  const { idToken } = useAuth(); // Use the context to get and token
+  //const { idToken } = useAuth(); // Use the context to get and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [listOfVotes, setListOfVotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentItem, setCurrentItem] = useState('');
@@ -65,13 +66,14 @@ const DashBoardVotingItems = ({ reload, arrHandler }) => {
   };
 
   const deletePermanently = async (itemId) => {
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       try {
         // Correctly structure the Axios DELETE request
         await axios.delete(`${apiUrl}/api/listOfVotings/delete`, {
           data: { lov_id: itemId }, // Data should be under the 'data' property
           headers: {
-            Authorization: `Bearer ${idToken}`, // Include the authorization header
+            Authorization: `Bearer ${localIdToken}`, // Include the authorization header
           },
         });
         // Update the state to remove the deleted item from the list
@@ -88,11 +90,12 @@ const DashBoardVotingItems = ({ reload, arrHandler }) => {
 
   useEffect(() => {
     const fetchListOfVotings = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         try {
           const response = await axios.get(`${apiUrl}/api/listOfVotings/subset`, {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
 
@@ -108,7 +111,7 @@ const DashBoardVotingItems = ({ reload, arrHandler }) => {
     };
 
     fetchListOfVotings();
-  }, [idToken, reload]);
+  }, [reload]);
 
   return (
     <>

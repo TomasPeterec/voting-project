@@ -27,8 +27,9 @@ interface CustomUser {
 const VotingForm: React.FC = () => {
   const { uuid, uuidSecond } = useParams(); // Capture dynamic UUID parameters from the URL
   const { appState, appStateSetter } = useMainContext();
-  const location = useLocation();
+  //const location = useLocation();
   const { idToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -64,12 +65,13 @@ const VotingForm: React.FC = () => {
 
   useEffect(() => {
     const fetchUsername = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         // Only fetch if we have a valid token
         try {
           const response = await axios.get(`${apiUrl}/username`, {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
 

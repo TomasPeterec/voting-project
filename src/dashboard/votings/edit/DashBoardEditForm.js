@@ -19,7 +19,8 @@ const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
   const location = useLocation();
   const { currentItem, currentId } = location.state;
-  const { idToken } = useAuth(); // Use the context to get user and token
+  //const { idToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
   const [clicked, setClicked] = useState(false);
   const [formDataTitle, setFormDataTitle] = useState('');
@@ -27,8 +28,8 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       console.log(formDataTitle);
       console.log(formDataDes);
       try {
@@ -42,7 +43,7 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${idToken}`,
+                  Authorization: `Bearer ${localIdToken}`,
                 },
               },
             );

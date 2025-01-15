@@ -11,15 +11,33 @@ export function AuthProvider({ children }) {
     // Initialize from localStorage, or null if not present
     return localStorage.getItem('idToken') || null;
   });
+  const [waiting, setWaiting] = useState(false);
+
+  const getValidToken = async () => {
+
+    if (waiting === false) {
+      const token = await auth.currentUser.getIdToken(true); // Retrieve the ID token
+      setTimeout(() => setWaiting(false), 60 * 60 * 1000);
+      setIdToken(token);
+      localStorage.setItem('idToken', token); // Persist token to localStorage
+      setWaiting(true);
+      return token;
+    } else{
+      return idToken;
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
 
       if (currentUser) {
-        const token = await currentUser.getIdToken(true); // Retrieve the ID token
-        setIdToken(token);
-        localStorage.setItem('idToken', token); // Persist token to localStorage
+        getValidToken();
+        // const token = await currentUser.getIdToken(true); // Retrieve the ID token
+        // setIdToken(token);
+
+        // localStorage.setItem('idToken', token); // Persist token to localStorage
+        // setWaiting(true);
       } else {
         setIdToken(null);
         localStorage.removeItem('idToken'); // Clear token on logout
@@ -27,7 +45,8 @@ export function AuthProvider({ children }) {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [idToken]);
+
 
   // Sync `idToken` to localStorage when it changes
   useEffect(() => {
@@ -38,7 +57,7 @@ export function AuthProvider({ children }) {
     }
   }, [idToken]);
 
-  return <AuthContext.Provider value={{ user, idToken }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, idToken, getValidToken }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

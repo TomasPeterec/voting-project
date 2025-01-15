@@ -43,10 +43,11 @@ const DashboardDistribute: React.FC = () => {
     currentEmailListId: '',
   });
 
-  const { appState, appStateSetter } = useMainContext();
+  //const { appState, appStateSetter } = useMainContext();
   const location = useLocation();
   const { currentItem, currentId } = location.state;
   const { idToken } = useAuth(); // Use the context to get user and toke
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [username, setUsername] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -60,10 +61,11 @@ const DashboardDistribute: React.FC = () => {
 
   useEffect(() => {
     const loading = async () => {
-      if (idToken && currentEmailListIdAux !== getGlobal.currentEmailListId) {
+      const localIdToken = await getValidToken();
+      if (localIdToken && currentEmailListIdAux !== getGlobal.currentEmailListId) {
         const newSetOfMails = await axios.get(`${apiUrl}/api/emaillists/${getGlobal.currentEmailListId}`, {
           headers: {
-            Authorization: `Bearer ${idToken}`, // Include the authorization header
+            Authorization: `Bearer ${localIdToken}`, // Include the authorization header
           },
         });
 
@@ -226,12 +228,13 @@ const DashboardDistribute: React.FC = () => {
 
   useEffect(() => {
     const fetchUsername = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         // Only fetch if we have a valid token
         try {
           const response = await axios.get(`${apiUrl}/username`, {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
 

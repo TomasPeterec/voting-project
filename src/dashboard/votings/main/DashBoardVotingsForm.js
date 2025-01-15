@@ -20,7 +20,8 @@ initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
 const DashBoardVotingsForm = ({ triggerReload, arrFromItems }) => {
-  const { idToken } = useAuth(); // Use the context to get user and token
+  //const { idToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
   const [clicked, setClicked] = useState(false);
   const [formData, setFormData] = useState('');
@@ -43,8 +44,8 @@ const DashBoardVotingsForm = ({ triggerReload, arrFromItems }) => {
       setNoteBelowTheInput('Your input contains inappropriate words.');
       return; // Stop form submission if profanity is found
     }
-
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       try {
         if (noteBelowTheInput !== 'Such name of item is already in the list') {
           if (formData !== '' && formData !== ' ' && formData !== '.' && formData !== ',') {
@@ -56,7 +57,7 @@ const DashBoardVotingsForm = ({ triggerReload, arrFromItems }) => {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${idToken}`,
+                  Authorization: `Bearer ${localIdToken}`,
                 },
               },
             );

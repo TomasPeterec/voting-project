@@ -9,19 +9,21 @@ const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 const DashBoardVotingStats = () => {
   const { appState, appStateSetter } = useMainContext();
   const { idToken } = useAuth(); // Use the context to get and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [loading, setLoading] = useState(true);
   const [statsArr, setStatsArr] = useState([]);
 
   useEffect(() => {
     const fetchListOfVotings = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         try {
           console.log('API URL:', apiUrl);
           console.log('Chosen Vote ID:', appState.chosenVotesId);
 
           const response = await axios.get(`${apiUrl}/api/listOfVotings/${appState.chosenVotesId}/candidates`, {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
 

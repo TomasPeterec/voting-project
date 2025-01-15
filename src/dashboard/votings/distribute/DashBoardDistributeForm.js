@@ -21,16 +21,8 @@ const DashBoardDistributeForm = ({
   loadedEmails,
   clearBigArea,
 }) => {
-  const { idToken } = useAuth(); // Access user token from context
-
-  // Add user ID header to axios instance
-  // axiosInstance.interceptors.request.use(
-  //   (config) => {
-  //     config.headers['X-User-ID'] = userId;
-  //     return config;
-  //   },
-  //   (error) => Promise.reject(error),
-  // );
+  //const { idToken } = useAuth(); // Access user token from context
+  const { getValidToken } = useAuth(); // Use the context to get user and token
 
   const validateString = (value) => typeof value === 'string' && value.trim() !== '' && value !== '.' && value !== ',';
 
@@ -39,8 +31,8 @@ const DashBoardDistributeForm = ({
     const emails = getGlobal.curentSetOfEmails || '';
 
     //if (!validateString(emails)) return;
-
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       try {
         const response = await axios.post(
           `${apiUrl}/api/voting-records/${curentUuid}`,
@@ -49,7 +41,7 @@ const DashBoardDistributeForm = ({
             mails: emails,
           },
           {
-            headers: { Authorization: `Bearer ${idToken}` },
+            headers: { Authorization: `Bearer ${localIdToken}` },
           },
         );
         triggerReload();
@@ -86,8 +78,8 @@ const DashBoardDistributeForm = ({
       console.log('No valid emails found');
       return;
     }
-
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       try {
         const response = await axios.post(
           `${apiUrl}/api/emaillists`,
@@ -97,7 +89,7 @@ const DashBoardDistributeForm = ({
             mails: emailArray,
           },
           {
-            headers: { Authorization: `Bearer ${idToken}` },
+            headers: { Authorization: `Bearer ${idTolocalen}` },
           },
         );
 

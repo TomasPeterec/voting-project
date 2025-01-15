@@ -28,7 +28,8 @@ interface CustomUser {
 }
 
 const DashboardMain: React.FC = () => {
-  const { idToken } = useAuth(); // Use the context to get user and token
+  //const { idToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -109,14 +110,15 @@ const DashboardMain: React.FC = () => {
 
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchUsername = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         // Only fetch if we have a valid token
         try {
           const response = await axios.get(`${apiUrl}/username`, {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
 
@@ -133,7 +135,7 @@ const DashboardMain: React.FC = () => {
 
     fetchUsername();
     setLoading(false); // Set loading to false once the effect runs
-  }, [idToken]); // Run effect whenever idToken changes
+  }, []); 
 
   return (
     <div

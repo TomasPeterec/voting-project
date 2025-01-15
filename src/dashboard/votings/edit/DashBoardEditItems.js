@@ -24,7 +24,8 @@ const DashBoardEditItems = ({ reload, arrHandler }) => {
     arrHandler: PropTypes.func.isRequired,
   };
 
-  const { idToken } = useAuth(); // Use the context to get user and token
+  //const { idToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get user and token
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
   const [listOfCandidates, setListOfCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +43,8 @@ const DashBoardEditItems = ({ reload, arrHandler }) => {
 
   useEffect(() => {
     const fetchVotingTemplate = async () => {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         try {
           setLoading(true);
 
@@ -51,7 +53,7 @@ const DashBoardEditItems = ({ reload, arrHandler }) => {
               id: currentId, // Pridanie ID ako query parameter
             },
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${localIdToken}`,
             },
           });
 
@@ -112,12 +114,13 @@ const DashBoardEditItems = ({ reload, arrHandler }) => {
   const hideEditModal = () => setModalEdit(false);
 
   const deletePermanently = async (item) => {
-    if (idToken) {
+    const localIdToken = await getValidToken();
+    if (localIdToken) {
       const newListArray = ifExistDeleteFromArrayOfObjects(listOfCandidates, 'title', item);
       try {
         await axios.delete(`${apiUrl}/api/listOfVotings/${currentId}/candidates/${currentCandidateID}`, {
           headers: {
-            Authorization: `Bearer ${idToken}`, // Include the authorization header
+            Authorization: `Bearer ${localIdToken}`, // Include the authorization header
           },
         });
         //setListOfCandidates(newListArray);
@@ -148,7 +151,8 @@ const DashBoardEditItems = ({ reload, arrHandler }) => {
       newItem.trim() &&
       ![' ', '.', ','].includes(newItem)
     ) {
-      if (idToken) {
+      const localIdToken = await getValidToken();
+      if (localIdToken) {
         try {
           await axios.put(
             `${apiUrl}/api/listOfVotings/${currentId}/candidates/${currentCandidateID}`,
@@ -158,7 +162,7 @@ const DashBoardEditItems = ({ reload, arrHandler }) => {
             },
             {
               headers: {
-                Authorization: `Bearer ${idToken}`,
+                Authorization: `Bearer ${localIdToken}`,
               },
             },
           );
