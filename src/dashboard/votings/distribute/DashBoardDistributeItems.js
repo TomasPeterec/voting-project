@@ -41,8 +41,7 @@ const DashBoardDistributeItems = ({
   const [currentId, setCurrentId] = useState('');
   const [listsOfEmails, setListsOfEmails] = useState([]);
   const [loading, setLoading] = useState(true);
-  //const { idToken } = useAuth(); // Use the context to get user and token
-  const { getValidToken } = useAuth(); // Use the context to get user and token
+  const { getValidToken } = useAuth(); // Use the context to get token
   const [currentItem, setCurrentItem] = useState('');
   const [curentEmails, setCurentEmails] = useState('');
   const [newItem, setNewItem] = useState('');
@@ -66,7 +65,15 @@ const DashBoardDistributeItems = ({
   };
 
   const handleDeleteItemModal = (itemIdentificators) => {
-    // handleDeleteItemModal({ currentItem, currentId });
+    console.log(itemIdentificators);
+    hideModalButtons();
+    setModalDeleteConfirmation(true);
+    setCurrentListId(itemIdentificators.currentId);
+    setCurrentItem(itemIdentificators.currentItem);
+  };
+
+  const handleChoseItemModal = (itemIdentificators) => {
+
     hideModalButtons();
     setModalDeleteConfirmation(true);
     setCurrentListId(itemIdentificators.currentId);
@@ -110,6 +117,9 @@ const DashBoardDistributeItems = ({
   };
 
   const deletePermanently = (item) => {
+
+    console.log(item);
+
     deleteEmailList(item);
     setModalDeleteConfirmation(false);
   };
@@ -232,7 +242,7 @@ const DashBoardDistributeItems = ({
                 </button>
                 <button
                   style={modalWindowsStyles.invisibleNostyle}
-                  onClick={() => handleDeleteItemModal({ currentItem, currentListId })}
+                  onClick={() => handleDeleteItemModal({ currentItem, currentId: currentListId })}
                 >
                   <IDeleteDef style={modalWindowsStyles.modalRowIcone} />
                 </button>
@@ -262,6 +272,7 @@ const DashBoardDistributeItems = ({
               delete item with name
             </p>
             <h3 style={modalWindowsStyles.modalHeader}>{currentItem}</h3>
+            
             <div style={modalWindowsStyles.automaticRow}>
               <Button
                 onMouseEnter={() => setDeleteIsHovered(true)} // Set hover state to true
@@ -284,17 +295,6 @@ const DashBoardDistributeItems = ({
           </div>
         </div>
       )}
-      <div style={!modalDeleteConfirmation ? styles02.desktopFormContainerHidden : styles02.displayed}>
-        <div style={styles02.nameOfItemOnModalNest}>
-          <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>
-          <div style={styles02.buttonNest01}>
-            <Button onClick={() => deletePermanently(currentItem)}>Confirm delete</Button>
-          </div>
-          <div style={styles02.buttonNest01}>
-            <Button onClick={hideDeleteConfirmation}>Return</Button>
-          </div>
-        </div>
-      </div>
       <div style={!modalEdit ? styles02.desktopFormContainerHidden : styles02.displayed}>
         <div style={styles02.nameOfItemOnModalNest}>
           <h3 style={styles02.nameOfItemOnModal}>{currentItem}</h3>

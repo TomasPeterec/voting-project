@@ -89,7 +89,7 @@ const DashBoardDistributeForm = ({
             mails: emailArray,
           },
           {
-            headers: { Authorization: `Bearer ${idTolocalen}` },
+            headers: { Authorization: `Bearer ${localIdToken}` },
           },
         );
 

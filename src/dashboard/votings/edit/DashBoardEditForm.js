@@ -12,6 +12,7 @@ import votingTheme from '../../../css-and-material/theme';
 import { testIfItExists } from '../../common/alreadyExist';
 import { sanitizeForApi } from '../../common/sanitize';
 import { useLocation } from 'react-router-dom';
+import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
 
 initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
@@ -19,7 +20,6 @@ const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
   const location = useLocation();
   const { currentItem, currentId } = location.state;
-  //const { idToken } = useAuth(); // Use the context to get user and token
   const { getValidToken } = useAuth(); // Use the context to get user and token
   const [noteBelowTheInput, setNoteBelowTheInput] = useState('Required input');
   const [clicked, setClicked] = useState(false);
@@ -30,8 +30,6 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
     e.preventDefault();
     const localIdToken = await getValidToken();
     if (localIdToken) {
-      console.log(formDataTitle);
-      console.log(formDataDes);
       try {
         if (noteBelowTheInput != 'Such name of item is already in the list') {
           if (formDataTitle != '' && formDataTitle != ' ' && formDataTitle != '.' && formDataTitle != ',') {
@@ -47,7 +45,6 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
                 },
               },
             );
-            console.log(response.data);
             triggerReload();
             setFormDataTitle('');
             setFormDataDes('');
@@ -79,13 +76,79 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
   // breakpoint
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
+
+
+  const localStyles = {
+      ...modalWindowsStyles,
+      automaticRow: {
+        ...modalWindowsStyles.automaticRow,
+        flexDirection: isMobile ? 'column' : 'row',
+      },
+      returnButton: {
+        ...modalWindowsStyles.returnButton,
+        margin: '0px',
+        padding: isMobile ? modalWindowsStyles.returnButton.padding : '18px',
+        paddingLeft: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
+        paddingRight: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
+        height: isMobile ? modalWindowsStyles.returnButton.height : '100%',
+      },
+      sendButton: {
+        ...modalWindowsStyles.sendButton,
+        margin: '0px',
+        padding: isMobile ? modalWindowsStyles.sendButton.padding : '18px',
+        paddingLeft: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+        paddingRight: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+        height: isMobile ? modalWindowsStyles.sendButton.height : '100%',
+      },
+      buttonPlacement: {
+        paddingLeft: isMobile ? '0px' : '20px',
+        paddingTop: isMobile ? '10px' : '10px',
+        display: 'flex',
+        flexDirection: 'row',
+      },
+      solidFoundation: {
+        ...modalWindowsStyles.solidFoundation,
+        width: isMobile ? modalWindowsStyles.solidFoundation.width : '100%',
+        paddingTop: '12px',
+      },
+      solidFoundationLittle: {
+        ...modalWindowsStyles.solidFoundation,
+        width: '85px',
+        height: '85px',
+        borderRadius: '25px',
+        borderTopRightRadius: '25px',
+        borderTopLeftRadius: '25px',
+        paddingTop: '4px',
+        paddingBottom: '4px',
+        paddingLeft: '4px',
+        paddingRight: '4px',
+      },
+      sendButton02: {
+        ...modalWindowsStyles.sendButton,
+        margin: '0px',
+        width: '100%',
+        height: '100%',
+        borderRadius: '21px',
+        borderWidth: '3.3px',
+      },
+      areaStyle: {
+        ...modalWindowsStyles.inputStyle,
+        width: '100%',
+        overflowY: 'auto',
+        height: isMobile ? '150px' : '100px',
+        marginBottom: '0px',
+      },
+    };
+
   return (
     <>
       <div style={isMobile ? styles02.separatorFlat : styles02.separatorHigh}></div>
       <div style={isMobile ? styles02.floatedVisible : styles02.floatedHidden}>
-        <Button style={styles02.basicButton} onClick={handleClickModalOn} variant="contained">
-          PLUS
-        </Button>
+        <div style={localStyles.solidFoundationLittle}>
+          <Button style={localStyles.sendButton02} onClick={handleClickModalOn}>
+            Add
+          </Button>
+        </div>
       </div>
       <div
         style={
@@ -98,13 +161,13 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
       >
         <div style={{ height: '40%' }}></div>
         <div style={isMobile ? styles02.modalInnerDivMobile : styles02.modalInnerDivDesk}>
-          <Box borderRadius="10px" bgcolor="white" border="1px solid #ccc" p={2}>
+          <div style={localStyles.solidFoundation}>
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <div style={{ width: '100%', display: 'flex' }}>
                 <div style={{ width: '100%' }}>
                   <Typography sx={votingTheme.typography.formDescription}>The name of the new choice</Typography>
                   <input
-                    style={{ width: '100%' }}
+                    style={modalWindowsStyles.inputStyle}
                     type="text"
                     name="name"
                     placeholder="Enter Input"
@@ -114,7 +177,7 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
                   <Typography sx={votingTheme.typography.inputRequired}>{noteBelowTheInput}</Typography>
                   <Typography sx={votingTheme.typography.formDescription}>The description of the new choice</Typography>
                   <textarea
-                    style={{ width: '100%' }}
+                    style={localStyles.areaStyle}
                     rows={4} // Specifies the number of visible text lines
                     cols={150} // Specifies the width of the textarea in characters
                     value={formDataDes} // Specifies the initial value of the textarea
@@ -130,13 +193,13 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
                 </div>
                 <div style={{ width: '30px' }}></div>
                 <div>
-                  <Button type="submit" onClick={handleClickModalOff} variant="contained">
+                  <Button style={localStyles.sendButton} type="submit" onClick={handleClickModalOff}>
                     PLUS
                   </Button>
                 </div>
               </div>
             </form>
-          </Box>
+          </div>
         </div>
       </div>
     </>

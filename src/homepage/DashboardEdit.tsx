@@ -143,7 +143,7 @@ const DashboardEdit: React.FC = () => {
 
     fetchUsername();
     //setLoading(false); // Set loading to false once the effect runs
-  }, []); 
+  }, []);
 
   return (
     <div
