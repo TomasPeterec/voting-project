@@ -21,6 +21,7 @@ import RegisterTo from './homepage/RegisterTo';
 import SetUsername from './SetUsername';
 import DashboardDistribute from './homepage/DashboardDistribute';
 import DashboardStatistic from './homepage/DashboardStatistic';
+import DashboardStatisticVoters from 'homepage/DashboardStatisticVoters';
 
 export default function AppRouter() {
   const [appState, setAppState] = useState<AppStateType>({
@@ -60,6 +61,7 @@ export default function AppRouter() {
           <Route path="/votings/statictics" element={<DashboardStatistic />} />
           {/* Dynamic route with UUIDs */}
           <Route path="/voting-records/:uuid/votingform/:uuidSecond" element={<VotingForm />} />
+          <Route path="/voting-records/:uuid/results" element={<DashboardStatisticVoters />} />
         </Routes>
       </BrowserRouter>
     </MainContext.Provider>

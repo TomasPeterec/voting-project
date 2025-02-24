@@ -7,6 +7,7 @@ import votingTheme from '../../../css-and-material/theme';
 import { sanitizeForApi } from '../../common/sanitize';
 import { useAuth } from '../../../contexts/AuthContext';
 import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
+import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary
 
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
@@ -26,7 +27,7 @@ const DashBoardDistributeForm = ({
 
   const validateString = (value) => typeof value === 'string' && value.trim() !== '' && value !== '.' && value !== ',';
 
-  const handleSubmit = async (e) => {
+  const handleSubmitToDistribute = async (e) => {
     e.preventDefault();
     const emails = getGlobal.curentSetOfEmails || '';
 
@@ -218,7 +219,7 @@ const DashBoardDistributeForm = ({
       )}
       <div style={styles02.desktopFormContainerVisible}>
         <div style={localStyles.solidFoundation}>
-          <form onSubmit={handleSubmit} style={localStyles.formOrder}>
+          <form onSubmit={handleSubmitToDistribute} style={localStyles.formOrder}>
             <div
               style={{
                 height: '100%',
@@ -227,7 +228,7 @@ const DashBoardDistributeForm = ({
                 justifyContent: 'flex-end',
               }}
             >
-              <Typography sx={votingTheme.typography.formDescription}>Email addresses</Typography>
+              <div className="inter-form-title">Email addresses</div>
               <textarea
                 style={localStyles.areaStyle}
                 rows={isMobile ? 24 : 8}

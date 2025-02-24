@@ -59,6 +59,10 @@ const DashboardDistribute: React.FC = () => {
   const [parentClick, setParentClick] = useState(false);
   const [currentEmailListIdAux, setCurrentEmailListIdAux] = useState('');
 
+  const setParentClickTrig = () => {
+    setParentClick(false);
+  };
+
   useEffect(() => {
     const loading = async () => {
       const localIdToken = await getValidToken();
@@ -337,6 +341,7 @@ const DashboardDistribute: React.FC = () => {
               arrHandler={handleItemArray}
               handleEmails={handleEmails}
               parentClick={parentClick}
+              setParentClickTrig={setParentClickTrig}
               changeParentClick={changeParentClick}
               handleEmails2={handleEmails2}
               setGlobal={setGlobal}

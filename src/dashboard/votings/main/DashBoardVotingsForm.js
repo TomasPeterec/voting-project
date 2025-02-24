@@ -11,6 +11,7 @@ import firebaseConfig from '../../../firebaseConfig';
 import { testIfItExists } from '../../common/alreadyExist';
 import { sanitizeForApi } from '../../common/sanitize';
 import { styles02 } from '../../../css-and-material/styles-02';
+import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary
 import { Filter } from 'bad-words'; // Correct the import to use named export
 
 // Import custom bad words from external file
@@ -168,7 +169,8 @@ const DashBoardVotingsForm = ({ triggerReload, arrFromItems }) => {
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <div style={localStyles.automaticRow}>
                 <div style={{ width: '100%', textAlign: 'left' }}>
-                  <Typography sx={votingTheme.typography.formDescription}>The name of the new vote</Typography>
+                  <div className="inter-form-title">The name of the new vote</div>
+
                   <input
                     style={modalWindowsStyles.inputStyle}
                     type="text"
@@ -177,7 +179,7 @@ const DashBoardVotingsForm = ({ triggerReload, arrFromItems }) => {
                     onChange={handleChange}
                     placeholder="Enter input"
                   />
-                  <Typography sx={votingTheme.typography.inputRequired}>{noteBelowTheInput}</Typography>
+                  <div className="inter-form-note">{noteBelowTheInput}</div>
                 </div>
                 <div>
                   <div style={localStyles.buttonPlacement}>

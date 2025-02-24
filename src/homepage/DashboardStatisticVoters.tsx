@@ -1,4 +1,4 @@
-// DashboardStatistic.tsx
+// DashboardStatisticVoters.tsx
 import { CssBaseline, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 import React, { useRef, useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ import staticStyles from '../css-and-material/staticStyles';
 import DashBoardStaticTexts from '../dashboard/common/DashBoardStaticTexts';
 import CandidateItems from 'dashboard/votings/votingform/CandidateItems';
 import votingFormStyles from '../css-and-material/votingFormStyles';
-import DashBoardVotingStats from '../dashboard/votings/statistics/DashBoardVotingStats';
+import DashBoardVotingStatsVoters from '../dashboard/votings/statistics/DashBoardVotingStatsVoters';
 
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
 
@@ -24,7 +24,8 @@ interface CustomUser {
   displayName: string | null;
 }
 
-const DashboardStatistic: React.FC = () => {
+const DashboardStatisticVoters: React.FC = () => {
+  const { uuid } = useParams(); // Capture dynamic UUID parameters from the URL
   const { appState, appStateSetter } = useMainContext();
   const { idToken } = useAuth(); // Use the context to get user and token
   const { getValidToken } = useAuth(); // Use the context to get user and token
@@ -34,56 +35,40 @@ const DashboardStatistic: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0); // Store the container's width
 
-  useEffect(() => {
-    const fetchUsername = async () => {
-      console.log('f1');
-      const localIdToken = await getValidToken();
-      if (localIdToken) {
-        // Only fetch if we have a valid token
-        try {
-          const response = await axios.get(`${apiUrl}/username`, {
-            headers: {
-              Authorization: `Bearer ${localIdToken}`,
-            },
-          });
+  // useEffect(() => {
+  //   const fetchUsername = async () => {
+  //     console.log('f1');
+  //     const localIdToken = await getValidToken();
+  //     if (localIdToken) {
+  //       // Only fetch if we have a valid token
+  //       try {
+  //         const response = await axios.get(`${apiUrl}/username`, {
+  //           headers: {
+  //             Authorization: `Bearer ${localIdToken}`,
+  //           },
+  //         });
 
-          if (response.data.username) {
-            setUsername(response.data.username);
-          } else {
-            console.log('No username found, navigating to set username');
-          }
-        } catch (error) {
-          console.error('Error fetching username:', error);
-        }
-      }
-    };
+  //         if (response.data.username) {
+  //           setUsername(response.data.username);
+  //         } else {
+  //           console.log('No username found, navigating to set username');
+  //         }
+  //       } catch (error) {
+  //         console.error('Error fetching username:', error);
+  //       }
+  //     }
+  //   };
 
-    fetchUsername();
-  }, [idToken]); // Run effect whenever idToken changes
+  //   fetchUsername();
+  // }, [idToken]); // Run effect whenever idToken changes
 
   // Define the expected structure of a Firebase ID token
-  type DashboardStatistic = {
+  type DashboardStatisticVoters = {
     user_id: string; // UID of the user
     email?: string; // Email address (optional)
     exp?: number; // Expiration timestamp (optional)
     iat?: number; // Issued-at timestamp (optional)
     [key: string]: any; // Allow other optional fields
-  };
-
-  const sendResults = async () => {
-    console.log('f2');
-    console.log('funguje');
-    const localIdToken = await getValidToken();
-    if (localIdToken) {
-      const response = await axios.post(
-        `${apiUrl}/api/voting-records/${appState.chosenVotesId}/send-results`,
-        {}, // Empty body if not needed
-        {
-          headers: { Authorization: `Bearer ${localIdToken}` }, // Move headers here
-        },
-      );
-      console.log(response.data);
-    }
   };
 
   // Use the external hook for width updating logic
@@ -127,9 +112,8 @@ const DashboardStatistic: React.FC = () => {
               <DashBoardStaticTexts
                 title={appState.actualVoteToVoting}
                 breadcrumb={`Email of the voter: ${appState.emailOfVoter}`}
-                urlBack="/votings/dashboard"
+                urlBack=""
               />
-              <button onClick={sendResults}>Send results to woters</button>
               <div style={staticStyles.overForm} />
               {/* Here was Form */}
             </div>
@@ -137,7 +121,7 @@ const DashboardStatistic: React.FC = () => {
             <div style={staticStyles.aboveCentralMiddlePart} />
           </div>
           {/* Central middle part */}
-          <DashBoardVotingStats />
+          <DashBoardVotingStatsVoters uuId={uuid} />
           <div style={localStyles.centralPart}>{/* There was items */}</div>
           {/* Footer */}
           <div style={localStyles.footerCont}>
@@ -168,4 +152,4 @@ const DashboardStatistic: React.FC = () => {
   );
 };
 
-export default DashboardStatistic;
+export default DashboardStatisticVoters;

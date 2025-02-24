@@ -13,6 +13,7 @@ import { testIfItExists } from '../../common/alreadyExist';
 import { sanitizeForApi } from '../../common/sanitize';
 import { useLocation } from 'react-router-dom';
 import { modalWindowsStyles } from '../../../css-and-material/modalWindowsStyles';
+import '../../../css-and-material/candidate-items.scss'; // Adjust the path if necessary
 
 initializeApp(firebaseConfig);
 const apiUrl = process.env.REACT_APP_API_ROOT_VAR;
@@ -76,69 +77,76 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
   // breakpoint
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
-
-
   const localStyles = {
-      ...modalWindowsStyles,
-      automaticRow: {
-        ...modalWindowsStyles.automaticRow,
-        flexDirection: isMobile ? 'column' : 'row',
-      },
-      returnButton: {
-        ...modalWindowsStyles.returnButton,
-        margin: '0px',
-        padding: isMobile ? modalWindowsStyles.returnButton.padding : '18px',
-        paddingLeft: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
-        paddingRight: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
-        height: isMobile ? modalWindowsStyles.returnButton.height : '100%',
-      },
-      sendButton: {
-        ...modalWindowsStyles.sendButton,
-        margin: '0px',
-        padding: isMobile ? modalWindowsStyles.sendButton.padding : '18px',
-        paddingLeft: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
-        paddingRight: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
-        height: isMobile ? modalWindowsStyles.sendButton.height : '100%',
-      },
-      buttonPlacement: {
-        paddingLeft: isMobile ? '0px' : '20px',
-        paddingTop: isMobile ? '10px' : '10px',
-        display: 'flex',
-        flexDirection: 'row',
-      },
-      solidFoundation: {
-        ...modalWindowsStyles.solidFoundation,
-        width: isMobile ? modalWindowsStyles.solidFoundation.width : '100%',
-        paddingTop: '12px',
-      },
-      solidFoundationLittle: {
-        ...modalWindowsStyles.solidFoundation,
-        width: '85px',
-        height: '85px',
-        borderRadius: '25px',
-        borderTopRightRadius: '25px',
-        borderTopLeftRadius: '25px',
-        paddingTop: '4px',
-        paddingBottom: '4px',
-        paddingLeft: '4px',
-        paddingRight: '4px',
-      },
-      sendButton02: {
-        ...modalWindowsStyles.sendButton,
-        margin: '0px',
-        width: '100%',
-        height: '100%',
-        borderRadius: '21px',
-        borderWidth: '3.3px',
-      },
-      areaStyle: {
-        ...modalWindowsStyles.inputStyle,
-        width: '100%',
-        overflowY: 'auto',
-        height: isMobile ? '150px' : '100px',
-        marginBottom: '0px',
-      },
-    };
+    ...modalWindowsStyles,
+    automaticRow: {
+      ...modalWindowsStyles.automaticRow,
+      flexDirection: isMobile ? 'column' : 'row',
+    },
+    returnButton: {
+      ...modalWindowsStyles.returnButton,
+      margin: '0px',
+      padding: isMobile ? modalWindowsStyles.returnButton.padding : '18px',
+      paddingLeft: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
+      paddingRight: isMobile ? modalWindowsStyles.returnButton.padding : '14px',
+      height: isMobile ? modalWindowsStyles.returnButton.height : '100%',
+    },
+    sendButton: {
+      ...modalWindowsStyles.sendButton,
+      margin: '0px',
+      padding: isMobile ? modalWindowsStyles.sendButton.padding : '18px',
+      paddingLeft: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+      paddingRight: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+      height: isMobile ? modalWindowsStyles.sendButton.height : '45%',
+    },
+    returnButton: {
+      ...modalWindowsStyles.sendButton,
+      margin: '0px',
+      visibility: 'visible',
+      padding: isMobile ? modalWindowsStyles.sendButton.padding : '18px',
+      paddingLeft: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+      paddingRight: isMobile ? modalWindowsStyles.sendButton.padding : '14px',
+      height: isMobile ? modalWindowsStyles.sendButton.height : '45%',
+    },
+    buttonPlacement: {
+      paddingLeft: isMobile ? '0px' : '20px',
+      paddingTop: isMobile ? '10px' : '10px',
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    solidFoundation: {
+      ...modalWindowsStyles.solidFoundation,
+      width: isMobile ? modalWindowsStyles.solidFoundation.width : '100%',
+      paddingTop: '12px',
+    },
+    solidFoundationLittle: {
+      ...modalWindowsStyles.solidFoundation,
+      width: '85px',
+      height: '85px',
+      borderRadius: '25px',
+      borderTopRightRadius: '25px',
+      borderTopLeftRadius: '25px',
+      paddingTop: '4px',
+      paddingBottom: '4px',
+      paddingLeft: '4px',
+      paddingRight: '4px',
+    },
+    sendButton02: {
+      ...modalWindowsStyles.sendButton,
+      margin: '0px',
+      width: '100%',
+      height: '100%',
+      borderRadius: '21px',
+      borderWidth: '3.3px',
+    },
+    areaStyle: {
+      ...modalWindowsStyles.inputStyle,
+      width: '100%',
+      overflowY: 'auto',
+      height: isMobile ? '150px' : '100px',
+      marginBottom: '0px',
+    },
+  };
 
   return (
     <>
@@ -165,7 +173,7 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <div style={{ width: '100%', display: 'flex' }}>
                 <div style={{ width: '100%' }}>
-                  <Typography sx={votingTheme.typography.formDescription}>The name of the new choice</Typography>
+                  <div className="inter-form-title">The name of the new choice</div>
                   <input
                     style={modalWindowsStyles.inputStyle}
                     type="text"
@@ -174,8 +182,8 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
                     value={formDataTitle}
                     onChange={handleChange}
                   />
-                  <Typography sx={votingTheme.typography.inputRequired}>{noteBelowTheInput}</Typography>
-                  <Typography sx={votingTheme.typography.formDescription}>The description of the new choice</Typography>
+                  <div className="inter-form-note">{noteBelowTheInput}</div>
+                  <div className="inter-form-title">The description of the new choice</div>
                   <textarea
                     style={localStyles.areaStyle}
                     rows={4} // Specifies the number of visible text lines
@@ -195,6 +203,12 @@ const DashBoardEditForm = ({ triggerReload, arrFromItems }) => {
                 <div>
                   <Button style={localStyles.sendButton} type="submit" onClick={handleClickModalOff}>
                     PLUS
+                  </Button>
+                  <Button
+                    style={isMobile ? localStyles.returnButton : { visibility: 'hidden' }}
+                    onClick={handleClickModalOff}
+                  >
+                    return
                   </Button>
                 </div>
               </div>

@@ -26,6 +26,7 @@ const DashBoardDistributeItems = ({
   arrHandler,
   handleEmails,
   parentClick,
+  setParentClickTrig,
   changeParentClick,
   handleEmails2,
   setGlobal,
@@ -73,7 +74,6 @@ const DashBoardDistributeItems = ({
   };
 
   const handleChoseItemModal = (itemIdentificators) => {
-
     hideModalButtons();
     setModalDeleteConfirmation(true);
     setCurrentListId(itemIdentificators.currentId);
@@ -117,7 +117,6 @@ const DashBoardDistributeItems = ({
   };
 
   const deletePermanently = (item) => {
-
     console.log(item);
 
     deleteEmailList(item);
@@ -132,6 +131,10 @@ const DashBoardDistributeItems = ({
   const handleChange2 = (e) => {
     // setNewDescription(sanitizeForApi(e.target.value))
     setGlobal('displayedListOfEmails', e.target.value);
+  };
+
+  const turnModalItemsOff = () => {
+    setParentClickTrig(false);
   };
 
   useEffect(() => {
@@ -222,6 +225,30 @@ const DashBoardDistributeItems = ({
       borderColor: deleteIsHovered ? '#E40304' : '#BE2122',
       color: deleteIsHovered ? '#ffffff' : '#B7B7B7',
     },
+    solidFoundationLittle: {
+      ...modalWindowsStyles.solidFoundation,
+      visibility: 'visible',
+      position: 'fixed',
+      width: '135px',
+      height: '85px',
+      borderRadius: '25px',
+      borderTopRightRadius: '25px',
+      borderTopLeftRadius: '25px',
+      paddingTop: '4px',
+      paddingBottom: '4px',
+      paddingLeft: '4px',
+      paddingRight: '4px',
+      bottom: '160px', // Distance from the bottom edge
+      right: '16px', // Distance from the right edge
+    },
+    sendButton02: {
+      ...modalWindowsStyles.sendButton,
+      margin: '0px',
+      width: '100%',
+      height: '100%',
+      borderRadius: '21px',
+      borderWidth: '3.3px',
+    },
   };
 
   return (
@@ -272,7 +299,7 @@ const DashBoardDistributeItems = ({
               delete item with name
             </p>
             <h3 style={modalWindowsStyles.modalHeader}>{currentItem}</h3>
-            
+
             <div style={modalWindowsStyles.automaticRow}>
               <Button
                 onMouseEnter={() => setDeleteIsHovered(true)} // Set hover state to true
@@ -387,6 +414,11 @@ const DashBoardDistributeItems = ({
                   </li>
                 ))}
             </ul>
+            <div style={isMobile && parentClick ? localMOdalStyles.solidFoundationLittle : { visibility: 'hidden' }}>
+              <Button style={localMOdalStyles.sendButton02} onClick={turnModalItemsOff}>
+                BACK
+              </Button>
+            </div>
           </div>
         )}
       </div>
