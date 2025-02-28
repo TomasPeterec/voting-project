@@ -130,7 +130,7 @@ const HeaderOne: React.FC<HeaderProps> = ({ username }) => {
               <br />
               <a href="/tutorials">Tutorials</a>
               <br />
-              <a href="/votings">Votings</a>
+              <a href="/votings/dashboard">Votings</a>
               <br />
               <a href="/home" onClick={handleLogout}>
                 Log out
@@ -144,13 +144,13 @@ const HeaderOne: React.FC<HeaderProps> = ({ username }) => {
       ) : (
         <div style={styles.box2}>
           <SeparatingLine lineLength={0.78125} />
-          <MenuButon title="Home" textColor="white" active urlValue="" buttonSize={logoHeight} />
+          <MenuButon title="Home" textColor="white" active urlValue="/home" buttonSize={logoHeight} />
           <SeparatingLine lineLength={0.364583333} />
-          <MenuButon title="About" textColor="white" urlValue="" buttonSize={logoHeight} />
+          <MenuButon title="About" textColor="white" urlValue="/about" buttonSize={logoHeight} />
           <SeparatingLine lineLength={0.364583333} />
-          <MenuButon title="Tutorials" textColor="white" urlValue="" buttonSize={logoHeight} />
+          <MenuButon title="Tutorials" textColor="white" urlValue="/tutorials" buttonSize={logoHeight} />
           <SeparatingLine lineLength={0.364583333} />
-          <MenuButon title="Votings" textColor="white" urlValue="" buttonSize={logoHeight} />
+          <MenuButon title="Votings" textColor="white" urlValue="/votings/dashboard" buttonSize={logoHeight} />
           <SeparatingLine lineLength={lineGapVal} />
           <SimpleLogout textColor="#FFA50D" urlValue="/home" buttonSize={logoHeight} />
           <SeparatingLine lineLength={0.364583333} />

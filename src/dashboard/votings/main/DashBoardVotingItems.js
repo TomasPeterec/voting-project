@@ -129,7 +129,7 @@ const DashBoardVotingItems = ({ reload, arrHandler }) => {
                   {/* <Link to="/votings/distribution" state={{ currentItem, currentId }}>*/}
                   <IDistributeDef style={modalWindowsStyles.modalRowIcone} />
                 </Link>
-                <Link to="/votings/dashboard" state={{ currentItem, currentId }}>
+                <Link to="/votings/statictics" state={{ currentItem, currentId }}>
                   {/* <Link to="/votings/statistics" state={{ currentItem, currentId }}>*/}
                   <IStatisticsDef style={modalWindowsStyles.modalRowIcone} />
                 </Link>

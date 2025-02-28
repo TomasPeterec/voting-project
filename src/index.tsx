@@ -59,7 +59,7 @@ export default function AppRouter() {
           <Route path="/votings/email/notification" element={<EmailNotification />} />
           <Route path="/votings/dashboard" element={<DashboardMain />} />
           <Route path="/votings/statictics" element={<DashboardStatistic />} />
-          {/* Dynamic route with UUIDs */}
+          {/* Dynamic routes with UUIDs */}
           <Route path="/voting-records/:uuid/votingform/:uuidSecond" element={<VotingForm />} />
           <Route path="/voting-records/:uuid/results" element={<DashboardStatisticVoters />} />
         </Routes>

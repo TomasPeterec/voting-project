@@ -44,7 +44,7 @@ function DashBoardHeader() {
                   <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
                     <List>
                       <ListItem button onClick={toggleDrawer(false)}>
-                        <Link to="/votings">Votings</Link>
+                        <Link to="/votings/dashboard">Votings</Link>
                       </ListItem>
                       <ListItem button onClick={toggleDrawer(false)}>
                         <Link to="/tutorials">Tutorials</Link>
@@ -68,7 +68,7 @@ function DashBoardHeader() {
                       width: '250px',
                     }}
                   >
-                    <Link to="/votings">Votings</Link>
+                    <Link to="/votings/dashboard">Votings</Link>
                     <Link to="/tutorials">Tutorials</Link>
                     <Link to="/about">About</Link>
                   </div>

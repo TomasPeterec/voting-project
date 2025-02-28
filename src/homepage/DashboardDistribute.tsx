@@ -13,7 +13,6 @@ import BottomBanner from '../banners/BottomBanner';
 import SideBanner from '../banners/SideBanner';
 import Footer from '../common/Footer';
 import { useAuth } from '../contexts/AuthContext'; // Import the useAuth hook
-import { useMainContext } from '../contexts/useMainContext'; // Correct path
 
 import mobileWidth from '../css-and-material/isDevice';
 import staticStyles from '../css-and-material/staticStyles';
