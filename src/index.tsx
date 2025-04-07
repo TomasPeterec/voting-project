@@ -23,6 +23,7 @@ import DashboardDistribute from './homepage/DashboardDistribute';
 import DashboardStatistic from './homepage/DashboardStatistic';
 import DashboardStatisticVoters from 'homepage/DashboardStatisticVoters';
 
+
 export default function AppRouter() {
   const [appState, setAppState] = useState<AppStateType>({
     chosenVotesId: 'no chosen', // Initialize the state with default values
@@ -77,7 +78,7 @@ createRoot(rootElement).render(
     <AuthProvider>
       <AppRouter />
     </AuthProvider>
-  </ThemeProvider>,
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

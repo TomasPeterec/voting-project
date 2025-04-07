@@ -111,7 +111,8 @@ const DashboardMain: React.FC = () => {
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
 
   useEffect(() => {
-    const fetchUsername = async () => {
+    const fetchUsername =
+     async () => {
       const localIdToken = await getValidToken();
       if (localIdToken) {
         // Only fetch if we have a valid token
@@ -135,7 +136,7 @@ const DashboardMain: React.FC = () => {
 
     fetchUsername();
     setLoading(false); // Set loading to false once the effect runs
-  }, []);
+  }, [reload]);
 
   return (
     <div

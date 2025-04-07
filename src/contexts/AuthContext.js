@@ -13,13 +13,18 @@ export function AuthProvider({ children }) {
   });
   const [waiting, setWaiting] = useState(false);
 
+  // if(localStorage.getItem('waiting') === true) {
+  //   setWaiting(true)
+  // }
+
   const getValidToken = async () => {
-    if (waiting === false) {
+    if (waiting === false && auth.currentUser) {
       const token = await auth.currentUser.getIdToken(true); // Retrieve the ID token
       setTimeout(() => setWaiting(false), 60 * 60 * 1000);
       setIdToken(token);
       localStorage.setItem('idToken', token); // Persist token to localStorage
       setWaiting(true);
+      localStorage.setItem('waiting', true); // Persist token to localStorage
       return token;
     } else {
       return idToken;
